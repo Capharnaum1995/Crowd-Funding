@@ -9,7 +9,7 @@ spring:
   application:
     name: database-provider
 mybatis:
-  type-aliases-package: com.lemon.crowdfunding.model.mapper
+  type-aliases-package: com.crowdFunding.databaseProvider.model.mapper
   mapper-locations: classpath:mapper/*.xml
 eureka:
   client:

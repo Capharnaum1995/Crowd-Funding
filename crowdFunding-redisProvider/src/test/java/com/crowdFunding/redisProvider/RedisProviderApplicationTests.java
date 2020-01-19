@@ -19,11 +19,11 @@ public class RedisProviderApplicationTests {
 
     @Test
     public void saveValueToRedisByRedisTemplate() {
-        redisTemplate.opsForValue().set("Tiberius Hsu", "vary handsome!");
+        redisTemplate.opsForValue().set("Tiberius Hsu", "6666666666");
     }
 
     @Test
     public void saveValueToRedisByStringRedisTemplate() {
-        stringRedisTemplate.opsForValue().set("White Vinegar", "very lovely!");
+        stringRedisTemplate.opsForValue().set("White Vinegar", "7777777777777");
     }
 }
