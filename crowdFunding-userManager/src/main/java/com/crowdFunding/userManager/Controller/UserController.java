@@ -1,9 +1,11 @@
 package com.crowdFunding.userManager.Controller;
 
-import com.crowdFunding.common.Entity.ResultEntity;
+import com.crowdFunding.common.entity.ResultEntity;
 import com.crowdFunding.common.api.RedisRemoteOperationService;
+import com.crowdFunding.common.utils.SMS;
 import com.crowdFunding.common.utils.SMSUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +15,16 @@ public class UserController {
 
     @Autowired
     private RedisRemoteOperationService redisRemoteOperationService;
+    @Value("${sms.host}")
+    private String host;
+    @Value("${sms.path}")
+    private String path;
+    @Value("${sms.skin}")
+    private String skin;
+    @Value("${sms.sign}")
+    private String sign;
+    @Value("${sms.appCode}")
+    private String appCode;
 
     @RequestMapping("/send/message")
     ResultEntity<String> sendMessage(@RequestParam("phoneNumber") String phoneNumber) {
@@ -30,9 +42,10 @@ public class UserController {
         //这里比较绕。ResultEntity.FAILED="FAILED",resultEntity.getStatus()=SUCCESS/FAILED。参照着ResultEntity这个类来参照着看，理解
         if (ResultEntity.FAILED.equals(resultEntity.getStatus())) {
             return resultEntity;
-        } else {//3.2保存成功，则发送验证码
+        } else {//3.2保存成功，则发送
             try {
-                SMSUtils.sendMessage(phoneNumber, param);
+                SMS sms = new SMS(host, path, sign, skin, param, phoneNumber, appCode);
+                SMSUtils.sendMessage(sms);
             } catch (Exception e) {
                 e.printStackTrace();
                 return ResultEntity.failed(e.getMessage());
@@ -40,5 +53,4 @@ public class UserController {
             return ResultEntity.successWithoutData();
         }
     }
-
 }

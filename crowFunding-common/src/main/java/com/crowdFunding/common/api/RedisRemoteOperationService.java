@@ -1,6 +1,6 @@
 package com.crowdFunding.common.api;
 
-import com.crowdFunding.common.Entity.ResultEntity;
+import com.crowdFunding.common.entity.ResultEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

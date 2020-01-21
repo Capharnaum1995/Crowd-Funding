@@ -1,5 +1,6 @@
 package com.crowdFunding.common;
 
+import com.crowdFunding.common.utils.SMS;
 import com.crowdFunding.common.utils.SMSUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ public class CommonTests {
         String phoneNumber = "18774002425";
         Integer integer = 4;
         String param = SMSUtils.generateRandomVerificationCode(integer);
-        SMSUtils.sendMessage(phoneNumber, param);
+        SMS sms = new SMS("https://feginesms.market.alicloudapi.com", "/codeNotice", "2", "1", param, phoneNumber, "0984aecf7af34501b67084312786a0f2");
+        SMSUtils.sendMessage(sms);
     }
 }

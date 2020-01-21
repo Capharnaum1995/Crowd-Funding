@@ -1,6 +1,6 @@
 package com.crowdFunding.redisProvider.Controller;
 
-import com.crowdFunding.common.Entity.ResultEntity;
+import com.crowdFunding.common.entity.ResultEntity;
 import com.crowdFunding.common.utils.SMSUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;

@@ -1,4 +1,4 @@
-package com.crowdFunding.common.Entity;
+package com.crowdFunding.common.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
