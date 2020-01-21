@@ -9,6 +9,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class CommonTests {
     @Test
     public void sendVerificationTest() {
-        SMSUtils.sendMessage("18774002425");
+        String phoneNumber = "18774002425";
+        Integer integer = 4;
+        String param = SMSUtils.generateRandomVerificationCode(integer);
+        SMSUtils.sendMessage(phoneNumber, param);
     }
 }
