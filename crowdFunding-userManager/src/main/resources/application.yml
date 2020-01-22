@@ -3,15 +3,21 @@ server:
 spring:
   application:
     name: user-manager
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+
 sms:
   host: https://feginesms.market.alicloudapi.com
-  psth: /codeNotice
+  path: /codeNotice
   sign: 1
   skin: 2
   appCode: 0984aecf7af34501b67084312786a0f2
+

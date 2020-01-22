@@ -25,8 +25,19 @@ public class SMSUtils {
         }
     }
 
+    /**
+     * 判断字符串是否有效。有效返回true,无效返回false。
+     *
+     * @param string
+     * @return
+     */
     public static boolean strCheckEffective(String string) {
-        return (string != null) && (string.length() > 0);
+        if (StringUtils.isEmpty(string)) {
+            return false;                    //字符串为null或者为空字符串("")
+        } else if (StringUtils.containsWhitespace(string)) {
+            return false;                    //字符串包含空格
+        }
+        return true;
     }
 
     public static String generateRandomVerificationCode(Integer length) {
