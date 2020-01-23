@@ -1,6 +1,9 @@
 package com.crowdFunding.databaseProvider.service.imp;
 
+import com.crowdFunding.common.constant.Constant;
+import com.crowdFunding.common.dto.LoginInByAPInfoDTO;
 import com.crowdFunding.common.dto.UserRegistrationInfoDTO;
+import com.crowdFunding.common.entity.ResultEntity;
 import com.crowdFunding.databaseProvider.mapper.UserMapper;
 import com.crowdFunding.databaseProvider.model.User;
 import com.crowdFunding.databaseProvider.model.UserExample;
@@ -10,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,6 +37,17 @@ public class UserServiceImp implements UserService {
         User user = new User();
         BeanUtils.copyProperties(userRegistrationInfoDTO, user);
         return userMapper.insertSelective(user);
+    }
+
+    @Override
+    public User retrieveUserByAccount(String account) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andAccountEqualTo(account);
+        List<User> userList = userMapper.selectByExample(userExample);
+        if (!userList.isEmpty()) {
+            return userList.get(0);
+        }
+        return null;
     }
 
 }

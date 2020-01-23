@@ -2,8 +2,7 @@ package com.crowdFunding.redisProvider.Controller;
 
 import com.crowdFunding.common.constant.Constant;
 import com.crowdFunding.common.entity.ResultEntity;
-import com.crowdFunding.common.utils.SMSUtils;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.crowdFunding.common.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -29,10 +28,10 @@ public class RedisOperationController {
     public ResultEntity<String> saveKeyValue(@RequestParam("key") String key,
                                              @RequestParam("value") String value,
                                              @RequestParam("validTime") Integer validTime) {
-        if (!SMSUtils.strCheckEffective(key)) {
+        if (!CommonUtils.strCheckEffective(key)) {
             return ResultEntity.failed(Constant.INVALID_KEY);
         }
-        if (!SMSUtils.strCheckEffective(value)) {
+        if (!CommonUtils.strCheckEffective(value)) {
             return ResultEntity.failed(Constant.INVALID_VALUE);
         }
         if (validTime == null || validTime == 0) {
@@ -60,7 +59,7 @@ public class RedisOperationController {
     @RequestMapping("/retrieve/value/by/key")
     //@HystrixCommand(fallbackMethod = "retrieveValueByKeyHystrix")
     public ResultEntity<String> retrieveValueByKey(@RequestParam("key") String key) {
-        if (!SMSUtils.strCheckEffective(key)) {
+        if (!CommonUtils.strCheckEffective(key)) {
             return ResultEntity.failed(Constant.INVALID_KEY);
         } else {
             try {
@@ -79,7 +78,7 @@ public class RedisOperationController {
     @RequestMapping("/remove/by/key")
     //@HystrixCommand(fallbackMethod = "removeByKeyHystrix")
     public ResultEntity<String> removeByKey(@RequestParam("key") String key) {
-        if (!SMSUtils.strCheckEffective(key)) {
+        if (!CommonUtils.strCheckEffective(key)) {
             return ResultEntity.failed(Constant.INVALID_KEY);
         } else {
             try {

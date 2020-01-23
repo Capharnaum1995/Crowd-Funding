@@ -1,5 +1,6 @@
 package com.crowdFunding.common.api;
 
+import com.crowdFunding.common.dto.UserInfoDTO;
 import com.crowdFunding.common.dto.UserRegistrationInfoDTO;
 import com.crowdFunding.common.entity.ResultEntity;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -15,4 +16,7 @@ public interface DatabaseRemoteOperationService {
 
     @RequestMapping("/create/user")
     ResultEntity<String> createUser(@RequestBody UserRegistrationInfoDTO userRegistrationInfoDTO);
+
+    @RequestMapping("/retrieve/user/by/account")
+    ResultEntity<UserInfoDTO> retrieveUserByAccount(@RequestParam("account") String account);
 }
