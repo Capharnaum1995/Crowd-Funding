@@ -1,0 +1,1 @@
+alter table project change promoter_id initiator_id int not null comment '项目发起人的id';

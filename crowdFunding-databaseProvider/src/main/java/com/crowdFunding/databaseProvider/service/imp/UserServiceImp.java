@@ -1,9 +1,6 @@
 package com.crowdFunding.databaseProvider.service.imp;
 
-import com.crowdFunding.common.constant.Constant;
-import com.crowdFunding.common.dto.LoginInByAPInfoDTO;
 import com.crowdFunding.common.dto.UserRegistrationInfoDTO;
-import com.crowdFunding.common.entity.ResultEntity;
 import com.crowdFunding.databaseProvider.mapper.UserMapper;
 import com.crowdFunding.databaseProvider.model.User;
 import com.crowdFunding.databaseProvider.model.UserExample;

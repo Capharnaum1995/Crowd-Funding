@@ -22,7 +22,15 @@ public interface Constant {
             REDIS_REMOVE_FAILED_FUSE = "Redis删除操作失败，熔断",
             ACCOUNT_DOES_NOT_EXISTS = "账号或密错误，请仔细核对",
             PASSWORD_MISS_MATCH = "账号或密错误，请仔细核对",
-            VALID_TOKEN = "无效的token";
+            INVALID_TOKEN = "无效的token",
+            PLEASE_LOG_IN = "用户登录可能已经过期，请先登陆",
+            REDIS_PROJECT_TEMP_PREFIX = "PROJECT_TEMP_TOKEN_",
+            INVALID_PROJECT_TEMP_TOKEN = "无效的project temp token",
+            INVALID_PICTURE_PATH = "无效的图片路径",
+            PROJECT_INVALID = "暂时查询不到该项目，请重新尝试",
+            INVALID_PAY_NUMBER = "支付宝账号不合法",
+            INVALID_ID_NUMBER = "身份证账号不合法",
+            PROJECT_CACHE_REMOVE_FAILED = "项目创建成功，缓存删除失败，请重试删除缓存";
     Integer TOKEN_VALID_TIME = 30,    //缓存token过期时间
             VERIFICATION_CODE_VALID_TIME = 1,    //手机验证码过期时间
             VERIFICATION_CODE_LENGTH = 4;        //手机验证码生成的长度

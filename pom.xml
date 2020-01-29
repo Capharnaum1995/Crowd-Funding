@@ -9,6 +9,7 @@
         <module>crowdFunding-databaseProvider</module>
         <module>crowdFunding-redisProvider</module>
         <module>crowdFunding-userManager</module>
+        <module>crowdFunding-projectManager</module>
     </modules>
 
     <parent>
@@ -30,7 +31,7 @@
         <profile>
             <id>development</id>
             <properties>
-                <db.url>jdbc:mysql://45.76.175.197:3306/crowd_funding</db.url>
+                <db.url>jdbc:mysql://45.76.175.197:3306/crowd_funding?useSSL=false</db.url>
                 <db.user>root</db.user>
                 <db.password>Justin.171464928</db.password>
                 <db.driver>com.mysql.jdbc.Driver</db.driver>

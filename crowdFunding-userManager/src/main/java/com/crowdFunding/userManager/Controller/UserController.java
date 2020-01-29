@@ -183,7 +183,7 @@ public class UserController {
     @RequestMapping("/log/out")
     public ResultEntity<String> logOut(@RequestParam("token") String token) {
         if (!CommonUtils.strCheckEffective(token)) {
-            return ResultEntity.failed(Constant.VALID_TOKEN);
+            return ResultEntity.failed(Constant.INVALID_TOKEN);
         }
         return redisRemoteOperationService.removeByKey(token);
     }

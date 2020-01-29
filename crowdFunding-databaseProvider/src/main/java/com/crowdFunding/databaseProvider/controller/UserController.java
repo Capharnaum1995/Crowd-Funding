@@ -105,6 +105,7 @@ public class UserController {
             return ResultEntity.failed(e.getMessage());
         }
     }
+
 /**
  public ResultEntity<String> createUserHystrix(@RequestBody UserRegistrationInfoDTO userRegistrationInfoDTO) {
  return ResultEntity.failed(Constant.INSERT_DATABASE_FAILED_FUSE);

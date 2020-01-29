@@ -1,5 +1,6 @@
 package com.crowdFunding.common.api;
 
+import com.crowdFunding.common.dto.ProjectDTO;
 import com.crowdFunding.common.dto.UserInfoDTO;
 import com.crowdFunding.common.dto.UserRegistrationInfoDTO;
 import com.crowdFunding.common.entity.ResultEntity;
@@ -19,4 +20,7 @@ public interface DatabaseRemoteOperationService {
 
     @RequestMapping("/retrieve/user/by/account")
     ResultEntity<UserInfoDTO> retrieveUserByAccount(@RequestParam("account") String account);
+
+    @RequestMapping("/create/project")
+    ResultEntity<String> createProject(@RequestBody ProjectDTO projectDTO);
 }

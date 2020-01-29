@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface RedisRemoteOperationService {
 
     /**
-     * 保存验证码时调用的远程方法
+     * 保存
      *
      * @param key
      * @param value
-     * @param validTime 验证码的有效时间，以分钟为单位
+     * @param validTime 缓存数据的有效时间，以分钟为单位
      * @return
      */
     @RequestMapping("/save/key/value")
@@ -22,7 +22,7 @@ public interface RedisRemoteOperationService {
                                       @RequestParam("validTime") Integer validTime);
 
     /**
-     * 取回验证码时调用的远程方法
+     * 取回/查询
      *
      * @param key
      * @return
@@ -31,7 +31,7 @@ public interface RedisRemoteOperationService {
     ResultEntity<String> retrieveValueByKey(@RequestParam("key") String key);
 
     /**
-     * 删除验证码时调用的远程方法
+     * 删除
      *
      * @param key
      * @return

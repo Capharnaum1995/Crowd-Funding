@@ -1,6 +1,5 @@
 package com.crowdFunding.databaseProvider.service.api;
 
-import com.crowdFunding.common.dto.LoginInByAPInfoDTO;
 import com.crowdFunding.common.dto.UserRegistrationInfoDTO;
 import com.crowdFunding.databaseProvider.model.User;
 
