@@ -1,0 +1,1190 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>众筹商家后台管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="goCreate/css/index1.css"/>
+    <link rel="stylesheet" href="goCreate/css/index2.css"/>
+    <link rel="stylesheet" href="goCreate/css/base.css"/>
+    <link rel="stylesheet" href="goCreate/css/my-z.css"/>
+    <style>
+        .zpopup {
+            z-index: 1001;
+        }
+
+        .pop-search {
+            padding-left: 20px;
+            width: 460px;
+            height: 40px;
+            position: relative;
+        }
+
+        .pop-search .button {
+            display: block;
+            z-index: 2;
+            top: 0;
+            right: 0;
+            background-color: #009aff;
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            width: 100px;
+            height: 40px;
+            position: absolute;
+        }
+
+        .pop-search .input {
+            line-height: 40px;
+            font-size: 16px;
+            width: 100%;
+            height: 100%;
+
+            border: none !important;
+            color: #444;
+        }
+
+        .pop-search-resault {
+            position: absolute;
+            z-index: 2;
+            left: 0;
+            top: 40px;
+            background-color: #fff;
+            width: 500px;
+            height: auto;
+            min-height: 40px;
+            max-height: 500px;
+            overflow-y: scroll;
+        }
+
+        .pop-search-resault.hide {
+            display: none;
+        }
+
+        .pop-search-resault ul li {
+            padding-left: 20px;
+            line-height: 40px;
+            font-size: 12px;
+            color: #444;
+            cursor: pointer;
+        }
+
+        .pop-search-resault ul li img {
+            width: 30px;
+        }
+
+        .pop-search-resault ul li:hover {
+            background-color: #666;
+        }
+
+        .popSearchBg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .popSearchBg.hide {
+            display: none;
+        }
+
+        .popSearch {
+            position: absolute;
+            left: 225px;
+            top: 300px;
+            z-index: 3;
+            width: 500px;
+            height: 40px;
+            border: 10px solid #fff;
+            background-color: #fff;
+        }
+
+        .popSearch.hide {
+            display: none;
+        }
+
+        .app-story-con {
+            position: relative;
+            /*background: #F1F9FC;*/
+            margin-bottom: 5px;
+        }
+
+        .app-reason-con {
+            position: relative;
+            margin-bottom: 5px;
+            /*background: #F1F9FC;*/
+        }
+
+        .app-story-title {
+            font-size: 12px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .app-reason-title {
+            font-size: 12px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .upfile_root_ueditor input.ui_file {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            width: auto;
+            height: 40px;
+            cursor: pointer;
+            font-size: 40px;
+            opacity: 0;
+        }
+
+        .edui-default .edui-toolbar .edui-button .edui-icon, .edui-default .edui-toolbar .edui-menubutton .edui-icon, .edui-default .edui-toolbar .edui-splitbutton .edui-icon {
+            transform: translateY(5px);
+        }
+
+        #edui20 .edui-label {
+            transform: translateY(5px);
+        }
+
+        #edui41 .edui-label {
+            transform: translateY(5px);
+        }
+
+        .order-dl .additional {
+            margin-top: 10px;
+            color: #a5a5a5;
+            line-height: 1.25;
+            padding-right: 80px;
+        }
+
+        .project-photos .upload-number-tips-detail {
+            line-height: 1.2;
+            padding-top: 50px;
+        }
+
+        .project-photos .upload-number-tips .para {
+            line-height: 1.2;
+            color: black;
+            margin-top: 0;
+
+        }
+
+        #z-has-photo-m-detail .z-img {
+            position: absolute;
+            width: 200px;
+            height: 355px;
+        }
+
+        #z-has-photo-m-detail .z-shade {
+            width: 200px;
+            height: 355px;
+        }
+
+        #z-has-photo-m-detail .z-hover {
+            width: 200px;
+            height: 355px;
+            background-image: url(//static.360buyimg.com/zhongchou/zc_fe_cms/v1/build/css/i/bg-edit.png);
+            background-position: 0 0;
+        }
+
+        #z-has-photo-m-detail .z-hover .z-file {
+            width: 200px;
+            height: 355px;
+        }
+
+        .z-wrap {
+            position: relative;
+        }
+
+        .navTabbarFixd {
+            position: fixed;
+            top: 0;
+            z-index: 1001;
+        }
+
+        .edit-button {
+            position: absolute;
+            top: 126px;
+            right: 48px;
+            padding: 7px 9px;
+            border-radius: 4px;
+            border: 1px solid #666;
+        }
+
+        .edit-button a {
+            color: #666;
+        }
+
+        .project-photos .z-has-photo-x {
+            width: 200px;
+            height: 180px;
+            left: -212px;
+            top: 175px;
+        }
+
+        .project-photos .z-photo-x .phone-posi2 {
+            border: none;
+        }
+
+        .project-photos .z-photo-x .z-img {
+            width: 202px;
+            height: 182px;
+            border: none;
+            margin-left: -1px;
+            margin-top: -1px;
+        }
+
+        .project-photos-pp {
+            position: relative;
+            height: 220px
+        }
+
+        .err_ProjectListImg {
+            position: absolute;
+            top: 200px;
+            left: 0px;
+        }
+
+        .err_projectImage {
+            position: absolute;
+            top: 200px;
+            left: 273px;
+        }
+
+        .project-photos-pps {
+            position: relative;
+            height: 360px;
+        }
+
+        .err_appShow {
+            position: absolute;
+            top: 365px;
+            left: 0px;
+        }
+
+        .z-has-photo-xxl {
+            position: relative;
+        }
+
+        .err_floor {
+            position: absolute;
+            top: 145px;
+            left: 545px;
+        }
+
+        .err_floor_110 {
+            position: absolute;
+            top: 34px;
+            left: 240px;
+        }
+
+        .phone-posi2 {
+            position: relative;
+        }
+
+        .upload-notice-text {
+            margin-top: 10px;
+        }
+
+        .upload-notice-text2 {
+            position: absolute;
+            top: 356px;
+            right: 170px;
+        }
+
+        .prove-imgs .z-photo .z-img {
+            height: 0;
+        }
+
+        .prove-imgs .z-photo {
+            background-image: none;
+        }
+
+        .prove-imgs .z-photo:before {
+            display: flex;
+            justify-content: center;
+            line-height: 98px;
+            font-size: 18px;
+            content: "+";
+            color: #ccc;
+        }
+
+        .up-nt {
+            margin-top: 10px;
+        }
+
+        #z-has-photo-m-detail .z-p {
+            top: 295px;
+        }
+
+        .project-photos .z-has-photo-x .z-img {
+            width: 199px;
+        }
+
+        .project-photos .z-has-photo-x .small-mask {
+            width: 199px;
+            height: 180px;
+        }
+
+        .delete-icon2 {
+            margin-left: 20px;
+        }
+
+        .project-photos .z-has-photo-x {
+            width: 199px;
+        }
+
+        #z-has-photo-m-detail {
+            margin-top: 0px;
+        }
+
+        .z-has-photo-change {
+            top: 263px;
+        }
+
+        .z-has-photo-lang {
+            top: 606px;
+        }
+
+        #phone-posi {
+            position: absolute;
+            width: 308px;
+            top: 196px;
+            left: 215px;
+        }
+
+        .project-photos .z-photo-x .z-img {
+            width: 310px;
+        }
+
+        .project-photos .z-photo-x .z-file {
+            width: 310px;
+        }
+
+        .project-photos .z-photo-x {
+            background-position: 0px -1692px;
+        }
+
+        .upload-notice-text2 {
+            right: 233px;
+        }
+
+        /*修改公共样式*/
+
+        .header, .footer {
+            position: relative;
+            z-index: 1001;
+        }
+
+        .z-editor {
+            width: inherit;
+        }
+
+        #app-story, #app-reason {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        #edui22_iframeholder, #edui1_iframeholder {
+            overflow: auto !important;
+        }
+
+        #edui22, #edui1 {
+            width: 778px !important;
+        }
+
+        .form-title {
+            border: none;
+        }
+
+        .z-wrap .z-r {
+            padding-bottom: 10px;
+            width: inherit;
+        }
+
+        .z-table, .z-table-wrap {
+            width: inherit;
+        }
+
+        .order-dd {
+            overflow: visible !important;
+            position: relative;
+        }
+
+        .clearfix:after {
+            display: block;
+            content: "";
+            height: 0;
+            line-height: 0;
+            visibility: hidden;
+            clear: both;
+        }
+
+        /*tab css*/
+        .order-tabBar, .order-item {
+            font-size: 14px;
+        }
+
+        .tabBar-wrapper {
+            float: left;
+        }
+
+        .tabBar-title > div, .tabBar-button > div {
+            display: inline-block;
+            margin-right: -4px;
+        }
+
+        /*翻页隐藏*/
+        .tabBar-button div.tabBar-button-hide {
+            display: none;
+        }
+
+        .tabBar-title, .tabBar-button {
+            position: relative;
+            z-index: 10;
+            background: #fff;
+        }
+
+        .tabBar-title, .tabBar-button {
+            padding: 10px;
+        }
+
+        .tabBar-title > div {
+            margin-right: 0;
+            padding-left: 15px;
+            width: 200px;
+            height: 34px;
+            line-height: 34px;
+            border-bottom: 2px solid #666;
+            font-weight: 500;
+        }
+
+        .tabBar-button > div {
+            width: 80px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            background: #d7d7d7;
+            color: #171717;
+        }
+
+        .tabBar-button-save {
+            background: #aaa !important;
+        }
+
+        .tabActive {
+            position: relative;
+            top: 1px;
+            background: #f2f2f2;
+            box-shadow: 2px 3px 3px 0 #999;
+        }
+
+        .tabBar-title > div:hover, .tabBar-button > div:hover {
+            cursor: pointer;
+        }
+
+        .tabBar-button div:hover {
+            position: relative;
+            top: -1px;
+            box-shadow: 0 2px 2px 0 #ccc;
+        }
+
+        .order-item > div {
+            display: none;
+        }
+
+        .order-item > div.order-list {
+            display: block !important;
+        }
+
+        /*-------layer-bg---------*/
+        /*暂时隐藏弹层信息*/
+        .order-layer-tip, .tabBar-step-one, .tabBar-step-two {
+            display: none;
+        }
+
+        .order-layer-tip {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .tabBar-step {
+            position: relative;
+            top: 40px;
+        }
+
+        .tabBar-step::before {
+            position: absolute;
+            bottom: -1px;
+            left: 100px;
+            display: block;
+            content: "";
+            height: 0;
+            z-index: 1002;
+            border-top: 16px solid transparent;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-bottom: 16px solid #fff;
+        }
+
+        .step-wrapper {
+            position: absolute;
+            z-index: 1001;
+            width: 300px;
+            padding: 20px 40px;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #999;
+        }
+
+        .step-wrapper p {
+            margin-bottom: 10px;
+            line-height: 20px;
+            color: #333;
+        }
+
+        .step-wrapper button {
+            border: none;
+            float: right;
+            color: #1d8bbc;
+            font-weight: 600;
+            background: none;
+        }
+
+        .step-one-img {
+            z-index: 1001;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 935px;
+            height: 50px;
+        }
+
+        .step-two-img {
+            z-index: 1001;
+            position: absolute;
+            top: 0;
+            left: 945px;
+            width: 190px;
+            height: 50px;
+        }
+
+        .step-one-img img, .step-two-img img {
+            width: 100%;
+            height: 100%;
+        }
+
+        /*form 表单样式*/
+        .z-h5 {
+            height: 40px;
+            line-height: 40px;
+            border-bottom: 1px solid #666;
+            color: #fff;
+        }
+
+        .z-h5 > h4 {
+            padding-left: 20px;
+            width: 200px;
+            background: #7f7f7f;
+        }
+
+        .upload-img-button {
+            display: inline-block;
+            vertical-align: middle;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border: 1px solid #ccc;
+            color: #5e5e5e;
+        }
+
+        .item-block-err .order-dl {
+            display: flex;
+            align-items: center;
+        }
+
+        .item-block-err order-dt {
+            line-height: 20px;
+        }
+
+        .z-br-error .z-limit {
+            background-position-y: 1px;
+        }
+    </style>
+</head>
+<body>
+<!--header-->
+<div class="header">
+    <div class="header-inner pr">
+        <div class="header-logo">
+            <a href="//z-dm.jd.com/" style="color: #FFF;">
+                <h1>京东众筹商家后台管理系统</h1>
+            </a>
+        </div>
+        <div class="sign-out">
+            <div id="newLoginbar" class="user-title fl"></div>
+        </div>
+        <div class="header-nav">
+            <ul>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|2" target="_blank"
+                       href="//z.jd.com/new.html">众筹首页</a></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|1" target="_blank"
+                       href="//z-dm.jd.com/funding/goCreate.html">发起众筹</a></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|4" target="_blank"
+                       href="//ur.jr.jd.com/survey/show?id=137&amp;u=http%3A%2F%2Ftrade.z.jd.com%2Ffunding%2FmyCrowdfunding.action">问题反馈</a>
+                </li>
+            </ul>
+        </div>
+        <div class="cb"></div>
+    </div>
+</div>
+<!--wrap-->
+<div class="wrap wrap-m-editor" style="background-color: rgb(255, 255, 255);">
+    <div class="z-main" style="">
+        <div class="z-form" style="">
+            <!--title-->
+            <div class="form-title">
+                <span class="red-block"></span>
+                <p><span class="font-big">发起众筹</span></p>
+            </div>
+            <!--title end-->
+            <div class="z-wrap" style="">
+                <!--  formHeader -->
+                <div class="z-r navTabbar">
+                    <div class="order-tabBar">
+                        <!--提示层背景-->
+                        <div class="order-layer-tip"></div>
+                        <!--tabBar-->
+                        <div class="tabBar-wrapper">
+                            <div class="tabBar-title">
+                                <!--####“基本信息” “挡位信息” “推广资料” “资质信息”的导航条，tabActive的为高亮#####-->
+                                <div class="tabBar-title-one tabActive ">基本信息</div>
+                                <div class="tabBar-title-two">档位信息</div>
+                                <div class="tabBar-title-two ">推广资料</div>
+                                <div class="tabBar-title-three">资质信息</div>
+                            </div>
+                            <!--第一步提示-->
+                            <div class="tabBar-step-one">
+                                <div class="step-one-img">
+                                    <img src="https://capharnaum.oss-us-west-1.aliyuncs.com/goCreate/images/step1.png"
+                                         alt="">
+                                </div>
+                                <div class="tabBar-step">
+                                    <div class="step-wrapper step-one-wrapper">
+                                        <p>展示您当前填写资料的进度。</p>
+                                        <p>创建或修改项目的过程中，您可以随时掌握自己填写进度。</p>
+                                        <button class="step-one-know">我知道了</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--tabButton-->
+                        <div class="tabBar-wrapper">
+                            <div class="tabBar-button">
+                                <div id="drafts" class="tabBar-button-save">保存</div>
+                                <div id="submit-info" class="tabBar-button-submit">提交</div>
+                            </div>
+                            <!--第二步提示-->
+                            <div class="tabBar-step-two">
+                                <div class="step-two-img">
+                                    <img src="https://capharnaum.oss-us-west-1.aliyuncs.com/goCreate/images/step2.png">
+                                </div>
+                                <div class=" tabBar-step">
+                                    <div class="step-wrapper step-two-wrapper">
+                                        <p>填写信息的过程中，可以随时保存，可以在下次访问时，继续填写。</p>
+                                        <p>所有表单都填写完成后，可以点击提交，项目就会交由运营人员进行审核。</p>
+                                        <button class="step-two-know">我知道了</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--tabButton end-->
+                    </div>
+                </div>
+                <!--  formHeader end  -->
+                <!-- form -->
+                <div class="z-r" style="">
+                    <form action="/funding/save_project.action" method="post" id="crowdFrm" style="">
+                        <div class="order-item" style="padding-top: 0px;">
+                            <input type="hidden" id="projectId" name="projectId" value="">
+                            <input type="hidden" id="qualificationId" name="qualificationId" value="">
+                            <input type="hidden" id="raiseType" name="raiseType" value="0">
+                            <input type="hidden" id="raiseTypeBefore" name="raiseTypeBefore" value="0">
+                            <input type="hidden" id="projectTypeBefore" name="projectTypeBefore" value="1">
+                            <input type="hidden" id="reviewProgress" name="reviewProgress" value="">
+                            <input type="hidden" id="videoAddrUrl" name="videoAddrUrl">
+                            <input type="hidden" id="videoId" name="videoId" value="">
+                            <input type="hidden" id="isUploading" name="isUploading">
+                            <input type="hidden" id="videoIdTemp" name="videoIdTemp" value="">
+                            <input type="hidden" id="projectType" value="1">
+                            <input type="hidden" id="specRecommendSize" value="">
+                            <input type="hidden" id="proxyMinPrice" value="">
+                            <input type="hidden" id="tabIndex" value="2">
+                            <input type="hidden" id="companyType" name="companyType" value="N">
+                            <input type="hidden" id="qualificationStatus" name="qualificationStatus" value="">
+                            <!--基本信息-->
+                            <div class="order-list" style="">
+                                <!--众筹类型-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt"><span class="fr">众筹类型</span><span
+                                            class="order-point fr">*</span></dt>
+                                    <dd class="order-dd">
+                                        <div class="z-radios JradioType">
+                                            <div class="z-radio">
+                                                <input type="radio" name="projectType" id="projectNormal" value="1"
+                                                       checked="">
+                                                <label name="projectTypeLabel" class=" radio-current "
+                                                       for="projectNormal" value="1">回报众筹</label>
+                                            </div>
+                                            <span class="z-notes">（一般的有产品回报的众筹项目）</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span id="err_projectType" class="z-limit" style="display: none;"> </span>
+                                            <br>
+                                            <div class="z-radio">
+                                                <input type="radio" name="projectType" id="projectFree" value="6">
+                                                <label name="projectTypeLabel" class=" radio-normal " for="projectFree"
+                                                       value="6">公益众筹</label>
+                                            </div>
+                                            <span class="z-notes">（公益捐助类项目）</span>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!--众筹类型 end-->
+                                <!--筹资天数-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt"><span class="fr">筹资天数</span><span
+                                            class="order-point fr">*</span></dt>
+                                    <dd class="order-dd">
+                                        <div class="z-radios JradioDay">
+                                            <div id="collectDaysDiv" class="z-ipt-s fl w48 mr55">
+                                                <input id="collectDays" name="collectDays" value="" type="text"
+                                                       class="z-ipt fl w48" placeholder="10~60">
+                                                <span class="ipt-span">天</span>
+                                            </div>
+                                            <span class="z-notes" id="collectDaysSpan">（一般建议众筹时间为10-60天）</span>
+                                            <span id="err_collectDays" class="z-limit" style="display: none;"></span>
+                                            <br>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!--筹资天数 end-->
+                                <!--筹资金额-->
+                                <dl class="order-dl" id="targetAmount">
+                                    <dt class="order-dt"><span class="fr">筹资金额</span><span
+                                            class="order-point fr">*</span></dt>
+                                    <dd class="order-dd">
+                                        <div class="z-ipt-s w78">
+                                            <input id="projectAmount" name="projectAmount" value="" type="text"
+                                                   class="z-ipt fl w78" placeholder="不少于XX元">
+                                            <span class="ipt-span">元</span>
+                                        </div>
+                                        <div class="additional">本次项目需要筹集的目标金额</div>
+                                        <span id="err_amount" class="z-limit" style="display: none;"></span>
+
+                                    </dd>
+                                </dl>
+                                <!--筹资金额 end-->
+                                <div class="z-h5">
+                                    <h4>1、项目信息</h4>
+                                </div>
+                                <!--项目品类-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt">
+                                        <span class="fr">项目品类</span>
+                                        <span class="order-point fr">*</span>
+                                    </dt>
+                                    <dd class="order-dd">
+                                        <select class="z-sclect w200" name="sectorId" id="sectorId">
+                                            <option value="">请选择</option>
+                                            <option value="10">教育出版</option>
+                                            <option value="11">休闲娱乐</option>
+                                            <option value="12">文化艺术</option>
+                                            <option value="83">其它</option>
+                                            <option value="85">原创设计</option>
+                                        </select>
+                                        <input type="hidden" id="sectorIdStr" value="">
+                                        <select class="z-sclect w200" name="subfield" id="subfield">
+                                            <option value="">请选择</option>
+                                        </select>
+                                        <input type="hidden" id="subfieldStr" value="">
+                                        <span id="err_project-category" class="z-limit" style="display: none;"></span>
+                                        <div class="cb"></div>
+                                    </dd>
+                                </dl>
+                                <!--项目品类 end-->
+                                <!--项目名称-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt"><span class="fr">项目名称</span><span
+                                            class="order-point fr">*</span></dt>
+                                    <dd class="order-dd">
+                                        <input id="projectName" maxlength="14" name="projectName" value="" type="text"
+                                               class="z-ipt w328" placeholder="不多于14个字">
+                                        <span id="err_projectName" class="z-limit" style="display: none;"></span>
+                                        <div class="additional">示例：咕咚智能健步鞋 1万个透气孔</div>
+                                    </dd>
+                                </dl>
+                                <!--项目名称 end-->
+                                <!--关键描述-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt"><span class="fr">关键描述</span><span
+                                            class="order-point fr">*</span></dt>
+                                    <dd class="order-dd">
+                                        <input placeholder="请提炼产品卖点成关键词描述，不多于35个字" id="projectAdWord" maxlength="35"
+                                               name="projectAdWord" value="" type="text" class="z-ipt w328">
+                                        <span id="err_projectAdWord" class="z-limit" style="display: none;"></span>
+                                        <div class="additional"> 该描述用于首页推荐项目展示；示例：机洗无忧加倍减脂</div>
+                                    </dd>
+                                </dl>
+                                <dl class="order-dl">
+                                    <dt class="order-dt"><span class="fr">项目亮点</span><span
+                                            class="order-point fr">*</span></dt>
+                                    <dd class="order-dd">
+                                        <input id="projectSpot0" maxlength="5" name="projectSpot0" value="" type="text"
+                                               class="z-ipt w328" placeholder="不多于5个字">
+                                        <input id="spotId0" name="spotId0" value="" type="hidden">
+                                        <span id="err_projectSpot" class="z-limit" style="display: inline;"></span>
+                                    </dd>
+                                </dl>
+                                <dl class="order-dl">
+                                    <dt class="order-dt"><span class="fr">退换货说明</span><span
+                                            class="order-point fr">*</span></dt>
+                                    <dd class="order-dd">
+                                        <div class="order-dd-childen">
+                                            <div class="item">
+                                                <input type="radio" checked="" name="merchantType" value="2">
+                                                <label> 该项目支持15天无理由退换货</label>
+                                            </div>
+                                            <div class="item">
+                                                <input type="radio" name="merchantType" value="3">
+                                                <label>该项目不支持15天无理由退换货</label>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+
+                                <!--项目概括 end-->
+                                <div class="z-h5">
+                                    <h4>2 众筹故事</h4>
+                                </div>
+                                <!-- 众筹故事 -->
+                                <dl class="order-dl" style="">
+                                    <dt class="order-dt"><span class="fr">众筹故事</span><span
+                                            class="order-point fr">*</span></dt>
+                                    <dd class="order-dd" style="">
+                                        <span id="err_app-story" class="z-limit" style="display: none;"></span>
+                                        <div class="additional">（请上传宽度790px，高度建议506px场景图，格式为jpg png 或
+                                            gif，图片不大于500k）
+                                        </div>
+                                        <div id="app-story" class="edui-default" style="">
+                                            <!--###########这里添加第一个md编辑器###########-->
+                                            <div id="edui22" class="edui-editor  edui-default"
+                                                 style="width: 800px; z-index: 999;">
+
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!-- 众筹故事 end -->
+
+                                <!-- 为什么众筹 -->
+                                <dl class="order-dl" style="">
+                                    <dt class="order-dt"><span class="fr">为什么众筹</span><span
+                                            class="order-point fr">*</span></dt>
+                                    <dd class="order-dd" style="">
+                                        <span id="err_app-reason" class="z-limit" style="display: none;"></span>
+                                        <div class="additional">（请上传宽度790px，高度建议506px场景图，格式为jpg png或gif，图片不大于500k）</div>
+                                        <div id="app-reason" class="edui-default" style="">
+                                            <!--###########这里添加第二个md编辑器###########-->
+                                            <div id="edui1" class="edui-editor  edui-default"
+                                                 style="width: 800px; z-index: 999;">
+
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!-- 为什么众筹 end -->
+
+                                <!-- 基本信息 -->
+                                <dl class="order-dl">
+                                    <dt class="order-dt"><span class="fr">基本信息</span><span
+                                            class="order-point fr">*</span></dt>
+                                    <dd class="order-dd">
+                                        <div class="mb10">公司简介</div>
+                                        <span id="err_companyInfo" class="z-limit" style="display: none;"></span>
+                                        <div class="z-editor z-editor-auto mb10">
+                                            <textarea class="z-editor-textarea" name="companyInfo" id="companyInfo"
+                                                      cols="30" rows="10" placeholder="请输入公司简介50个字以内"></textarea>
+                                        </div>
+                                        <div class="mb10">团队信息</div>
+                                        <span id="err_teamInfo" class="z-limit" style="display: none;"></span>
+                                        <div class="z-editor z-editor-auto mb10">
+                                            <textarea class="z-editor-textarea" name="teamInfo" id="teamInfo" cols="30"
+                                                      rows="10" placeholder="请输入团队介绍，限制100~500字。"></textarea>
+                                        </div>
+                                        <!--添加成员-->
+                                        <div class="photos-wrapper" id="memberList">
+                                            <!-- 图文list 1 start -->
+                                            <div class="photos-item">
+                                                <div class="project-photos project-photos-w200 project-photos-h200">
+                                                    <!--图片未上传照片-->
+                                                    <div class="z-photo-xl" style="display:block; margin-bottom: 0;">
+                                                        <input id="upMemberImg1" class="z-file fileupload" type="file"
+                                                               data-url="/projectImg/uploadImg?width=100&amp;height=100&amp;num=2"
+                                                               multiple="" style="font-size: 0px;">
+                                                        <p class="z-size">上传成员头像</p>
+                                                        <p class="no-words">100px * 100px</p>
+                                                        <input type="hidden" name="memberImg" value="">
+                                                    </div>
+                                                    <!--图片未上传照片 end-->
+                                                </div>
+
+                                                <div class="z-editor z-editor-auto z-editor-member">
+                                                    <div class="txt-wrapper clearfix">
+                                                        <input type="text" name="memberName" value=""
+                                                               placeholder="请输入成员名称" class="z-ipt">
+                                                        <input type="text" name="position" value="" placeholder="请输入职位"
+                                                               class="z-ipt">
+                                                    </div>
+
+                                                    <textarea class="z-editor-textarea z-editor-textarea-2" name="intor"
+                                                              cols="30" rows="10"
+                                                              placeholder="成员简介，字数限制100字"></textarea>
+                                                </div>
+                                            </div>
+                                            <!-- 图文list 1 end -->
+                                            <!--添加-->
+                                        </div>
+                                        <!--添加成员的按钮-->
+                                        <div class="tc">
+                                            <input type="button" id="addMember" class="common_button mr20"
+                                                   value="添加成员（还能添加 9 人）">
+                                        </div>
+                                        <!--添加成员 end-->
+                                    </dd>
+                                </dl>
+                            </div>
+
+                            <!--挡位信息-->
+                            <div class="" style="width: 940px;">
+                                <!--table-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt"><span class="fr">基本信息</span><span
+                                            class="order-point fr">*</span></dt>
+                                    <dd class="order-dd" style="width: 778px;">
+                                        <span id="err_stall" class="z-limit" style="display: none;"></span>
+                                        <div class="z-table-wrap">
+                                            <div class="z-thead-bg"></div>
+                                            <table class="z-table" id="redoundTable">
+                                                <tbody>
+                                                <tr>
+                                                    <th class="w40">序号</th>
+                                                    <th class="w80">支持金额</th>
+                                                    <th class="w90">名额</th>
+                                                    <th class="w200">回报内容</th>
+                                                    <th class="w120">回报时间</th>
+                                                    <th class="w100">运费</th>
+                                                    <th class="w100">操作</th>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="add-stall" id="addStallNew"
+                                                 style="background: none;width: 80px;">+ 添加档位
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!--table end-->
+                            </div>
+
+                            <!--推广资料-->
+                            <div class="">
+                                <!--APP图片上传-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt">
+                                        <span class="fr">APP单品页图</span>
+                                        <span class="order-point fr">*</span>
+                                    </dt>
+                                    <dd class="order-dd" id="appImageDev">
+                                        <div class="project-photos project-photos-pps">
+                                            <input type="hidden" id="appPhotos" name="appPhotos" value="">
+                                            <!--app详情页未上传照片-->
+                                            <div class="z-photo-xxl" id="z-has-photo-m-detail"
+                                                 style="display:block;clear:both;background-color:#f9f9f9;background-image: url(//static.360buyimg.com/zhongchou/zc_fe_cms/v1/build/css/i/upload.png);background-position:center 120px;width:200px;height:355px;">
+                                                <input id="uploadAppShowImg" type="file" class="z-file fileupload"
+                                                       data-url="/projectImg/uploadImg?width=1125&amp;height=2000&amp;num=7"
+                                                       multiple="" style="font-size: 0px;width:200px;height:355px;">
+                                                <p class="z-p" style="top:175px;">app详情页展示图</p>
+                                                <p class="z-size" style="top:200px;">1125px * 2000px</p>
+                                                <p class="no-words" style="top:220px;">（大小不大于150KB）</p>
+                                                <input type="hidden" id="appShowImg" name="appShowImg" value="">
+                                            </div>
+                                            <div class="fl mt_10 err_appShow" style="display: none;">
+                                                <span class="z-limit" id="err_appShow"></span>
+                                            </div>
+                                            <!--app详情页未上传照片 end-->
+
+                                            <!--楼层图片未上传照片-->
+                                            <div class="z-photo-xxl z-photo-xxl2 phone-posi-xxl" id="z-photo-lc"
+                                                 style="display:block">
+                                                <input id="uploadFloor" type="file" class="z-file fileupload"
+                                                       data-url="/projectImg/uploadImg?width=686&amp;height=440&amp;num=5"
+                                                       multiple="" style="font-size: 0px;">
+                                                <p class="z-p">重点楼层展示图</p>
+                                                <p class="z-size">686px * 440px</p>
+                                                <p class="no-words">（大小不大于150KB）</p>
+                                                <input type="hidden" id="floorImg" name="floorImg" value="">
+                                            </div>
+                                            <div class="fl mt_10 err_floor" style="display: none;">
+                                                <span class="z-limit" id="err_floor"></span>
+                                            </div>
+                                            <!--楼层图片未上传照片 end-->
+                                            <!--APP列表图页未上传照片-->
+                                            <div class="z-photo-x phone-posi2" id="phone-posi">
+                                                <img class="z-img z-img2" id="pti2" alt="">
+                                                <input type="file" id="uploadApp" class="z-file z-file2"
+                                                       data-url="/projectImg/uploadImg?width=1080&amp;height=1080&amp;num=6&amp;appImg=app"
+                                                       multiple="" style="font-size: 0px;">
+                                                <p class="z-p">app 列表图页 </p>
+                                                <p class="z-size">1080px * 1080px</p>
+                                                <p class="no-words">（大小不大于150KB）</p>
+                                            </div>
+                                            <div class="upload-notice-text2"></div>
+                                            <!--APP列表图页未上传照片 end-->
+                                        </div>
+
+                                        <div class="fl mt_10" style="display: none;">
+                                            <span class="z-limit" id="err_appShowccc"></span>
+                                        </div>
+                                        <div class="project-photos project-photos-pp">
+                                            <div class="upload-notice-text up-nt">
+                                                所有图片支持jpg、png格式，不能出现文字、水印、促销文案
+                                            </div>
+                                            <!-------------特别注意有照片的z-has-photo，没有照片的z-photo---------------->
+                                            <!--PC 首页图-->
+                                            <div class="z-photo-xl" style="display:block">
+                                                <input id="uploadProjectListImg" class="z-file fileupload" type="file"
+                                                       data-url="/projectImg/uploadImg?width=280&amp;height=220&amp;num=2"
+                                                       multiple="" style="font-size: 0px;">
+                                                <p class="z-p">PC 首页图</p>
+                                                <p class="z-size">280px * 220px</p>
+                                                <p class="no-words">（大小不大于150KB）</p>
+                                                <input type="hidden" id="ProjectListImg" name="ProjectListImg" value="">
+                                            </div>
+                                            <div class="fl w202 mr10 mt_10 err_ProjectListImg" style="display: none;">
+                                                <span class="z-limit" id="err_ProjectListImg"></span>
+                                            </div>
+                                            <!--PC 首页图 end-->
+                                            <!--PC项目单品页图-->
+                                            <div class="z-photo-xxl posi-xxl" style="display:block">
+                                                <input id="upload2" type="file" class="z-file fileupload"
+                                                       data-url="/projectImg/uploadImg?width=790&amp;height=400&amp;num=4"
+                                                       multiple="" style="font-size: 0px;">
+                                                <p class="z-p">PC项目单品页图</p>
+                                                <p class="z-size">790px * 400px</p>
+                                                <p class="no-words">（大小不大于150KB）</p>
+                                                <input type="hidden" id="projectImage" name="projectImage" value="">
+                                            </div>
+                                            <div class="fl mt_10 err_projectImage" style="display: none;">
+                                                <span class="z-limit" id="err_projectImage"></span>
+                                            </div>
+                                            <!--PC项目单品页图 end-->
+                                            <div class="fl w160 mr10 mt_10"
+                                                 style="display: none;position: absolute;bottom: -10px;left: 0; width: 300px;">
+                                                <span class="z-limit" id="err_projectThumImage1"></span>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!--APP图片上传 end-->
+                                <!--上传视频-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt">
+                                        <span class="fr">视频介绍</span>
+                                    </dt>
+                                    <dd class="order-dd">
+                                        <div class="radio-box clearfix">
+                                            <div class="radio-click">
+                                                <a href="javascript:;" class="upload-video-btn">上传视频</a>
+                                                <!--<input type="file">-->
+                                                <div style="position:absolute;top:0;left:0;">
+                                                    <object id="SWFUpload_0" type="application/x-shockwave-flash"
+                                                            data="/res/js/swfupload/swfupload.swf?preventswfcaching=1504246810862"
+                                                            width="99" height="32" class="uploadfile">
+                                                        <param name="wmode" value="transparent">
+                                                        <param name="movie"
+                                                               value="/res/js/swfupload/swfupload.swf?preventswfcaching=1504246810862">
+                                                        <param name="quality" value="high">
+                                                        <param name="allowScriptAccess" value="always">
+                                                        <param name="flashvars"
+                                                               value="movieName=SWFUpload_0&amp;uploadURL=&amp;useQueryString=false&amp;requeueOnError=false&amp;httpSuccess=&amp;assumeSuccessTimeout=0&amp;params=&amp;filePostName=Filedata&amp;fileTypes=*.wmv%3B*.avi%3B*.rmvb%3B*.mp4%3B*.flv&amp;fileTypesDescription=%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6&amp;fileSizeLimit=1024%20MB&amp;fileUploadLimit=1&amp;fileQueueLimit=1&amp;debugEnabled=false&amp;buttonImageURL=&amp;buttonWidth=99&amp;buttonHeight=32&amp;buttonText=%3Cspan%20href%3D%22javascript%3A%3B%22%20class%3D%22uploadfile%22%3E%E4%B8%8A%E4%BC%A0%E8%A7%86%E9%A2%91%3C%2Fspan%3E&amp;buttonTextTopPadding=0&amp;buttonTextLeftPadding=0&amp;buttonTextStyle=.uploadfile%20%7Bfont-size%3A%2018px%3B%20text-align%3A%20center%3Bfont-family%3Ainherit%3B%7D&amp;buttonAction=-100&amp;buttonDisabled=false&amp;buttonCursor=-2">
+                                                    </object>
+                                                </div>
+                                            </div>
+                                            <div class="radio-box video-status" id="fsUploadProgress">
+                                            </div>
+                                        </div>
+                                        <div class="radio-box">
+                                            <div class="lt22 mt5 z-br-error" id="progressDivmmm">
+                                            </div>
+                                        </div>
+                                        <div class="upload-notice-text">
+                                            视频小于200M，建议视频时间3分钟以内，尺寸比例4:3，格式为wmv、avi、rmvb、mp4、flv等。
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <div class="pic-tr video-status">
+                                    <div class="pic-td01"></div>
+                                    <div class="pic-td02">
+                                        <div id="progressDiv"></div>
+                                        <div class="error-tips">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--上传视频  end-->
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <!-- form main end-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--footer-->
+<div class="footer">
+    <div class="footer-inner">
+        <div class="footer-container fl">
+            <ul>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|49" target="_blank"
+                       href="//help.jr.jd.com/show/helpcenter/110.html">关于京东金融</a><span class="v-line">|</span></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|50" target="_blank"
+                       href="//help.jr.jd.com/show/helpcenter/139.html">联系我们</a><span class="v-line">|</span></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|51" target="_blank"
+                       href="//help.jr.jd.com/show/helpcenter/145.html">服务协议</a></li>
+            </ul>
+            <p>Copyright © 2004-2015 京东JD.com 版权所有</p>
+        </div>
+        <div class="footer-contact fr">
+            <div class="mt50 mr50"><span class="tel"></span><a clstag="pageclick|keycount|zcprojectsystem_201509071|52"
+                                                               target="_blank"
+                                                               href="//sale.jd.com/act/Sx4iqnbrpmWDtAOR.html"
+                                                               class="contact-us">咨询我们</a></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

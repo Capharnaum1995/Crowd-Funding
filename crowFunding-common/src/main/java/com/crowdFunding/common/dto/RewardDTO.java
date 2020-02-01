@@ -4,13 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 众筹项目回报信息的数据传输对象
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RewardDTO {
+public class RewardDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String userToken;
 

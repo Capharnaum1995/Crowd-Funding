@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>众筹商家后台管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="goCreate/css/index1.css"/>
+    <link rel="stylesheet" href="goCreate/css/index2.css"/>
+    <link rel="stylesheet" href="goCreate/css/base.css"/>
+    <link rel="stylesheet" href="goCreate/css/my-z.css"/>
+</head>
+<body>
+<!--header-->
+<div class="header">
+    <div class="header-inner pr">
+        <div class="header-logo">
+            <a href="//z-dm.jd.com/" style="color: #FFF;">
+                <h1>京东众筹商家后台管理系统</h1>
+            </a>
+        </div>
+        <!--退出登陆-->
+        <div class="sign-out">
+            <div id="newLoginbar" class="user-name fl"><a class="link-user">jd_54d8eea5772ab</a>&nbsp;&nbsp;<a
+                    href="//biz.jd.com/login/toLogout.do?return=z-dm.jd.com" class="link-logout">退出</a></div>
+        </div>
+        <div class="header-nav">
+            <ul>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|2" target="_blank"
+                       href="//z.jd.com/new.html">众筹首页</a></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|1" target="_blank"
+                       href="//z-dm.jd.com/funding/goCreate.html">发起众筹</a></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|4" target="_blank"
+                       href="//ur.jr.jd.com/survey/show?id=137&amp;u=http%3A%2F%2Ftrade.z.jd.com%2Ffunding%2FmyCrowdfunding.action">问题反馈</a>
+                </li>
+            </ul>
+        </div>
+        <div class="cb"></div>
+    </div>
+</div>
+<!--wrap-->
+<div class="wrap" style="min-height: 393px; background-color: rgb(255, 255, 255);">
+    <div class="z-main">
+        <div class="z-form">
+            <!--title-->
+            <div class="form-title">
+                <span class="red-block"></span>
+                <p>
+                    <span class="font-big">发起众筹</span>
+                    <span class="download"><a href="//zbbs.jd.com/thread-28233-1-1.html"
+                                              target="_blank">查看《众筹发起指导手册》</a><span class="f18"></span>&nbsp;&nbsp;<a
+                            href="//zbbs.jd.com/portal.php?mod=topic&amp;topicid=19"
+                            target="_blank">查看《发起众筹须知》</a></span>
+                </p>
+            </div>
+            <!--title end-->
+            <div class="z-wrap">
+                <!--z-l-->
+                <div class="z-l">
+                    <ul class="z-list">
+                        <li class="current">
+                            <a href="#">
+                                个人信息
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" style="cursor:default">项目信息</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--z-r-->
+                <div class="z-r">
+                    <div class="personal-confirm">
+                        <div class="confirm-bg1"></div>
+                        <p class="confirm-txt">
+                            个人发起
+                        </p>
+                        <!--复选框-->
+                        <div class="start-read Jcheckbox">
+                            <div class="order-checkbox" id>
+                                <input type="radio" name="invoice" id="readAgreement">
+                                <label class="checkbox-normal" for="readAgreement"
+                                       id="checkbox-label">阅读并同意京东众筹的</label>
+                            </div>
+                            <div class="fl">
+                                <a class="font-blue" href="****协议的页面****" target="_blank">《京东众筹平台发起人协议》</a>
+                                <a class="font-blue" href="****协议的页面****" target="_blank">《支持者协议》</a>
+                            </div>
+                        </div>
+                        <div class="pt40 tc mb20">
+                            <button class="common_button" onclick="doPub();">发起项目</button>
+                        </div>
+                        <form id="fm" action="****项目的页面*****" method="post"></form>
+                    </div>
+                </div>
+                <!--z-r end-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--footer-->
+<div class="footer">
+    <div class="footer-inner">
+        <div class="footer-container fl">
+            <ul>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|49" target="_blank"
+                       href="//help.jr.jd.com/show/helpcenter/110.html">关于京东金融</a><span class="v-line">|</span></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|50" target="_blank"
+                       href="//help.jr.jd.com/show/helpcenter/139.html">联系我们</a><span class="v-line">|</span></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|51" target="_blank"
+                       href="//help.jr.jd.com/show/helpcenter/145.html">服务协议</a></li>
+            </ul>
+            <p>Copyright © 2004-2019 京东JD.com 版权所有</p>
+        </div>
+
+    </div>
+</div>
+<script>
+    // radio的显示函数
+    var radio = document.getElementById('readAgreement');
+    radio.onclick = function () {
+        var label = document.getElementById('checkbox-label');
+        var cssValue = label.getAttribute('class');
+        if (cssValue === "checkbox-normal") {
+            label.className = 'checkbox-current';
+        }
+        if (cssValue === "checkbox-current") {
+            label.className = 'checkbox-normal';
+        }
+    };
+
+    //发起项目按钮响应函数
+    function doPub() {
+        var cssValue = document.getElementById('checkbox-label').getAttribute('class');  //获取for="readAgreement"的label组件上的class属性值
+        if (cssValue === "checkbox-current") {                          //判断该属性是否为checkbox-current-->勾选同意
+            document.getElementById("fm").submit();
+        } else {
+            alert("请先阅读并同意京东众筹的《发起人协议》《支持者协议》");
+        }
+    }
+
+</script>
+</body>
+</html>

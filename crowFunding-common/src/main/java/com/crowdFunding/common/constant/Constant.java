@@ -35,4 +35,6 @@ public interface Constant {
             VERIFICATION_CODE_VALID_TIME = 1,    //手机验证码过期时间
             VERIFICATION_CODE_LENGTH = 4;        //手机验证码生成的长度
 
+    String ATTR_NAME_LOGIN_USER = "LOGIN_USER",
+            ATTR_NAME_MESSAGE = "attr name message";
 }

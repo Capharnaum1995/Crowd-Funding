@@ -1,13 +1,20 @@
 server:
-  port: 3000
+  port: 80
 spring:
-  application:
-    name: redis-provider
   redis:
     cluster:
       nodes: 45.76.75.121:9920,45.76.75.121:9921,45.76.75.121:9922,45.76.75.121:9923,45.76.75.121:9924,45.76.75.121:9925
       max-redirects: 3
     password: justin.171464928
+    jedis:
+      pool:
+        max-idle: 100
+  session:
+    store-type: redis
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
   cloud:
     loadbalancer:
       ribbon:

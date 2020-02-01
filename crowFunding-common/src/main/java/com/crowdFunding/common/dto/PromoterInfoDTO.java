@@ -4,13 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 团队成员信息的传输对象
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PromoterInfoDTO {
+public class PromoterInfoDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String name;
 

@@ -10,6 +10,7 @@
         <module>crowdFunding-redisProvider</module>
         <module>crowdFunding-userManager</module>
         <module>crowdFunding-projectManager</module>
+        <module>crowdFunding-ui</module>
     </modules>
 
     <parent>
