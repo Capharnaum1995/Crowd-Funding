@@ -18,7 +18,7 @@ public class RewardDTO implements Serializable {
 
     private String userToken;
 
-    private String projectTempToken;
+    String projectTempToken;
 
     private Byte type;
 
@@ -27,6 +27,8 @@ public class RewardDTO implements Serializable {
     private String description;
 
     private String picture;
+
+    private String remarks;  //新添加的  回报的备注信息
 
     private Integer limitedAmount;
 

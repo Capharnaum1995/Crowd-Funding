@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="editor">
+    <script type="text/javascript">
+        $(function () {
+            var editor = editormd("editor", {
+                width: "99%",
+                height: 450,
+                delay: 0,                                                     // Delay parse markdown to html, Uint : ms
+                placeholder: "F11/Esc：进入/退出全屏,全屏效果使用更佳。更多->使用帮助...",
+                watch: false,                                                 //实时预览关闭，可以手动打开
+                imageUpload: true,                                            //启用同域图片上传功能
+                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],   //图片的格式
+                imageUploadURL: "/file/up/load",                              //图片上传的url
+                path: "editor/lib/",                                           // Autoload modules mode, codemirror, marked... dependents libs path
+                emoji: true
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

@@ -4,10 +4,28 @@
     <title>众筹商家后台管理系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="goCreate/css/index1.css"/>
-    <link rel="stylesheet" href="goCreate/css/index2.css"/>
-    <link rel="stylesheet" href="goCreate/css/base.css"/>
-    <link rel="stylesheet" href="goCreate/css/my-z.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link href="test/css/fileinput.css" media="all" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+    <link href="test/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="addProject/css/index1.css"/>
+    <link rel="stylesheet" href="addProject/css/index2.css"/>
+    <link rel="stylesheet" href="addProject/css/base.css"/>
+    <link rel="stylesheet" href="addProject/css/my-z.css"/>
+    <link rel="stylesheet" href="editor/css/editormd.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"></script>
+    <script src="test/js/plugins/piexif.js" type="text/javascript"></script>
+    <script src="test/js/plugins/sortable.js" type="text/javascript"></script>
+    <script src="test/js/fileinput.js" type="text/javascript"></script>
+    <script src="test/js/locales/fr.js" type="text/javascript"></script>
+    <script src="test/js/locales/es.js" type="text/javascript"></script>
+    <script src="test/themes/fas/theme.js" type="text/javascript"></script>
+    <script src="test/themes/explorer-fas/theme.js" type="text/javascript"></script>
+    <script src="editor/js/editormd.min.js"></script>
+    <script src="addProject/js/add_project.js" type="application/javascript"></script>
     <style>
         .zpopup {
             z-index: 1001;
@@ -416,6 +434,13 @@
         .order-dd {
             overflow: visible !important;
             position: relative;
+            width: 816px
+        }
+
+        .slideInDown .order-dd {
+            overflow: visible !important;
+            position: relative;
+            width: 678px
         }
 
         .clearfix:after {
@@ -558,7 +583,7 @@
 
         .step-wrapper button {
             border: none;
-            float: right;
+            float: left;
             color: #1d8bbc;
             font-weight: 600;
             background: none;
@@ -599,6 +624,7 @@
             padding-left: 20px;
             width: 200px;
             background: #7f7f7f;
+            line-height: 2.2;
         }
 
         .upload-img-button {
@@ -672,11 +698,12 @@
                         <div class="tabBar-wrapper">
                             <div class="tabBar-title">
                                 <!--####“基本信息” “挡位信息” “推广资料” “资质信息”的导航条，tabActive的为高亮#####-->
-                                <div class="tabBar-title-one tabActive ">基本信息</div>
+                                <div class="tabBar-title-one tabActive">基本信息</div>
                                 <div class="tabBar-title-two">档位信息</div>
-                                <div class="tabBar-title-two ">推广资料</div>
-                                <div class="tabBar-title-three">资质信息</div>
+                                <div class="tabBar-title-three ">推广资料</div>
+                                <div class="tabBar-title-four">资质信息</div>
                             </div>
+
                             <!--第一步提示-->
                             <div class="tabBar-step-one">
                                 <div class="step-one-img">
@@ -737,7 +764,7 @@
                             <input type="hidden" id="companyType" name="companyType" value="N">
                             <input type="hidden" id="qualificationStatus" name="qualificationStatus" value="">
                             <!--基本信息-->
-                            <div class="order-list" style="">
+                            <div id="basicInfo" class="order-list" style="">
                                 <!--众筹类型-->
                                 <dl class="order-dl">
                                     <dt class="order-dt"><span class="fr">众筹类型</span><span
@@ -848,6 +875,8 @@
                                         <div class="additional"> 该描述用于首页推荐项目展示；示例：机洗无忧加倍减脂</div>
                                     </dd>
                                 </dl>
+                                <!--关键描述 end-->
+                                <!--项目亮点-->
                                 <dl class="order-dl">
                                     <dt class="order-dt"><span class="fr">项目亮点</span><span
                                             class="order-point fr">*</span></dt>
@@ -858,6 +887,8 @@
                                         <span id="err_projectSpot" class="z-limit" style="display: inline;"></span>
                                     </dd>
                                 </dl>
+                                <!--项目亮点 end-->
+                                <!--退换货说明-->
                                 <dl class="order-dl">
                                     <dt class="order-dt"><span class="fr">退换货说明</span><span
                                             class="order-point fr">*</span></dt>
@@ -874,8 +905,7 @@
                                         </div>
                                     </dd>
                                 </dl>
-
-                                <!--项目概括 end-->
+                                <!--退换货说明 end-->
                                 <div class="z-h5">
                                     <h4>2 众筹故事</h4>
                                 </div>
@@ -885,38 +915,17 @@
                                             class="order-point fr">*</span></dt>
                                     <dd class="order-dd" style="">
                                         <span id="err_app-story" class="z-limit" style="display: none;"></span>
-                                        <div class="additional">（请上传宽度790px，高度建议506px场景图，格式为jpg png 或
-                                            gif，图片不大于500k）
+                                        <div class="additional">（请上传宽度790px，高度建议506px场景图，格式为 jpg jpeg gif png bmp webp）
                                         </div>
-                                        <div id="app-story" class="edui-default" style="">
-                                            <!--###########这里添加第一个md编辑器###########-->
-                                            <div id="edui22" class="edui-editor  edui-default"
-                                                 style="width: 800px; z-index: 999;">
-
+                                        <div id="app-story" class="edui-default" style="z-index: 999;">
+                                            <!--###########这里添加md编辑器###########-->
+                                            <div id="editor" style="z-index: 999;">
+                                                <div th:insert="~{editor :: editor}"></div>
                                             </div>
                                         </div>
                                     </dd>
                                 </dl>
                                 <!-- 众筹故事 end -->
-
-                                <!-- 为什么众筹 -->
-                                <dl class="order-dl" style="">
-                                    <dt class="order-dt"><span class="fr">为什么众筹</span><span
-                                            class="order-point fr">*</span></dt>
-                                    <dd class="order-dd" style="">
-                                        <span id="err_app-reason" class="z-limit" style="display: none;"></span>
-                                        <div class="additional">（请上传宽度790px，高度建议506px场景图，格式为jpg png或gif，图片不大于500k）</div>
-                                        <div id="app-reason" class="edui-default" style="">
-                                            <!--###########这里添加第二个md编辑器###########-->
-                                            <div id="edui1" class="edui-editor  edui-default"
-                                                 style="width: 800px; z-index: 999;">
-
-                                            </div>
-                                        </div>
-                                    </dd>
-                                </dl>
-                                <!-- 为什么众筹 end -->
-
                                 <!-- 基本信息 -->
                                 <dl class="order-dl">
                                     <dt class="order-dt"><span class="fr">基本信息</span><span
@@ -970,15 +979,16 @@
                                         <!--添加成员的按钮-->
                                         <div class="tc">
                                             <input type="button" id="addMember" class="common_button mr20"
-                                                   value="添加成员（还能添加 9 人）">
+                                                   value="添加成员（还能添加 9 人）" count="0">
                                         </div>
                                         <!--添加成员 end-->
                                     </dd>
                                 </dl>
+                                <!-- 基本信息 end-->
                             </div>
 
                             <!--挡位信息-->
-                            <div class="" style="width: 940px;">
+                            <div id="rewardInfo" class="" style="width: 940px;">
                                 <!--table-->
                                 <dl class="order-dl">
                                     <dt class="order-dt"><span class="fr">基本信息</span><span
@@ -987,8 +997,8 @@
                                         <span id="err_stall" class="z-limit" style="display: none;"></span>
                                         <div class="z-table-wrap">
                                             <div class="z-thead-bg"></div>
-                                            <table class="z-table" id="redoundTable">
-                                                <tbody>
+                                            <table class="z-table">
+                                                <tbody id="redoundTable">
                                                 <tr>
                                                     <th class="w40">序号</th>
                                                     <th class="w80">支持金额</th>
@@ -1001,7 +1011,7 @@
                                                 </tbody>
                                             </table>
                                             <div class="add-stall" id="addStallNew"
-                                                 style="background: none;width: 80px;">+ 添加档位
+                                                 style="background: none;width: 100px;">+ 添加档位
                                             </div>
                                         </div>
                                     </dd>
@@ -1010,101 +1020,45 @@
                             </div>
 
                             <!--推广资料-->
-                            <div class="">
+                            <div id="promoteMaterial" class="">
                                 <!--APP图片上传-->
                                 <dl class="order-dl">
                                     <dt class="order-dt">
                                         <span class="fr">APP单品页图</span>
                                         <span class="order-point fr">*</span>
                                     </dt>
-                                    <dd class="order-dd" id="appImageDev">
-                                        <div class="project-photos project-photos-pps">
-                                            <input type="hidden" id="appPhotos" name="appPhotos" value="">
-                                            <!--app详情页未上传照片-->
-                                            <div class="z-photo-xxl" id="z-has-photo-m-detail"
-                                                 style="display:block;clear:both;background-color:#f9f9f9;background-image: url(//static.360buyimg.com/zhongchou/zc_fe_cms/v1/build/css/i/upload.png);background-position:center 120px;width:200px;height:355px;">
-                                                <input id="uploadAppShowImg" type="file" class="z-file fileupload"
-                                                       data-url="/projectImg/uploadImg?width=1125&amp;height=2000&amp;num=7"
-                                                       multiple="" style="font-size: 0px;width:200px;height:355px;">
-                                                <p class="z-p" style="top:175px;">app详情页展示图</p>
-                                                <p class="z-size" style="top:200px;">1125px * 2000px</p>
-                                                <p class="no-words" style="top:220px;">（大小不大于150KB）</p>
-                                                <input type="hidden" id="appShowImg" name="appShowImg" value="">
-                                            </div>
-                                            <div class="fl mt_10 err_appShow" style="display: none;">
-                                                <span class="z-limit" id="err_appShow"></span>
-                                            </div>
-                                            <!--app详情页未上传照片 end-->
-
-                                            <!--楼层图片未上传照片-->
-                                            <div class="z-photo-xxl z-photo-xxl2 phone-posi-xxl" id="z-photo-lc"
-                                                 style="display:block">
-                                                <input id="uploadFloor" type="file" class="z-file fileupload"
-                                                       data-url="/projectImg/uploadImg?width=686&amp;height=440&amp;num=5"
-                                                       multiple="" style="font-size: 0px;">
-                                                <p class="z-p">重点楼层展示图</p>
-                                                <p class="z-size">686px * 440px</p>
-                                                <p class="no-words">（大小不大于150KB）</p>
-                                                <input type="hidden" id="floorImg" name="floorImg" value="">
-                                            </div>
-                                            <div class="fl mt_10 err_floor" style="display: none;">
-                                                <span class="z-limit" id="err_floor"></span>
-                                            </div>
-                                            <!--楼层图片未上传照片 end-->
-                                            <!--APP列表图页未上传照片-->
-                                            <div class="z-photo-x phone-posi2" id="phone-posi">
-                                                <img class="z-img z-img2" id="pti2" alt="">
-                                                <input type="file" id="uploadApp" class="z-file z-file2"
-                                                       data-url="/projectImg/uploadImg?width=1080&amp;height=1080&amp;num=6&amp;appImg=app"
-                                                       multiple="" style="font-size: 0px;">
-                                                <p class="z-p">app 列表图页 </p>
-                                                <p class="z-size">1080px * 1080px</p>
-                                                <p class="no-words">（大小不大于150KB）</p>
-                                            </div>
-                                            <div class="upload-notice-text2"></div>
-                                            <!--APP列表图页未上传照片 end-->
-                                        </div>
-
-                                        <div class="fl mt_10" style="display: none;">
-                                            <span class="z-limit" id="err_appShowccc"></span>
-                                        </div>
-                                        <div class="project-photos project-photos-pp">
-                                            <div class="upload-notice-text up-nt">
-                                                所有图片支持jpg、png格式，不能出现文字、水印、促销文案
-                                            </div>
-                                            <!-------------特别注意有照片的z-has-photo，没有照片的z-photo---------------->
-                                            <!--PC 首页图-->
-                                            <div class="z-photo-xl" style="display:block">
-                                                <input id="uploadProjectListImg" class="z-file fileupload" type="file"
-                                                       data-url="/projectImg/uploadImg?width=280&amp;height=220&amp;num=2"
-                                                       multiple="" style="font-size: 0px;">
-                                                <p class="z-p">PC 首页图</p>
-                                                <p class="z-size">280px * 220px</p>
-                                                <p class="no-words">（大小不大于150KB）</p>
-                                                <input type="hidden" id="ProjectListImg" name="ProjectListImg" value="">
-                                            </div>
-                                            <div class="fl w202 mr10 mt_10 err_ProjectListImg" style="display: none;">
-                                                <span class="z-limit" id="err_ProjectListImg"></span>
-                                            </div>
-                                            <!--PC 首页图 end-->
-                                            <!--PC项目单品页图-->
-                                            <div class="z-photo-xxl posi-xxl" style="display:block">
-                                                <input id="upload2" type="file" class="z-file fileupload"
-                                                       data-url="/projectImg/uploadImg?width=790&amp;height=400&amp;num=4"
-                                                       multiple="" style="font-size: 0px;">
-                                                <p class="z-p">PC项目单品页图</p>
-                                                <p class="z-size">790px * 400px</p>
-                                                <p class="no-words">（大小不大于150KB）</p>
-                                                <input type="hidden" id="projectImage" name="projectImage" value="">
-                                            </div>
-                                            <div class="fl mt_10 err_projectImage" style="display: none;">
-                                                <span class="z-limit" id="err_projectImage"></span>
-                                            </div>
-                                            <!--PC项目单品页图 end-->
-                                            <div class="fl w160 mr10 mt_10"
-                                                 style="display: none;position: absolute;bottom: -10px;left: 0; width: 300px;">
-                                                <span class="z-limit" id="err_projectThumImage1"></span>
-                                            </div>
+                                    <dd class="order-dd" id="appImageDev" style="line-height: 12px;width: 705px;">
+                                        <div class="container my-4">
+                                            <form enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <div class="file-loading">
+                                                        <input id="important-block-display" type="file" multiple
+                                                               class="file"
+                                                               data-overwrite-initial="false"
+                                                               data-min-file-count="2" data-theme="fas">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <form enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <div class="file-loading">
+                                                        <input id="pc-home-display" type="file" multiple
+                                                               class="file"
+                                                               data-overwrite-initial="false"
+                                                               data-min-file-count="2" data-theme="fas">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <form enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <div class="file-loading">
+                                                        <input id="pc-product-display" type="file" multiple
+                                                               class="file"
+                                                               data-overwrite-initial="false"
+                                                               data-min-file-count="2" data-theme="fas">
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </dd>
                                 </dl>
@@ -1114,48 +1068,181 @@
                                     <dt class="order-dt">
                                         <span class="fr">视频介绍</span>
                                     </dt>
-                                    <dd class="order-dd">
-                                        <div class="radio-box clearfix">
-                                            <div class="radio-click">
-                                                <a href="javascript:;" class="upload-video-btn">上传视频</a>
-                                                <!--<input type="file">-->
-                                                <div style="position:absolute;top:0;left:0;">
-                                                    <object id="SWFUpload_0" type="application/x-shockwave-flash"
-                                                            data="/res/js/swfupload/swfupload.swf?preventswfcaching=1504246810862"
-                                                            width="99" height="32" class="uploadfile">
-                                                        <param name="wmode" value="transparent">
-                                                        <param name="movie"
-                                                               value="/res/js/swfupload/swfupload.swf?preventswfcaching=1504246810862">
-                                                        <param name="quality" value="high">
-                                                        <param name="allowScriptAccess" value="always">
-                                                        <param name="flashvars"
-                                                               value="movieName=SWFUpload_0&amp;uploadURL=&amp;useQueryString=false&amp;requeueOnError=false&amp;httpSuccess=&amp;assumeSuccessTimeout=0&amp;params=&amp;filePostName=Filedata&amp;fileTypes=*.wmv%3B*.avi%3B*.rmvb%3B*.mp4%3B*.flv&amp;fileTypesDescription=%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6&amp;fileSizeLimit=1024%20MB&amp;fileUploadLimit=1&amp;fileQueueLimit=1&amp;debugEnabled=false&amp;buttonImageURL=&amp;buttonWidth=99&amp;buttonHeight=32&amp;buttonText=%3Cspan%20href%3D%22javascript%3A%3B%22%20class%3D%22uploadfile%22%3E%E4%B8%8A%E4%BC%A0%E8%A7%86%E9%A2%91%3C%2Fspan%3E&amp;buttonTextTopPadding=0&amp;buttonTextLeftPadding=0&amp;buttonTextStyle=.uploadfile%20%7Bfont-size%3A%2018px%3B%20text-align%3A%20center%3Bfont-family%3Ainherit%3B%7D&amp;buttonAction=-100&amp;buttonDisabled=false&amp;buttonCursor=-2">
-                                                    </object>
-                                                </div>
-                                            </div>
-                                            <div class="radio-box video-status" id="fsUploadProgress">
-                                            </div>
-                                        </div>
-                                        <div class="radio-box">
-                                            <div class="lt22 mt5 z-br-error" id="progressDivmmm">
-                                            </div>
+                                    <dd class="order-dd" style="line-height: 12px;width: 705px;">
+                                        <div class="file-loading">
+                                            <input id="upload-video" name="upload-video[]" type="file" multiple>
                                         </div>
                                         <div class="upload-notice-text">
                                             视频小于200M，建议视频时间3分钟以内，尺寸比例4:3，格式为wmv、avi、rmvb、mp4、flv等。
                                         </div>
                                     </dd>
                                 </dl>
-                                <div class="pic-tr video-status">
-                                    <div class="pic-td01"></div>
-                                    <div class="pic-td02">
-                                        <div id="progressDiv"></div>
-                                        <div class="error-tips">
-                                        </div>
-                                    </div>
-                                </div>
                                 <!--上传视频  end-->
                             </div>
 
+                            <!--资质信息-->
+                            <div id="qualificationInfo" class="">
+                                <!--品牌专利委托-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt">
+                                        <span class="fr">品牌、专利、委托</span>
+                                        <span class="fr">或销售协议</span>
+                                    </dt>
+                                    <dd class="order-dd">
+                                        <div class="prove-imgs">
+                                            <div class="container">
+                                                <form enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <div class="file-loading">
+                                                            <input id="brand-patent" type="file" multiple class="file"
+                                                                   data-overwrite-initial="false"
+                                                                   data-min-file-count="2" data-theme="fas">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!--品牌专利委托  end-->
+                                <!--经营许可证-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt">
+                                        <span class="fr">经营许可证</span>
+                                    </dt>
+                                    <dd class="order-dd">
+                                        <div class="prove-imgs">
+                                            <div class="container">
+                                                <form enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <div class="file-loading">
+                                                            <input id="manage-permit" type="file" multiple class="file"
+                                                                   data-overwrite-initial="false"
+                                                                   data-min-file-count="2" data-theme="fas">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!--经营许可证  end-->
+                                <!--生产许可-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt">
+                                        <span class="fr">生产许可</span>
+                                    </dt>
+                                    <dd class="order-dd">
+                                        <div class="prove-imgs">
+                                            <div class="container">
+                                                <form enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <div class="file-loading">
+                                                            <input id="production-permit" type="file" multiple
+                                                                   class="file"
+                                                                   data-overwrite-initial="false"
+                                                                   data-min-file-count="2" data-theme="fas">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!--生产许可  end-->
+                                <!--3C 认证-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt">
+                                        <span class="fr">3C 认证、产品备案注册凭证等</span>
+                                    </dt>
+                                    <dd class="order-dd">
+                                        <div class="prove-imgs">
+                                            <div class="container">
+                                                <form enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <div class="file-loading">
+                                                            <input id="certification" type="file" multiple class="file"
+                                                                   data-overwrite-initial="false"
+                                                                   data-min-file-count="2" data-theme="fas">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!--3C 认证  end-->
+                                <!--质检报告-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt">
+                                        <span class="fr">质检报告</span>
+                                    </dt>
+                                    <dd class="order-dd">
+                                        <div class="prove-imgs">
+                                            <div class="container">
+                                                <form enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <div class="file-loading">
+                                                            <input id="quality-report" type="file" multiple class="file"
+                                                                   data-overwrite-initial="false"
+                                                                   data-min-file-count="2" data-theme="fas">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <a href="https://zbbs.jd.com/thread-27129-1-1.html" target="_blank"
+                                           class="font-blue">
+                                            请仔细阅读《京东众筹行业分类及其行业资质》，并上传正确的行业资质。
+                                        </a>
+                                    </dd>
+                                </dl>
+                                <!--质检报告  end-->
+                                <!--营业执照-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt">
+                                        <span class="fr">营业执照</span>
+                                    </dt>
+                                    <dd class="order-dd">
+                                        <div class="prove-imgs">
+                                            <div class="container">
+                                                <form enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <div class="file-loading">
+                                                            <input id="business-license-report" type="file" multiple
+                                                                   class="file"
+                                                                   data-overwrite-initial="false"
+                                                                   data-min-file-count="2" data-theme="fas">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!--营业执照  end-->
+                                <!--其他-->
+                                <dl class="order-dl">
+                                    <dt class="order-dt"><span class="fr">其他证明</span></dt>
+                                    <dd class="order-dd">
+                                        <div class="prove-imgs">
+                                            <div class="container">
+                                                <form enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <div class="file-loading">
+                                                            <input id="other-qualification-file" type="file" multiple
+                                                                   class="file"
+                                                                   data-overwrite-initial="false"
+                                                                   data-min-file-count="2" data-theme="fas">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <!--其他  end-->
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -1186,5 +1273,888 @@
         </div>
     </div>
 </div>
+<!--Reward information-->
+<div class="zpopup" id="addStallPopupShadow" style="height: 1263px; display: none;"></div>
+<div class="zpopup-wrap w984 popupab slideInDown" id="addStallsPopupBody"
+     style="left: 182.5px; top: -394px; display: none;">
+    <div class="zpopup-head">
+        <div class="zpopup-title" id="redoundTitle">添加档位</div>
+        <div class="Jpopupclosed zpopup-closed-fixed" style="left: 1196.5px;"></div>
+        <!--标记该次为新增的还是修改的-->
+        <input type="hidden" id="rewardDTOIndex" value="">
+    </div>
+    <div class="add-stall-block">
+        <!--回报类型-->
+        <dl class="order-dl">
+            <dt class="order-dt"><span class="fr">回报类型</span></dt>
+            <dd class="order-dd">
+                <div class="z-radios JradioReback">
+                    <div class="z-radio">
+                        <input type="radio" name="redoundType" id="rt1" value="1">
+                        <label class="radio-current" name="redoundType">实物回报</label>
+                    </div>
+                    <div class="z-radio">
+                        <input type="radio" name="redoundType" id="rt0" value="0">
+                        <label class="radio-normal" name="redoundType">虚拟物品回报</label>
+                    </div>
+                    <span class="z-notes">（虚拟点卡、兑换码等不需要填写运单号发货的回报内容）</span>
+                </div>
+            </dd>
+        </dl>
+        <!--回报类型 end-->
+        <!--支持金额-->
+        <div class="clearfix">
+            <dl class="order-dl fl" id="AmountDiv" style="display: block;">
+                <dt class="order-dt"><span class="fr">支持金额</span></dt>
+                <dd class="order-dd clearfix w200">
+                    <div class="z-ipt-s w78 fl">
+                        <input type="text" class="z-ipt fl w78" placeholder="不少于0" id="reward-money" maxlength="8">
+                        <span class="ipt-span">元</span>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <!--支持金额 end-->
+        <!--回报说明-->
+        <dl class="order-dl" id="rewardContent">
+            <dt class="order-dt"><span class="fr">回报内容</span></dt>
+            <dd class="order-dd lt0 mt5 mb5">
+                <textarea class="z-textarea h80" placeholder="请简要概述该档位的回报内容，最多120字" id="reward-description"></textarea>
+            </dd>
+        </dl>
+        <!--回报说明 end-->
+        <!--说明图片-->
+        <dl class="order-dl">
+            <dt class="order-dt"><span class="fr">说明图片</span></dt>
+            <dd class="order-dd">
+                <div class="add-stall-photos">
+                    <!-------------有照片的z-has-photo-s，没有照片的z-photo-s---------------->
+                    <!--预热图片未上传照片-->
+                    <div class="z-photo-s" style="display:block" id="imageUploadDiv">
+                        <input id="unUpLoaded" class="z-file" name="upload" type="file"
+                               data-url="/projectRedound/uploadImg?width=600&amp;height=600" multiple=""
+                               style="font-size: 0px;">
+                        <p class="z-size">600px * 600px</p>
+                        <input type="hidden" id="images" name="images" value="">
+                        <input type="hidden" id="thumimages" name="thumimages" value="">
+                    </div>
+                    <!--预热图片未上传照片 end-->
+                    <!--预热图片已上传照片-->
+                    <div class="z-has-photo-s" style="display:none" id="imageUploadDiv2">
+                        <img id="redoundImage" src="/res/img/sl78_78.png" class="z-img" alt="">
+                        <div class="z-hover">
+                            <input id="upload" class="z-file" name="upload" type="file"
+                                   data-url="/projectRedound/uploadImg?width=600&amp;height=600" multiple=""
+                                   style="font-size: 0px;">
+                            <input type="hidden" id="images1" name="images" value="">
+                            <input type="hidden" id="thumimages1" name="thumimages" value="">
+                        </div>
+                    </div>
+                    <script>
+                        //上传图片的脚本
+                    </script>
+                    <!--预热图片已上传照片 end-->
+                    <div class="fl font-a5 mt30">支持jpg、png、gif格式；</div>
+                </div>
+            </dd>
+        </dl>
+        <!--说明图片 end-->
+        <!--备注信息-->
+        <dl class="order-dl">
+            <dt class="order-dt"><span class="fr">填写备注信息</span></dt>
+            <dd class="order-dd">
+                <div class="z-radios JradioMark">
+                    <input type="text" class="z-ipt w566" id="reward-remarks"
+                           placeholder="请输入备注校验信息，例如回报物品的颜色、尺寸等（不超过30个字）。"
+                           maxlength="30">
+                </div>
+            </dd>
+        </dl>
+        <!--备注信息 end-->
+        <!--限定发售量-->
+        <dl class="order-dl">
+            <dt class="order-dt"><span class="fr">限定数量</span></dt>
+            <dd class="order-dd mb5">
+                <div class="z-ipt-s fl w78">
+                    <input type="text" class="z-ipt fl w78" placeholder="0" id="reward-limitedAmount" value="0">
+                    <span class="ipt-span">份</span>
+                </div>
+                <span id="count_tip" class="z-notes">（0人为不限发售量，提示：该档位支持者每单可支持份）</span></dd>
+        </dl>
+        <!--限定发售量 end-->
+        <!--单人限购数量-->
+        <dl class="order-dl">
+            <dt class="order-dt"><span class="fr">单人限购数量</span></dt>
+            <dd class="order-dd mb5">
+                <div class="z-ipt-s fl w78">
+                    <input type="text" class="z-ipt fl w78" placeholder="0" id="reward-limitedPurchase" value="0">
+                    <span class="ipt-span">份</span>
+                </div>
+                <span id="singlg_count_tip" class="z-notes">（0人为不限购）</span></dd>
+        </dl>
+        <!--单人限购数量 end-->
+        <!--运费-->
+        <dl class="order-dl">
+            <dt class="order-dt"><span class="fr">运费单价</span></dt>
+            <dd class="order-dd">
+                <div class="z-ipt-s fl w78">
+                    <input type="text" class="z-ipt fl w78 fl" placeholder="0" id="reward-freight" value="0">
+                    <span class="ipt-span">元</span>
+                </div>
+                <span class="z-notes">（0元为包邮）</span></dd>
+        </dl>
+        <!--运费 end-->
+        <!--回报时间-->
+        <dl class="order-dl">
+            <dt class="order-dt"><span class="fr">回报时间</span></dt>
+            <dd class="order-dd">
+                <span class="fl mr10">众筹成功后</span>
+                <div class="z-ipt-s w78 fl">
+                    <input type="text" class="z-ipt fl w78" id="reward-rewardData">
+                    <span class="ipt-span">天</span>
+                </div>
+                <span class="fl ml50">，将会向支持者发送回报</span>
+            </dd>
+        </dl>
+        <!--回报时间 end-->
+        <!--是否支持开发票-->
+        <dl class="order-dl">
+            <dt class="order-dt"><span class="fr">是否支持发票</span></dt>
+            <dd class="order-dd">
+                <div class="z-radios JradioSetbuy">
+                    <div class="z-radio">
+                        <input type="radio" name="scrambleStatus" id="scramble1" value="1">
+                        <label class="radio-current" name="scrambleStatus">是</label>
+                    </div>
+                    <div class="z-radio">
+                        <input type="radio" name="scrambleStatus" id="scramble0" value="0">
+                        <label class="radio-normal" name="scrambleStatus">否</label>
+                    </div>
+                    <span class="z-notes">（该项目请仔细选择，bulabula........）</span>
+                </div>
+            </dd>
+        </dl>
+        <!--是否支持开发票 end-->
+        <!--取消、保存-->
+        <dl class="order-dl">
+            <dd class="tc">
+                <input type="button" class="common_btn_white mr10" value="取消" id="addRedoundCancelBtn">
+                <input type="button" class="common_button" id="addRedoundSaveBtn" value="保存">
+            </dd>
+
+        </dl>
+        <!--取消、保存 end-->
+    </div>
+</div>
+<!--Reward information end-->
+<!--首次进入提示-->
+<script>
+    //这里需要添加一点，判断用户是否是第一次创建项目
+    var showTips = false;
+    var stepOne = document.getElementsByClassName('tabBar-step-one').item(0);  //第一步提示组件
+    var stepTwo = document.getElementsByClassName('tabBar-step-two').item(0);  //第二步提示组件
+    var confirmOne = document.getElementsByClassName('step-one-know').item(0); //第一步确认按钮
+    var confirmTwo = document.getElementsByClassName('step-two-know').item(0); //第二步确认按钮
+    var bgLayer = document.getElementsByClassName('order-layer-tip').item(0);    //背景层
+    var showBgLayer1 = true;
+    var showBgLayer2 = true;
+    if (showTips) {
+        bgLayer.style.display = 'block';
+        stepOne.style.display = 'block';
+        stepTwo.style.display = 'block';
+    }
+
+    //"我知道了"按钮添加响应事件
+    confirmOne.onclick = function () {
+        showBgLayer1 = false;
+        stepOne.style.display = 'none';
+        if ((!showBgLayer1) && (!showBgLayer2)) {
+            bgLayer.style.display = 'none';
+        }
+    }
+    confirmTwo.onclick = function () {
+        showBgLayer2 = false;
+        stepTwo.style.display = 'none';
+        if ((!showBgLayer1) && (!showBgLayer2)) {
+            bgLayer.style.display = 'none';
+        }
+    }
+
+</script>
+<!--填写信息页切换-->
+<script>
+    //判断该标签elements是否有为cName的样式
+    function hasClass(elements, cName) {
+        return !!elements.className.match(new RegExp("(\\s|^)" + cName + "(\\s|$)"));
+    }
+
+    //为标签elements添加为名为cName样式
+    function addClass(elements, cName) {
+        if (!hasClass(elements, cName)) {
+            elements.className += " " + cName;
+        }
+    }
+
+    //删除样式
+    function removeClass(elements, cName) {
+        if (hasClass(elements, cName)) {
+            elements.className = elements.className.replace(new RegExp("(\\s|^)" + cName + "(\\s|$)"), " ");
+        }
+    }
+
+    //头部
+    var var1 = document.getElementsByClassName('tabBar-title-one').item(0);
+    var var2 = document.getElementsByClassName('tabBar-title-two').item(0);
+    var var3 = document.getElementsByClassName('tabBar-title-three').item(0);
+    var var4 = document.getElementsByClassName('tabBar-title-four').item(0);
+    //分页标签
+    var var5 = document.getElementById('basicInfo');
+    var var6 = document.getElementById('rewardInfo');
+    var var7 = document.getElementById('promoteMaterial');
+    var var8 = document.getElementById('qualificationInfo');
+
+    //清除所有头部选中的样式
+    function clearHead() {
+        if (hasClass(var1, 'tabActive')) {
+            removeClass(var1, 'tabActive')
+        }
+        if (hasClass(var2, 'tabActive')) {
+            removeClass(var2, 'tabActive')
+        }
+        if (hasClass(var3, 'tabActive')) {
+            removeClass(var3, 'tabActive')
+        }
+        if (hasClass(var4, 'tabActive')) {
+            removeClass(var4, 'tabActive')
+        }
+    }
+
+    //清除所有分页显示的样式
+    function clearPagination() {
+        if (hasClass(var5, 'order-list')) {
+            removeClass(var5, 'order-list')
+        }
+        if (hasClass(var6, 'order-list')) {
+            removeClass(var6, 'order-list')
+        }
+        if (hasClass(var7, 'order-list')) {
+            removeClass(var7, 'order-list')
+        }
+        if (hasClass(var8, 'order-list')) {
+            removeClass(var8, 'order-list')
+        }
+    }
+
+    //标签体添加点击响应函数
+    var1.onclick = function () {
+        if (!hasClass(var1, 'tabActive')) {
+            clearHead();
+            clearPagination();
+            addClass(var1, 'tabActive');
+            addClass(var5, "order-list")
+        }
+    };
+    var2.onclick = function () {
+        if (!hasClass(var2, 'tabActive')) {
+            clearHead();
+            clearPagination();
+            addClass(var2, 'tabActive');
+            addClass(var6, "order-list")
+        }
+    };
+    var3.onclick = function () {
+        if (!hasClass(var3, 'tabActive')) {
+            clearHead();
+            clearPagination();
+            addClass(var3, 'tabActive');
+            addClass(var7, "order-list")
+        }
+    };
+    var4.onclick = function () {
+        if (!hasClass(var4, 'tabActive')) {
+            clearHead();
+            clearPagination();
+            addClass(var4, 'tabActive');
+            addClass(var8, "order-list")
+        }
+    }
+</script>
+<!--添加member-->
+<script>
+    var count = 0;
+
+    //生成member组件
+    function generateNewMember() {
+        var newMember = "<div class='photos-item'>" +
+            "                <span class='delete-photo-txt' name='delM' onclick='deleteMember(this);'></span>" +
+            "                <div class='project-photos project-photos-w200 project-photos-h200'>" +
+            "                    <div class='z-photo-xl' style='display:block; margin-bottom: 0;'>" +
+            "                        <input id='upMemberImgEajdpn6' class='z-file fileupload' type='file' data-url='/projectImg/uploadImg?width=100&amp;height=100&amp;num=2' multiple='' style='font-size: 0px;'>" +
+            "                        <p class='z-size'>上传成员头像</p>" +
+            "                        <p class='no-words'>100px * 100px</p>" +
+            "                        <input type='hidden' name='memberImg' value=''>" +
+            "                    </div>" +
+            "                </div>" +
+            "                <div class='z-editor z-editor-auto z-editor-member'>" +
+            "                    <div class='txt-wrapper clearfix'>" +
+            "                        <input type='text' name='memberName' value='' placeholder='请输入成员名称' class='z-ipt'>" +
+            "                        <input type='text' name='position' value='' placeholder='请输入职位' class='z-ipt'>" +
+            "                    </div>" +
+            "                    <textarea class='z-editor-textarea z-editor-textarea-2' name='intor' cols='30' rows='10' placeholder='成员简介，字数限制100字'></textarea>" +
+            "                </div>" +
+            "            </div>";
+        return newMember;
+    }
+
+    var addMemberInfoBtn = document.getElementById('addMember');  //添加成员按钮
+    var parentElement = document.getElementById('memberList');    //成员组件块需要添加到的父级组件对象
+    addMemberInfoBtn.onclick = function () {
+        count = parseInt(addMemberInfoBtn.getAttribute('count'));
+        if (count > 8) {
+            alert("添加人数已达上限");
+        } else {
+            var newMember = generateNewMember();
+            parentElement.insertAdjacentHTML('beforeend', newMember);
+            var now = 8 - count;
+            addMemberInfoBtn.setAttribute('value', '添加成员（还能添加 ' + now + ' 人）');
+            addMemberInfoBtn.setAttribute('count', count + 1)
+        }
+    };
+
+    //删除member组件
+    function deleteMember(element) {
+        element.parentElement.remove();
+        count = parseInt(addMemberInfoBtn.getAttribute('count'));
+        var now = 10 - count;
+        addMemberInfoBtn.setAttribute('value', '添加成员（还能添加 ' + now + ' 人）');
+        addMemberInfoBtn.setAttribute('count', count - 1)
+    }
+
+</script>
+<!--添加，删除，修改挡位信息-->
+<script>
+    var addRewardBtn = document.getElementById('addStallNew');
+    var rewardFormShadow = document.getElementById('addStallPopupShadow');
+    var rewardForm = document.getElementById('addStallsPopupBody');
+    var bgLayer = document.getElementsByClassName('order-layer-tip').item(0);
+    var rewardInfoConfirmBtn = document.getElementById('addRedoundSaveBtn');
+    var rewardInfoCancelBtn = document.getElementById('addRedoundCancelBtn');
+    var x = document.getElementsByClassName('Jpopupclosed').item(0);   //关闭的小叉叉
+
+    var rewardDTOIndex = document.getElementById('rewardDTOIndex');   //该组件的value值表明此次操作是新增的还是修改的
+
+    //start--表单单选按钮逻辑处理
+    var actualItem = document.getElementById('rt1');
+    var actualItemLabel = actualItem.parentElement.children.item(1);
+    var visualItem = document.getElementById('rt0');
+    var visualItemLabel = visualItem.parentElement.children.item(1);
+    var receipt = document.getElementById('scramble1');
+    var receiptLabel = receipt.parentElement.children.item(1);
+    var noReceipt = document.getElementById('scramble0');
+    var noReceiptLabel = noReceipt.parentElement.children.item(1);
+    actualItemLabel.onclick = function () {
+        if (actualItemLabel.getAttribute('class') !== 'radio-current') {
+            actualItemLabel.setAttribute('class', 'radio-current');
+            visualItemLabel.setAttribute('class', 'radio-normal')
+        }
+    };
+    visualItemLabel.onclick = function () {
+        if (visualItemLabel.getAttribute('class') !== 'radio-current') {
+            visualItemLabel.setAttribute('class', 'radio-current');
+            actualItemLabel.setAttribute('class', 'radio-normal')
+        }
+    };
+    receiptLabel.onclick = function () {
+        if (receiptLabel.getAttribute('class') !== 'radio-current') {
+            receiptLabel.setAttribute('class', 'radio-current');
+            noReceiptLabel.setAttribute('class', 'radio-normal')
+        }
+    };
+    noReceiptLabel.onclick = function () {
+        if (noReceiptLabel.getAttribute('class') !== 'radio-current') {
+            noReceiptLabel.setAttribute('class', 'radio-current');
+            receiptLabel.setAttribute('class', 'radio-normal')
+        }
+    };
+
+    function getType() {
+        if (actualItemLabel.getAttribute('class') === 'radio-current') {
+            return parseInt(actualItem.getAttribute('value'));
+        } else {
+            return parseInt(visualItem.getAttribute('value'));
+        }
+    }
+
+    function getReceipt() {
+        if (receiptLabel.getAttribute('class') === 'radio-current') {
+            return parseInt(receipt.getAttribute('value'));
+        } else {
+            return parseInt(noReceipt.getAttribute('value'));
+        }
+    }
+
+    //表单单选按钮逻辑处理--end
+    //start 获取表单信息
+    var moneyUnit = document.getElementById('reward-money');
+    var descriptionUnit = document.getElementById('reward-description');
+    var pictureUnit = document.getElementById('reward-picture');
+    var remarksUnit = document.getElementById('reward-remarks');
+    var limitedAmountUnit = document.getElementById('reward-limitedAmount');
+    var limitedPurchaseUnit = document.getElementById('reward-limitedPurchase');
+    var freightUnit = document.getElementById('reward-freight');
+    var rewardDataUnit = document.getElementById('reward-rewardData');
+    //获取挡位简略展示表
+    var redoundTable = document.getElementById('redoundTable');
+
+    //清除表单数据的函数
+    function initFormData() {
+        //1. 重置按钮
+        if (actualItemLabel.getAttribute('class') !== 'radio-current') {
+            actualItemLabel.setAttribute('class', 'radio-current');
+            visualItemLabel.setAttribute('class', 'radio-normal')
+        }
+        if (receiptLabel.getAttribute('class') !== 'radio-current') {
+            receiptLabel.setAttribute('class', 'radio-current');
+            noReceiptLabel.setAttribute('class', 'radio-normal')
+        }
+        //2.清除数据,其中有三项为默认值的，最好需要值为零，不然用户采不修改该选项时会获取不到数据
+        moneyUnit.value = '';
+        descriptionUnit.value = '';
+        //*************************************pictureUnit.value = '';
+        remarksUnit.value = '';
+        limitedAmountUnit.value = '';
+        limitedAmountUnit.setAttribute('value', '0');
+        limitedPurchaseUnit.value = '';
+        limitedPurchaseUnit.setAttribute('value', '0');
+        freightUnit.value = '';
+        freightUnit.setAttribute('value', '0');
+        rewardDataUnit.value = '';
+        //2.1 清除标记
+        rewardDTOIndex.setAttribute('value', '');
+    }
+
+    //点击添加挡位信息
+    addRewardBtn.onclick = function () {
+        initFormData();
+        bgLayer.style.display = "block";
+        rewardFormShadow.style.display = 'block';
+        rewardForm.style.display = "block";
+    };
+
+    //关闭rewardForm的函数
+    function closeRewardForm() {
+        rewardForm.style.display = "none";
+        rewardFormShadow.style.display = 'none';
+        bgLayer.style.display = "none";
+        initFormData();
+    }
+
+    //点击"x"
+    x.onclick = function () {
+        closeRewardForm();
+    };
+    //取消添加挡位信息
+    rewardInfoCancelBtn.onclick = function () {
+        closeRewardForm();
+    };
+    //确认提交挡位信息
+    rewardInfoConfirmBtn.onclick = function () {
+        //1. 先将弹窗表单的信息保存起来，表单信息不完整弹出提示，返回
+        var type = getType();
+        var money = moneyUnit.value;
+        var description = descriptionUnit.value.replace(/\s+/g, "");//去除空格
+        var picture = '图片的路径';                     //pictureUnit.value;
+        var remarks = remarksUnit.value.replace(/\s+/g, "");
+        var limitedAmount = limitedAmountUnit.value;
+        var limitedPurchase = limitedPurchaseUnit.value;
+        var freight = freightUnit.value;
+        var rewardData = rewardDataUnit.value;
+        var receipt = getReceipt();
+        //2. *************这里需要进行表单信息格式的校验，以后再补充******************
+        if (money === null || money === '') {
+            window.alert('请输入支持金额！')
+            return;
+        }
+        //3. 校验成功，创建对象,给对象赋值
+        var rewardDTO = new RewardDTO();
+        rewardDTO.setUserToken('userToken');
+        rewardDTO.setProjectTempToken('projectTempToken');
+        rewardDTO.setType(type);
+        rewardDTO.setMoney(money);
+        rewardDTO.setDescription(description);
+        rewardDTO.setPicture(picture);
+        rewardDTO.setRemarks(remarks);
+        rewardDTO.setLimitedAmount(limitedAmount);
+        rewardDTO.setLimitedPurchase(limitedPurchase);
+        rewardDTO.setFreight(freight);
+        rewardDTO.setRewardData(rewardData);
+        rewardDTO.setReceipt(receipt);
+        //4. 根据标记位判断此次为修改操作还是添加操作
+        var index = rewardDTOIndex.getAttribute('value');
+        if (index === '' || index === null) {   //此次为新增操作
+            rewardDTOList.push(rewardDTO);
+        } else {                                  //此次为修改操作
+            rewardDTOList[parseInt(index)] = rewardDTO;
+        }
+        console.log(rewardDTOList);
+        //2. 表单信息保存完成，更新列表的序列
+        closeRewardForm();
+        updateRewardIntroList(rewardDTOList);
+    };
+
+    //删除某个挡位
+    function deleteRewardInfo(index) {
+        rewardDTOList.splice(index, 1);
+        updateRewardIntroList(rewardDTOList);
+    }
+
+    //修改某个挡位,即只需用修改rewardDTOList中的信息，再跟新
+    function modifyRewardInfo(index) {
+        //1. 取出挡位信息对象,复原到表
+        var rewardDTO = rewardDTOList[index];
+        moneyUnit.value = rewardDTO.getMoney();
+        descriptionUnit.value = rewardDTO.getDescription();
+        //pictureUnit.value = rewardDTO.getPicture();
+        remarksUnit.value = rewardDTO.getRemarks();
+        limitedAmountUnit.value = rewardDTO.getLimitedAmount();
+        limitedPurchaseUnit.value = rewardDTO.getLimitedPurchase();
+        freightUnit.value = rewardDTO.getFreight();
+        rewardDataUnit.value = rewardDTO.getRewardData();
+        if (rewardDTO.getType() === '0') {
+            actualItemLabel.setAttribute('class', 'radio-normal');
+            visualItemLabel.setAttribute('class', 'radio-current');
+        }
+        if (rewardDTO.getReceipt() === '0') {
+            receiptLabel.setAttribute('class', 'radio-normal');
+            noReceiptLabel.setAttribute('class', 'radio-current');
+        }
+        //2. 修改表的标记
+        rewardDTOIndex.setAttribute('value', index);
+        //3. 显示表
+        bgLayer.style.display = "block";
+        rewardFormShadow.style.display = 'block';
+        rewardForm.style.display = "block";
+    }
+
+    //更新挡位列表
+    function updateRewardIntroList(rewardDTOList) {
+        //1. 清除列表
+        var listLength = redoundTable.children.length;
+        if (listLength > 1) {
+            for (var i = 0; i < listLength - 1; i++) {
+                redoundTable.children[1].remove();
+            }
+        }
+        //2.重新按照rewardDTOList添加
+        for (var i = 0; i < rewardDTOList.length; i++) {
+            redoundTable.insertAdjacentHTML('beforeend', generateRewardIntro(rewardDTOList[i], i + 1, i));
+        }
+    }
+
+    function generateRewardIntro(rewardDTO, tag, index) {
+        var rewardIntro = "<tr>" +
+            "    <td >" + tag + "</td>" +
+            "    <td >￥" + rewardDTO.getMoney() + "</td>" +
+            "    <td >" + rewardDTO.getLimitedAmount() + "位</td>" +
+            "    <td>" +
+            "        <p class='tl'>" + rewardDTO.getDescription() + "</p>" +
+            "    </td>" +
+            "    <td >项目结束后" + rewardDTO.getRewardData() + "天</td>" +
+            "    <td >￥" + rewardDTO.getFreight() + "</td>" +
+            "    <td>" +
+            "        <span class='td-edit'>" +
+            "            <a class='td-edit' href='javascript:void(0);' onclick='modifyRewardInfo(" + index + ");');'>编辑</a>" +
+            "            <a class='td-edit' href='javascript:void(0);' onclick='deleteRewardInfo(" + index + ");');'>删除</a>" +
+            "        </span>" +
+            "    </td>" +
+            "</tr>";
+        return rewardIntro;
+    }
+
+</script>
+<script>
+    //资质信息
+    var brandPatent = new Map();
+    var managePermit = new Map();
+    var productionPermit = new Map();
+    var certification = new Map();
+    var qualityReport = new Map();
+    var businessLicenseReport = new Map();
+    var otherQualificationFile = new Map();
+    //推广资料
+    var importantBlockDisplay = new Map();
+    var pcHomeDisplay = new Map();
+    var pcProductDisplay = new Map();
+
+    $("#brand-patent").fileinput({
+        theme: 'fas',
+        uploadUrl: '/file/upload',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        maxFileCount: 6,  //允许每次上传的文件数为1
+        minFileSize: 200,
+        maxFileSize: 1024 * 4,
+        maxFilesNum: 6,
+        showClose: false,
+        uploadExtraData: {userToken: 'userToken'},
+        allowedFileTypes: ['image'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    $("#manage-permit").fileinput({
+        theme: 'fas',
+        uploadUrl: '/file/upload',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        maxFileCount: 6,  //允许每次上传的文件数为1
+        minFileSize: 300,
+        maxFileSize: 1000,
+        maxFilesNum: 6,
+        showClose: false,
+        uploadExtraData: {userToken: 'userToken'},
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    $("#production-permit").fileinput({
+        theme: 'fas',
+        uploadUrl: '/file/upload',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        maxFileCount: 6,  //允许每次上传的文件数为1
+        minFileSize: 300,
+        maxFileSize: 1000,
+        maxFilesNum: 6,
+        showClose: false,
+        uploadExtraData: {userToken: 'userToken'},
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    $("#certification").fileinput({
+        theme: 'fas',
+        uploadUrl: '/file/upload',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        maxFileCount: 6,  //允许每次上传的文件数为1
+        minFileSize: 300,
+        maxFileSize: 1000,
+        maxFilesNum: 6,
+        showClose: false,
+        uploadExtraData: {userToken: 'userToken'},
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    $("#quality-report").fileinput({
+        theme: 'fas',
+        uploadUrl: '/file/upload',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        maxFileCount: 6,  //允许每次上传的文件数为1
+        minFileSize: 300,
+        maxFileSize: 1000,
+        maxFilesNum: 6,
+        showClose: false,
+        uploadExtraData: {userToken: 'userToken'},
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    $("#business-license-report").fileinput({
+        theme: 'fas',
+        uploadUrl: '/file/upload',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        maxFileCount: 6,  //允许每次上传的文件数为1
+        minFileSize: 300,
+        maxFileSize: 1000,
+        maxFilesNum: 6,
+        showClose: false,
+        uploadExtraData: {userToken: 'userToken'},
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    $("#other-qualification-file").fileinput({
+        theme: 'fas',
+        uploadUrl: '/file/upload',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        maxFileCount: 6,  //允许每次上传的文件数为1
+        minFileSize: 300,
+        maxFileSize: 1000,
+        maxFilesNum: 6,
+        showClose: false,
+        uploadExtraData: {userToken: 'userToken'},
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+
+    /**
+     * 文件上传成功回调
+     * previewId:该略缩图组件的id
+     * index:这个可以不管，暂时用不上
+     */
+    $('#brand-patent').on('fileuploaded', function (event, data, previewId) {
+        //1. 文件上传成功，id-url的形式加入map中
+        brandPatent.set(previewId, data.response.data);
+    });
+    $('#brand-patent').on('filesuccessremove', function (event, id) {
+        brandPatent.delete(id);
+    });
+    $('#manage-permit').on('fileuploaded', function (event, data, previewId) {
+        managePermit.set(previewId, data.response.data);
+    });
+    $('#manage-permit').on('filesuccessremove', function (event, id) {
+        managePermit.delete(id);
+    });
+    $('#production-permit').on('fileuploaded', function (event, data, previewId) {
+        productionPermit.set(previewId, data.response.data);
+    });
+    $('#production-permit').on('filesuccessremove', function (event, id) {
+        productionPermit.delete(id);
+    });
+    $('#certification').on('fileuploaded', function (event, data, previewId) {
+        certification.set(previewId, data.response.data);
+    });
+    $('#certification').on('filesuccessremove', function (event, id) {
+        certification.delete(id);
+    });
+    $('#quality-report').on('fileuploaded', function (event, data, previewId) {
+        qualityReport.set(previewId, data.response.data);
+    });
+    $('#quality-report').on('filesuccessremove', function (event, id) {
+        qualityReport.delete(id);
+    });
+    $('#business-license-report').on('fileuploaded', function (event, data, previewId) {
+        businessLicenseReport.set(previewId, data.response.data);
+    });
+    $('#business-license-report').on('filesuccessremove', function (event, id) {
+        businessLicenseReport.delete(id);
+    });
+    $('#other-qualification-file').on('fileuploaded', function (event, data, previewId) {
+        otherQualificationFile.set(previewId, data.response.data);
+    });
+    $('#other-qualification-file').on('filesuccessremove', function (event, id) {
+        otherQualificationFile.delete(id);
+    });
+
+    $("#important-block-display").fileinput({
+        theme: 'fas',
+        uploadUrl: '/file/upload',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        showUpload: false,
+        maxFileCount: 1,  //允许每次上传的文件数为1
+        minFileSize: 200,
+        maxFileSize: 1024 * 4,
+        maxFilesNum: 1,
+        showClose: false,
+        uploadExtraData: {userToken: 'userToken'},
+        allowedFileTypes: ['image'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    $("#pc-home-display").fileinput({
+        theme: 'fas',
+        uploadUrl: '/file/upload',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        showUpload: false,
+        overwriteInitial: false,
+        maxFileCount: 1,  //允许每次上传的文件数为1
+        minFileSize: 200,
+        maxFileSize: 1024 * 4,
+        maxFilesNum: 1,
+        showClose: false,
+        uploadExtraData: {userToken: 'userToken'},
+        allowedFileTypes: ['image'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    $("#pc-product-display").fileinput({
+        theme: 'fas',
+        uploadUrl: '/file/upload',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        showUpload: false,
+        overwriteInitial: false,
+        maxFileCount: 1,  //允许每次上传的文件数为1
+        minFileSize: 200,
+        maxFileSize: 1024 * 4,
+        maxFilesNum: 1,
+        showClose: false,
+        uploadExtraData: {userToken: 'userToken'},
+        allowedFileTypes: ['image'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+
+    $('#important-block-display').on('fileuploaded', function (event, data, previewId) {
+        //1. 文件上传成功，id-url的形式加入map中
+        importantBlockDisplay.set(previewId, data.response.data);
+    });
+    $('#important-block-display').on('filesuccessremove', function (event, id) {
+        importantBlockDisplay.delete(id);
+    });
+    $('#pc-home-display').on('fileuploaded', function (event, data, previewId) {
+        pcHomeDisplay.set(previewId, data.response.data);
+    });
+    $('#pc-home-display').on('filesuccessremove', function (event, id) {
+        pcHomeDisplay.delete(id);
+    });
+    $('#pc-product-display').on('fileuploaded', function (event, data, previewId) {
+        //1. 文件上传成功，id-url的形式加入map中
+        pcProductDisplay.set(previewId, data.response.data);
+    });
+    $('#pc-product-display').on('filesuccessremove', function (event, id) {
+        pcProductDisplay.delete(id);
+    });
+
+    // Resumable Uploads
+    $("#upload-video").fileinput({
+        theme: 'fas',
+        uploadUrl: '/resumable/file/upload',
+        enableResumableUpload: true,            //支持断点续传
+        allowedFileTypes: ['video'],  //设置其一就够了
+        //overwriteInitial: false,
+        resumableUploadOptions: {
+            //testUrl: "/site/test-file-chunks",续传功能的开发
+            chunkSize: 256 // 256KB
+        },
+        minFileSize: 1024 * 2,
+        maxFileSize: 1024 * 200,
+        maxFileCount: 1,
+        uploadExtraData: {userToken: 'fifteenthofjuly'}  //$.sessionStorage.getItem("userToken")
+    }).on('fileuploaded', function (event, fileId) {
+        var file_id = fileId.slice(19);  //这个返回的fileId比原始的fileId前面多追加了"thumb-upload-video-"
+        $.ajax({
+            type: "GET",
+            url: "/complete/chunk/file",
+            data: {"fileId": file_id},
+            dataType: "json",
+            success: function (response) {
+                if (response.status === 'FAILED') {
+                    console.log("文件上传失败")
+                } else {
+                    var url = response.data;
+                    console.log("文件上传成功，文件的地址为" + url)
+                }
+            }
+        })
+    }).on('filesuccessremove', function (event, id) {
+        //productVideo.delete(id);
+    });
+</script>
 </body>
 </html>

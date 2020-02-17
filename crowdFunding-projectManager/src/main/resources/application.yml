@@ -13,8 +13,3 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
-oss:
-  endpoint: oss-us-west-1.aliyuncs.com
-  accessKeyId: LTAI4FcBhdDymSvgNUX3AnmD
-  accessKeySecret: yi2PLWM5fia6uzWO5To3xZpTkoDuSv
-  bucketName: capharnaum

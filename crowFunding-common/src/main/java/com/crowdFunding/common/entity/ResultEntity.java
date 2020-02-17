@@ -29,4 +29,8 @@ public class ResultEntity<T> {
         return new ResultEntity<>(FAILED, message, null);
     }
 
+    public static <T> ResultEntity<T> failed() {
+        return new ResultEntity<>(FAILED, null, null);
+    }
+
 }

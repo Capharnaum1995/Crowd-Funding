@@ -11,6 +11,7 @@
         <module>crowdFunding-userManager</module>
         <module>crowdFunding-projectManager</module>
         <module>crowdFunding-ui</module>
+        <module>crowdFunding-ossProvider</module>
     </modules>
 
     <parent>
@@ -27,6 +28,15 @@
     <properties>
         <java.version>1.8</java.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <profiles>
         <profile>

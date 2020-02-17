@@ -1,0 +1,31 @@
+clusterServersConfig:
+  idleConnectionTimeout: 10000
+  pingTimeout: 1000
+  connectTimeout: 10000    #同任何节点建立连接时等待超时时间
+  timeout: 3000  #等待节点回复命令的时间 10000
+  retryAttempts: 3
+  retryInterval: 1500
+  reconnectionTimeout: 3000  #与某个连接断开时，与其重新建立连接的时间间隔 5000
+  password: justin.171464928
+  subscriptionsPerConnection: 5
+  clientName: null
+  loadBalancer: !<org.redisson.connection.balancer.RoundRobinLoadBalancer> {}
+  sslEnableEndpointIdentification: false    #关闭SSL终端识别能力
+  checkSlotsCoverage: false
+  slaveConnectionMinimumIdleSize: 2  #从节点最小空闲链接数，默认32,需要设置小一点，否则连接不上master
+  slaveConnectionPoolSize: 300
+  masterConnectionMinimumIdleSize: 1
+  masterConnectionPoolSize: 300
+  readMode: "SLAVE"    #只在从节点里面读取数据，默认SLAVE
+  nodeAddresses:
+    - "redis://45.76.75.121:9920"
+    - "redis://45.76.75.121:9921"
+    - "redis://45.76.75.121:9922"
+    - "redis://45.76.75.121:9923"
+    - "redis://45.76.75.121:9924"
+    - "redis://45.76.75.121:9925"
+  scanInterval: 1000  #集群扫描间隔时间，默认的是1000ms  6000
+threads: 0
+nettyThreads: 0
+codec: !<org.redisson.codec.JsonJacksonCodec> {}
+transportMode: "NIO"

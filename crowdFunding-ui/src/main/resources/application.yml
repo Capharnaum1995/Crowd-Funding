@@ -19,9 +19,20 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 15MB
+rocketmq:
+  name-server: 45.76.175.197:19876;45.76.175.197:29876
+  producer:
+    group: ChunkFileUploadGroup
+    send-message-timeout: 6000
 eureka:
   client:
+    register-with-eureka: false
     service-url:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+

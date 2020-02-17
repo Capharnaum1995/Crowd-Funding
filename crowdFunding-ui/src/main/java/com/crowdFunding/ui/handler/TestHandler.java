@@ -21,10 +21,19 @@ public class TestHandler {
         return "serviceProtocol";
     }
 
-
     @GetMapping("/add_Project")
     public String addProject() {
         return "add_Project";
+    }
+
+    @GetMapping("/test")
+    public String toEditor() {
+        return "test";
+    }
+
+    @GetMapping("/wtf")
+    public String test1() {
+        return "wtf";
     }
 }
 

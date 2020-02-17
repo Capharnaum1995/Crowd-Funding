@@ -9,16 +9,10 @@ import com.crowdFunding.common.dto.ProjectDTO;
 import com.crowdFunding.common.dto.RewardDTO;
 import com.crowdFunding.common.entity.ResultEntity;
 import com.crowdFunding.common.utils.CommonUtils;
-import com.crowdFunding.common.utils.OSSUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -31,18 +25,6 @@ public class ProjectController {
 
     @Autowired
     private DatabaseRemoteOperationService databaseRemoteOperationService;
-
-    @Value("${oss.endpoint}")
-    private String endpoint;
-
-    @Value("${oss.accessKeyId}")
-    private String accessKeyId;
-
-    @Value("${oss.accessKeySecret}")
-    private String accessKeySecret;
-
-    @Value("${oss.bucketName}")
-    private String bucketName;
 
     /**
      * 初始化项目（发起众筹时的“同意并继续”）
@@ -95,36 +77,6 @@ public class ProjectController {
         ProjectDTO projectDTO1 = JSON.parseObject(resultEntity1.getData(), ProjectDTO.class);
         BeanUtils.copyProperties(projectDTO, projectDTO1);
         return redisRemoteOperationService.saveKeyValue(projectDTO1.getProjectTempToken(), JSON.toJSONString(projectDTO1), -1);
-    }
-
-
-    /**
-     * 保存图片文件,返回图片的地址
-     *
-     * @param userToken 用户的token
-     * @return
-     */
-    @RequestMapping("/project/manager/upload/picture")
-    public ResultEntity<String> uploadPicture(@RequestParam("userToken") String userToken, HttpServletRequest httpServletRequest) {
-        if (!CommonUtils.strCheckEffective(userToken)) {
-            return ResultEntity.failed(Constant.INVALID_TOKEN);
-        }
-        //1. 验证用户是否登录
-        ResultEntity<String> resultEntity = redisRemoteOperationService.retrieveValueByKey(userToken);
-        if (ResultEntity.FAILED.equals(resultEntity.getStatus())) {
-            return ResultEntity.failed(Constant.PLEASE_LOG_IN);
-        }
-        //2. 若用户已经登陆，获取图片的输入流
-        MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) httpServletRequest;
-        InputStream inputStream;
-        try {
-            inputStream = multipartHttpServletRequest.getInputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResultEntity.failed(e.getMessage());
-        }
-        //3. 输入流获取成功，上传图片
-        return OSSUtils.uploadPicture(endpoint, accessKeyId, accessKeySecret, bucketName, inputStream);
     }
 
     /**
