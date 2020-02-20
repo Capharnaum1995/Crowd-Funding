@@ -1,18 +1,20 @@
-package com.crowdFunding.common.dto;
+package com.crowdFunding.common.dto.addProject;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * 发起人确认信息的数据传输对象
+ * 回报挡位信息
  */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InitiatorInfoDTO implements Serializable {
+public class RewardDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,10 +22,6 @@ public class InitiatorInfoDTO implements Serializable {
 
     private String projectTempToken;
 
-    private Integer userId;
-
-    private String payNumber;
-
-    private String idNumber;
+    private List<Reward> rewardList;
 
 }

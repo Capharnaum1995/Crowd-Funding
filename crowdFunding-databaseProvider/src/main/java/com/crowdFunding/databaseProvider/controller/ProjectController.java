@@ -1,6 +1,6 @@
 package com.crowdFunding.databaseProvider.controller;
 
-import com.crowdFunding.common.dto.ProjectDTO;
+import com.crowdFunding.common.dto.addProject.ProjectDTO;
 import com.crowdFunding.common.entity.ResultEntity;
 import com.crowdFunding.databaseProvider.service.api.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;

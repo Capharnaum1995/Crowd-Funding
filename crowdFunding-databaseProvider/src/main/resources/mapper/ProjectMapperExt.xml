@@ -3,26 +3,24 @@
 <mapper namespace="com.crowdFunding.databaseProvider.mapper.ProjectMapperExt">
     <resultMap id="BaseResultMap" type="com.crowdFunding.databaseProvider.model.Project">
         <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="day" jdbcType="TINYINT" property="day"/>
+        <result column="money" jdbcType="BIGINT" property="money"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="main_description" jdbcType="VARCHAR" property="mainDescription"/>
         <result column="highlight" jdbcType="VARCHAR" property="highlight"/>
-        <result column="money" jdbcType="BIGINT" property="money"/>
-        <result column="day" jdbcType="TINYINT" property="day"/>
-        <result column="type" jdbcType="TINYINT" property="type"/>
         <result column="return_purchase" jdbcType="TINYINT" property="returnPurchase"/>
         <result column="crowd_funding_story" jdbcType="VARCHAR" property="crowdFundingStory"/>
-        <result column="why_crowd_funding" jdbcType="VARCHAR" property="whyCrowdFunding"/>
         <result column="company_file" jdbcType="VARCHAR" property="companyFile"/>
         <result column="team_file" jdbcType="VARCHAR" property="teamFile"/>
+        <result column="initiator_id" jdbcType="INTEGER" property="initiatorId"/>
         <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate"/>
         <result column="gmt_deploy" jdbcType="BIGINT" property="gmtDeploy"/>
         <result column="fund_money" jdbcType="BIGINT" property="fundMoney"/>
         <result column="supporter_number" jdbcType="INTEGER" property="supporterNumber"/>
-        <result column="initiator_id" jdbcType="INTEGER" property="initiatorId"/>
-        <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate"/>
         <result column="follower_count" jdbcType="INTEGER" property="followerCount"/>
         <result column="like_count" jdbcType="INTEGER" property="likeCount"/>
-        <result column="header_picture" jdbcType="VARCHAR" property="headerPicture"/>
     </resultMap>
     <insert id="insertSelectivelyAndGetPrimaryKey" parameterType="com.crowdFunding.databaseProvider.model.Project">
         <selectKey keyProperty="id" resultType="java.lang.Integer" order="AFTER">
@@ -33,6 +31,15 @@
             <if test="id != null">
                 id,
             </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="day != null">
+                day,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
             <if test="name != null">
                 name,
             </if>
@@ -42,23 +49,11 @@
             <if test="highlight != null">
                 highlight,
             </if>
-            <if test="money != null">
-                money,
-            </if>
-            <if test="day != null">
-                day,
-            </if>
-            <if test="type != null">
-                type,
-            </if>
             <if test="returnPurchase != null">
                 return_purchase,
             </if>
             <if test="crowdFundingStory != null">
                 crowd_funding_story,
-            </if>
-            <if test="whyCrowdFunding != null">
-                why_crowd_funding,
             </if>
             <if test="companyFile != null">
                 company_file,
@@ -66,8 +61,14 @@
             <if test="teamFile != null">
                 team_file,
             </if>
+            <if test="initiatorId != null">
+                initiator_id,
+            </if>
             <if test="status != null">
                 status,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
             </if>
             <if test="gmtDeploy != null">
                 gmt_deploy,
@@ -78,25 +79,25 @@
             <if test="supporterNumber != null">
                 supporter_number,
             </if>
-            <if test="initiatorId != null">
-                initiator_id,
-            </if>
-            <if test="gmtCreate != null">
-                gmt_create,
-            </if>
             <if test="followerCount != null">
                 follower_count,
             </if>
             <if test="likeCount != null">
                 like_count,
             </if>
-            <if test="headerPicture != null">
-                header_picture,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="day != null">
+                #{day,jdbcType=TINYINT},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=BIGINT},
             </if>
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
@@ -107,23 +108,11 @@
             <if test="highlight != null">
                 #{highlight,jdbcType=VARCHAR},
             </if>
-            <if test="money != null">
-                #{money,jdbcType=BIGINT},
-            </if>
-            <if test="day != null">
-                #{day,jdbcType=TINYINT},
-            </if>
-            <if test="type != null">
-                #{type,jdbcType=TINYINT},
-            </if>
             <if test="returnPurchase != null">
                 #{returnPurchase,jdbcType=TINYINT},
             </if>
             <if test="crowdFundingStory != null">
                 #{crowdFundingStory,jdbcType=VARCHAR},
-            </if>
-            <if test="whyCrowdFunding != null">
-                #{whyCrowdFunding,jdbcType=VARCHAR},
             </if>
             <if test="companyFile != null">
                 #{companyFile,jdbcType=VARCHAR},
@@ -131,8 +120,14 @@
             <if test="teamFile != null">
                 #{teamFile,jdbcType=VARCHAR},
             </if>
+            <if test="initiatorId != null">
+                #{initiatorId,jdbcType=INTEGER},
+            </if>
             <if test="status != null">
                 #{status,jdbcType=TINYINT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=BIGINT},
             </if>
             <if test="gmtDeploy != null">
                 #{gmtDeploy,jdbcType=BIGINT},
@@ -143,20 +138,11 @@
             <if test="supporterNumber != null">
                 #{supporterNumber,jdbcType=INTEGER},
             </if>
-            <if test="initiatorId != null">
-                #{initiatorId,jdbcType=INTEGER},
-            </if>
-            <if test="gmtCreate != null">
-                #{gmtCreate,jdbcType=BIGINT},
-            </if>
             <if test="followerCount != null">
                 #{followerCount,jdbcType=INTEGER},
             </if>
             <if test="likeCount != null">
                 #{likeCount,jdbcType=INTEGER},
-            </if>
-            <if test="headerPicture != null">
-                #{headerPicture,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>

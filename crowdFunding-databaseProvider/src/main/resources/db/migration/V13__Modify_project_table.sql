@@ -1,1 +1,0 @@
-alter table project modify gmt_deploy bigint null comment '众筹开始时间,审核通过开始';

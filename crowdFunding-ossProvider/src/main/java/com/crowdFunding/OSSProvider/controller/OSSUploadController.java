@@ -39,10 +39,12 @@ public class OSSUploadController {
             return ResultEntity.failed(Constant.INVALID_TOKEN);
         }
         //1. 验证用户是否登录
+        /**
         ResultEntity<String> resultEntity = redisRemoteOperationService.retrieveValueByKey(userToken);
-        if (ResultEntity.FAILED.equals(resultEntity.getStatus())) {
+        if (ResultEntity.FAILED.equals(resultEntity.getStatus()) || ResultEntity.NO_DATA.equals(resultEntity.getData())) {
             return ResultEntity.failed(Constant.PLEASE_LOG_IN);
         }
+         */
         //2. 若用户已经登陆，上传文件
         try {
             return ossProvider.fileUpload(new ByteArrayInputStream(fileUpLoadDTO.getContent()), fileUpLoadDTO.getFileName());

@@ -1,6 +1,6 @@
 package com.crowdFunding.common.api;
 
-import com.crowdFunding.common.dto.ProjectDTO;
+import com.crowdFunding.common.dto.addProject.ProjectDTO;
 import com.crowdFunding.common.dto.UserInfoDTO;
 import com.crowdFunding.common.dto.UserRegistrationInfoDTO;
 import com.crowdFunding.common.entity.ResultEntity;

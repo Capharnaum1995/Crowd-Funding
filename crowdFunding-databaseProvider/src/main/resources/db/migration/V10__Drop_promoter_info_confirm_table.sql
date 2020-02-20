@@ -1,1 +1,0 @@
-drop table promoter_confirm_info;

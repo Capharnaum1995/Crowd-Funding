@@ -18,8 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -50,6 +49,7 @@ public class FileUpLoadHandler {
             response.put("error", Constant.FILE_UP_LOAD_FAILED);
             return response;
         }
+
         FileUpLoadDTO fileUpLoadDTO = new FileUpLoadDTO();
         fileUpLoadDTO.setUserToken(userToken);
         fileUpLoadDTO.setContent(content);

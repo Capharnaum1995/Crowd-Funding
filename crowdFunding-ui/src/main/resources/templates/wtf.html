@@ -20,46 +20,54 @@
 </head>
 <body>
 <div>
-    <div class="file-loading">
-        <input id="upload-video" name="upload-video[]" type="file" multiple>
+    <div class="form-group">
+        <div class="file-loading">
+            <label>Preview File Icon</label>
+            <input id="file-3" type="file" multiple>
+        </div>
     </div>
 </div>
 <script>
-    $("#upload-video").fileinput({
-        theme: 'fas',
-        uploadUrl: '/resumable/file/upload',
-        enableResumableUpload: true,            //支持断点续传
-        allowedFileTypes: ['video'],  //设置其一就够了
-        //overwriteInitial: false,
-        resumableUploadOptions: {
-            //testUrl: "/site/test-file-chunks",续传功能的开发
-            chunkSize: 256 // 256KB
-        },
-        minFileSize: 1024 * 2,
-        maxFileSize: 1024 * 200,
-        maxFileCount: 1,
-        uploadExtraData: {userToken: 'fifteenthofjuly'}
-    });
-    $("#upload-video").on('fileuploaded', function (event, fileId) {
-        var file_id = fileId.slice(19);  //这个返回的fileId比原始的fileId前面多追加了"thumb-upload-video-"
-        $.ajax({
-            type: "GET",
-            url: "/complete/chunk/file",
-            data: {"fileId": file_id},
-            dataType: "json",
-            success: function (response) {
-                if (response.status === 'FAILED') {
-                    console.log("文件上传失败")
-                } else {
-                    var url = response.data;
-                    console.log("文件上传成功，文件的地址为" + url)
-                }
+    function Images() {
+    }
 
-            }
-        })
-    });
-    $("#upload-video").on('filesuccessremove', function (event, id) {
-        //productVideo.delete(id);
+    Images.prototype.setUrl = function (url) {
+        this.url = url
+    };
+    Images.prototype.getUrl = function () {
+        return this.url
+    };
+
+    var images = new Images();
+    images.setUrl('https://capharnaum.oss-us-west-1.aliyuncs.com/cffe7c78-93ee-4b2e-97f0-293093a929d1.jpg');
+    $("#file-3").fileinput({
+        theme: 'fas',
+        uploadUrl: '/file/upload',
+        allowedFileTypes: ['image'],
+        overwriteInitial: true,
+        initialPreviewAsData: true,
+        maxFileCount: 1,    //允许每次上传的文件数为1
+        minFileSize: 200,
+        maxFileSize: 1024 * 4,
+        maxFilesNum: 1,
+        showClose: false,
+        uploadExtraData: {userToken: 'fifteenthofjuly'},
+        initialPreview: [
+            images.getUrl()
+            //"https://capharnaum.oss-us-west-1.aliyuncs.com/28902d0c-525d-48c8-929e-25fd60a73d9e.jpg",
+            //"https://capharnaum.oss-us-west-1.aliyuncs.com/b4fc6903-fcc8-4b1c-9fa3-f934d9c2a6b8.jpg",
+            //"https://capharnaum.oss-us-west-1.aliyuncs.com/cffe7c78-93ee-4b2e-97f0-293093a929d1.jpg"
+        ],
+        initialPreviewConfig: [
+            {}
+            // {caption: "transport-1.jpg", size: 329892, width: "120px", key: 1}
+            //{caption: "transport-2.jpg", size: 872378, width: "120px", key: 2},
+            //{caption: "transport-3.jpg", size: 632762, width: "120px", key: 3}
+        ]
+    }).on('fileuploaded', function (event, data, previewId) {
+        console.log("文件已经上传，fileId=" + previewId);
+    }).on('filesuccessremove', function (event, id) {
+        console.log("文件被移除，fileId=" + id);
     });
 </script>
 </body>

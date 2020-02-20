@@ -1,1 +1,0 @@
-rename table initiator_info_confirm to initiator_info;

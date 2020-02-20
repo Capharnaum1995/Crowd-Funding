@@ -1,8 +1,8 @@
 package com.crowdFunding.common.api;
 
-import com.crowdFunding.common.dto.InitiatorInfoDTO;
-import com.crowdFunding.common.dto.ProjectDTO;
-import com.crowdFunding.common.dto.RewardDTO;
+import com.crowdFunding.common.dto.addProject.InitiatorInfoDTO;
+import com.crowdFunding.common.dto.addProject.ProjectDTO;
+import com.crowdFunding.common.dto.addProject.RewardDTO;
 import com.crowdFunding.common.entity.ResultEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;

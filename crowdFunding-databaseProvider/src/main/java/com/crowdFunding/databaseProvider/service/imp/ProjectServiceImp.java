@@ -1,9 +1,9 @@
 package com.crowdFunding.databaseProvider.service.imp;
 
-import com.crowdFunding.common.dto.InitiatorInfoDTO;
-import com.crowdFunding.common.dto.ProjectDTO;
-import com.crowdFunding.common.dto.PromoterInfoDTO;
-import com.crowdFunding.common.dto.RewardDTO;
+import com.crowdFunding.common.dto.addProject.InitiatorInfoDTO;
+import com.crowdFunding.common.dto.addProject.ProjectDTO;
+import com.crowdFunding.common.dto.addProject.MemberInfoDTO;
+import com.crowdFunding.common.dto.addProject.RewardDTO;
 import com.crowdFunding.common.entity.ResultEntity;
 import com.crowdFunding.databaseProvider.mapper.*;
 import com.crowdFunding.databaseProvider.model.*;
@@ -80,10 +80,10 @@ public class ProjectServiceImp implements ProjectService {
             }
         }
         //3. 插入表Promoter
-        List<PromoterInfoDTO> promoterInfoDTOList = projectDTO.getPromoterInfoDTOList();
+        List<MemberInfoDTO> promoterInfoDTOList = projectDTO.getPromoterInfoDTOList();
         Promoter promoter = new Promoter();
         promoter.setProjectId(projectPrimaryKey);
-        for (PromoterInfoDTO promoterInfoDTO : promoterInfoDTOList) {
+        for (MemberInfoDTO promoterInfoDTO : promoterInfoDTOList) {
             BeanUtils.copyProperties(promoterInfoDTO, promoter);
             try {
                 promoterMapper.insertSelective(promoter);

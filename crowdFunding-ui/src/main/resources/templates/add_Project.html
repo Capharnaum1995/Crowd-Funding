@@ -440,7 +440,7 @@
         .slideInDown .order-dd {
             overflow: visible !important;
             position: relative;
-            width: 678px
+            width: 566px
         }
 
         .clearfix:after {
@@ -698,10 +698,10 @@
                         <div class="tabBar-wrapper">
                             <div class="tabBar-title">
                                 <!--####“基本信息” “挡位信息” “推广资料” “资质信息”的导航条，tabActive的为高亮#####-->
-                                <div class="tabBar-title-one tabActive">基本信息</div>
-                                <div class="tabBar-title-two">档位信息</div>
-                                <div class="tabBar-title-three ">推广资料</div>
-                                <div class="tabBar-title-four">资质信息</div>
+                                <div id="tabBar-title-one" class="tabBar-title-one tabActive">基本信息</div>
+                                <div id="tabBar-title-two" class="tabBar-title-two">档位信息</div>
+                                <div id="tabBar-title-three" class="tabBar-title-three">推广资料</div>
+                                <div id="tabBar-title-four" class="tabBar-title-four">资质信息</div>
                             </div>
 
                             <!--第一步提示-->
@@ -757,7 +757,6 @@
                             <input type="hidden" id="videoId" name="videoId" value="">
                             <input type="hidden" id="isUploading" name="isUploading">
                             <input type="hidden" id="videoIdTemp" name="videoIdTemp" value="">
-                            <input type="hidden" id="projectType" value="1">
                             <input type="hidden" id="specRecommendSize" value="">
                             <input type="hidden" id="proxyMinPrice" value="">
                             <input type="hidden" id="tabIndex" value="2">
@@ -771,23 +770,38 @@
                                             class="order-point fr">*</span></dt>
                                     <dd class="order-dd">
                                         <div class="z-radios JradioType">
+                                            <input type="hidden" id="projectType" value="0">
                                             <div class="z-radio">
-                                                <input type="radio" name="projectType" id="projectNormal" value="1"
-                                                       checked="">
-                                                <label name="projectTypeLabel" class=" radio-current "
-                                                       for="projectNormal" value="1">回报众筹</label>
+                                                <label id="projectTypeLabel1" class="radio-current">回报众筹</label>
                                             </div>
                                             <span class="z-notes">（一般的有产品回报的众筹项目）</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <span id="err_projectType" class="z-limit" style="display: none;"> </span>
                                             <br>
                                             <div class="z-radio">
-                                                <input type="radio" name="projectType" id="projectFree" value="6">
-                                                <label name="projectTypeLabel" class=" radio-normal " for="projectFree"
-                                                       value="6">公益众筹</label>
+                                                <label id="projectTypeLabel2" class="radio-normal">公益众筹</label>
                                             </div>
                                             <span class="z-notes">（公益捐助类项目）</span>
                                         </div>
                                     </dd>
+                                    <script>
+                                        var projectTypeLabel1 = document.getElementById('projectTypeLabel1');
+                                        var projectTypeLabel2 = document.getElementById('projectTypeLabel2');
+                                        var projectType = document.getElementById('projectType');
+                                        projectTypeLabel1.onclick = function () {
+                                            if (projectTypeLabel1.getAttribute('class') !== 'radio-current') {
+                                                projectTypeLabel2.setAttribute('class', 'radio-normal');
+                                                projectTypeLabel1.setAttribute('class', 'radio-current');
+                                                projectType.setAttribute('value', '0')
+                                            }
+                                        };
+                                        projectTypeLabel2.onclick = function () {
+                                            if (projectTypeLabel2.getAttribute('class') !== 'radio-current') {
+                                                projectTypeLabel1.setAttribute('class', 'radio-normal');
+                                                projectTypeLabel2.setAttribute('class', 'radio-current');
+                                                projectType.setAttribute('value', '1')
+                                            }
+                                        }
+                                    </script>
                                 </dl>
                                 <!--众筹类型 end-->
                                 <!--筹资天数-->
@@ -797,8 +811,10 @@
                                     <dd class="order-dd">
                                         <div class="z-radios JradioDay">
                                             <div id="collectDaysDiv" class="z-ipt-s fl w48 mr55">
-                                                <input id="collectDays" name="collectDays" value="" type="text"
-                                                       class="z-ipt fl w48" placeholder="10~60">
+                                                <label for="collectDays"></label>
+                                                <input id="collectDays" maxlength="3" type="text" value=""
+                                                       class="z-ipt fl w48"
+                                                       placeholder="10~60">
                                                 <span class="ipt-span">天</span>
                                             </div>
                                             <span class="z-notes" id="collectDaysSpan">（一般建议众筹时间为10-60天）</span>
@@ -809,13 +825,14 @@
                                 </dl>
                                 <!--筹资天数 end-->
                                 <!--筹资金额-->
-                                <dl class="order-dl" id="targetAmount">
+                                <dl class="order-dl">
                                     <dt class="order-dt"><span class="fr">筹资金额</span><span
                                             class="order-point fr">*</span></dt>
                                     <dd class="order-dd">
                                         <div class="z-ipt-s w78">
+                                            <label for="projectAmount"></label>
                                             <input id="projectAmount" name="projectAmount" value="" type="text"
-                                                   class="z-ipt fl w78" placeholder="不少于XX元">
+                                                   class="z-ipt fl w78" placeholder="不少于1k元">
                                             <span class="ipt-span">元</span>
                                         </div>
                                         <div class="additional">本次项目需要筹集的目标金额</div>
@@ -857,6 +874,7 @@
                                     <dt class="order-dt"><span class="fr">项目名称</span><span
                                             class="order-point fr">*</span></dt>
                                     <dd class="order-dd">
+                                        <label for="projectName"></label>
                                         <input id="projectName" maxlength="14" name="projectName" value="" type="text"
                                                class="z-ipt w328" placeholder="不多于14个字">
                                         <span id="err_projectName" class="z-limit" style="display: none;"></span>
@@ -869,6 +887,7 @@
                                     <dt class="order-dt"><span class="fr">关键描述</span><span
                                             class="order-point fr">*</span></dt>
                                     <dd class="order-dd">
+                                        <label for="projectAdWord"></label>
                                         <input placeholder="请提炼产品卖点成关键词描述，不多于35个字" id="projectAdWord" maxlength="35"
                                                name="projectAdWord" value="" type="text" class="z-ipt w328">
                                         <span id="err_projectAdWord" class="z-limit" style="display: none;"></span>
@@ -881,7 +900,8 @@
                                     <dt class="order-dt"><span class="fr">项目亮点</span><span
                                             class="order-point fr">*</span></dt>
                                     <dd class="order-dd">
-                                        <input id="projectSpot0" maxlength="5" name="projectSpot0" value="" type="text"
+                                        <label for="projectSpot"></label>
+                                        <input id="projectSpot" maxlength="5" value="" type="text"
                                                class="z-ipt w328" placeholder="不多于5个字">
                                         <input id="spotId0" name="spotId0" value="" type="hidden">
                                         <span id="err_projectSpot" class="z-limit" style="display: inline;"></span>
@@ -893,17 +913,36 @@
                                     <dt class="order-dt"><span class="fr">退换货说明</span><span
                                             class="order-point fr">*</span></dt>
                                     <dd class="order-dd">
-                                        <div class="order-dd-childen">
-                                            <div class="item">
-                                                <input type="radio" checked="" name="merchantType" value="2">
-                                                <label> 该项目支持15天无理由退换货</label>
+                                        <div class="z-radios JradioType">
+                                            <input type="hidden" id="returnPurchase" value="0">
+                                            <div class="z-radio">
+                                                <label id="returnPurchase0" class="radio-current">该项目支持15天无理由退换货</label>
                                             </div>
-                                            <div class="item">
-                                                <input type="radio" name="merchantType" value="3">
-                                                <label>该项目不支持15天无理由退换货</label>
+                                            <br>
+                                            <div class="z-radio">
+                                                <label id="returnPurchase1" class="radio-normal">该项目不支持15天无理由退换货</label>
                                             </div>
                                         </div>
                                     </dd>
+                                    <script>
+                                        var returnPurchase0 = document.getElementById('returnPurchase0');
+                                        var returnPurchase1 = document.getElementById('returnPurchase1');
+                                        var returnPurchase = document.getElementById('returnPurchase');
+                                        returnPurchase0.onclick = function () {
+                                            if (returnPurchase0.getAttribute('class') !== 'radio-current') {
+                                                returnPurchase1.setAttribute('class', 'radio-normal');
+                                                returnPurchase0.setAttribute('class', 'radio-current');
+                                                returnPurchase.setAttribute('value', '0')
+                                            }
+                                        };
+                                        returnPurchase1.onclick = function () {
+                                            if (returnPurchase1.getAttribute('class') !== 'radio-current') {
+                                                returnPurchase0.setAttribute('class', 'radio-normal');
+                                                returnPurchase1.setAttribute('class', 'radio-current');
+                                                returnPurchase.setAttribute('value', '1')
+                                            }
+                                        }
+                                    </script>
                                 </dl>
                                 <!--退换货说明 end-->
                                 <div class="z-h5">
@@ -1010,7 +1049,7 @@
                                                 </tr>
                                                 </tbody>
                                             </table>
-                                            <div class="add-stall" id="addStallNew"
+                                            <div class="add-stall" id="addStallNew" onclick="addRewardInfo()"
                                                  style="background: none;width: 100px;">+ 添加档位
                                             </div>
                                         </div>
@@ -1024,7 +1063,7 @@
                                 <!--APP图片上传-->
                                 <dl class="order-dl">
                                     <dt class="order-dt">
-                                        <span class="fr">APP单品页图</span>
+                                        <span class="fr">单品页图</span>
                                         <span class="order-point fr">*</span>
                                     </dt>
                                     <dd class="order-dd" id="appImageDev" style="line-height: 12px;width: 705px;">
@@ -1035,7 +1074,7 @@
                                                         <input id="important-block-display" type="file" multiple
                                                                class="file"
                                                                data-overwrite-initial="false"
-                                                               data-min-file-count="2" data-theme="fas">
+                                                               data-min-file-count="2 " data-theme="fas">
                                                     </div>
                                                 </div>
                                             </form>
@@ -1068,7 +1107,8 @@
                                     <dt class="order-dt">
                                         <span class="fr">视频介绍</span>
                                     </dt>
-                                    <dd class="order-dd" style="line-height: 12px;width: 705px;">
+                                    <dd class="order-dd"
+                                        style="line-height: 12px;width: 705px;padding-left: 13px;padding-right: 13px">
                                         <div class="file-loading">
                                             <input id="upload-video" name="upload-video[]" type="file" multiple>
                                         </div>
@@ -1209,7 +1249,7 @@
                                                 <form enctype="multipart/form-data">
                                                     <div class="form-group">
                                                         <div class="file-loading">
-                                                            <input id="business-license-report" type="file" multiple
+                                                            <input id="business-license" type="file" multiple
                                                                    class="file"
                                                                    data-overwrite-initial="false"
                                                                    data-min-file-count="2" data-theme="fas">
@@ -1275,176 +1315,7 @@
 </div>
 <!--Reward information-->
 <div class="zpopup" id="addStallPopupShadow" style="height: 1263px; display: none;"></div>
-<div class="zpopup-wrap w984 popupab slideInDown" id="addStallsPopupBody"
-     style="left: 182.5px; top: -394px; display: none;">
-    <div class="zpopup-head">
-        <div class="zpopup-title" id="redoundTitle">添加档位</div>
-        <div class="Jpopupclosed zpopup-closed-fixed" style="left: 1196.5px;"></div>
-        <!--标记该次为新增的还是修改的-->
-        <input type="hidden" id="rewardDTOIndex" value="">
-    </div>
-    <div class="add-stall-block">
-        <!--回报类型-->
-        <dl class="order-dl">
-            <dt class="order-dt"><span class="fr">回报类型</span></dt>
-            <dd class="order-dd">
-                <div class="z-radios JradioReback">
-                    <div class="z-radio">
-                        <input type="radio" name="redoundType" id="rt1" value="1">
-                        <label class="radio-current" name="redoundType">实物回报</label>
-                    </div>
-                    <div class="z-radio">
-                        <input type="radio" name="redoundType" id="rt0" value="0">
-                        <label class="radio-normal" name="redoundType">虚拟物品回报</label>
-                    </div>
-                    <span class="z-notes">（虚拟点卡、兑换码等不需要填写运单号发货的回报内容）</span>
-                </div>
-            </dd>
-        </dl>
-        <!--回报类型 end-->
-        <!--支持金额-->
-        <div class="clearfix">
-            <dl class="order-dl fl" id="AmountDiv" style="display: block;">
-                <dt class="order-dt"><span class="fr">支持金额</span></dt>
-                <dd class="order-dd clearfix w200">
-                    <div class="z-ipt-s w78 fl">
-                        <input type="text" class="z-ipt fl w78" placeholder="不少于0" id="reward-money" maxlength="8">
-                        <span class="ipt-span">元</span>
-                    </div>
-                </dd>
-            </dl>
-        </div>
-        <!--支持金额 end-->
-        <!--回报说明-->
-        <dl class="order-dl" id="rewardContent">
-            <dt class="order-dt"><span class="fr">回报内容</span></dt>
-            <dd class="order-dd lt0 mt5 mb5">
-                <textarea class="z-textarea h80" placeholder="请简要概述该档位的回报内容，最多120字" id="reward-description"></textarea>
-            </dd>
-        </dl>
-        <!--回报说明 end-->
-        <!--说明图片-->
-        <dl class="order-dl">
-            <dt class="order-dt"><span class="fr">说明图片</span></dt>
-            <dd class="order-dd">
-                <div class="add-stall-photos">
-                    <!-------------有照片的z-has-photo-s，没有照片的z-photo-s---------------->
-                    <!--预热图片未上传照片-->
-                    <div class="z-photo-s" style="display:block" id="imageUploadDiv">
-                        <input id="unUpLoaded" class="z-file" name="upload" type="file"
-                               data-url="/projectRedound/uploadImg?width=600&amp;height=600" multiple=""
-                               style="font-size: 0px;">
-                        <p class="z-size">600px * 600px</p>
-                        <input type="hidden" id="images" name="images" value="">
-                        <input type="hidden" id="thumimages" name="thumimages" value="">
-                    </div>
-                    <!--预热图片未上传照片 end-->
-                    <!--预热图片已上传照片-->
-                    <div class="z-has-photo-s" style="display:none" id="imageUploadDiv2">
-                        <img id="redoundImage" src="/res/img/sl78_78.png" class="z-img" alt="">
-                        <div class="z-hover">
-                            <input id="upload" class="z-file" name="upload" type="file"
-                                   data-url="/projectRedound/uploadImg?width=600&amp;height=600" multiple=""
-                                   style="font-size: 0px;">
-                            <input type="hidden" id="images1" name="images" value="">
-                            <input type="hidden" id="thumimages1" name="thumimages" value="">
-                        </div>
-                    </div>
-                    <script>
-                        //上传图片的脚本
-                    </script>
-                    <!--预热图片已上传照片 end-->
-                    <div class="fl font-a5 mt30">支持jpg、png、gif格式；</div>
-                </div>
-            </dd>
-        </dl>
-        <!--说明图片 end-->
-        <!--备注信息-->
-        <dl class="order-dl">
-            <dt class="order-dt"><span class="fr">填写备注信息</span></dt>
-            <dd class="order-dd">
-                <div class="z-radios JradioMark">
-                    <input type="text" class="z-ipt w566" id="reward-remarks"
-                           placeholder="请输入备注校验信息，例如回报物品的颜色、尺寸等（不超过30个字）。"
-                           maxlength="30">
-                </div>
-            </dd>
-        </dl>
-        <!--备注信息 end-->
-        <!--限定发售量-->
-        <dl class="order-dl">
-            <dt class="order-dt"><span class="fr">限定数量</span></dt>
-            <dd class="order-dd mb5">
-                <div class="z-ipt-s fl w78">
-                    <input type="text" class="z-ipt fl w78" placeholder="0" id="reward-limitedAmount" value="0">
-                    <span class="ipt-span">份</span>
-                </div>
-                <span id="count_tip" class="z-notes">（0人为不限发售量，提示：该档位支持者每单可支持份）</span></dd>
-        </dl>
-        <!--限定发售量 end-->
-        <!--单人限购数量-->
-        <dl class="order-dl">
-            <dt class="order-dt"><span class="fr">单人限购数量</span></dt>
-            <dd class="order-dd mb5">
-                <div class="z-ipt-s fl w78">
-                    <input type="text" class="z-ipt fl w78" placeholder="0" id="reward-limitedPurchase" value="0">
-                    <span class="ipt-span">份</span>
-                </div>
-                <span id="singlg_count_tip" class="z-notes">（0人为不限购）</span></dd>
-        </dl>
-        <!--单人限购数量 end-->
-        <!--运费-->
-        <dl class="order-dl">
-            <dt class="order-dt"><span class="fr">运费单价</span></dt>
-            <dd class="order-dd">
-                <div class="z-ipt-s fl w78">
-                    <input type="text" class="z-ipt fl w78 fl" placeholder="0" id="reward-freight" value="0">
-                    <span class="ipt-span">元</span>
-                </div>
-                <span class="z-notes">（0元为包邮）</span></dd>
-        </dl>
-        <!--运费 end-->
-        <!--回报时间-->
-        <dl class="order-dl">
-            <dt class="order-dt"><span class="fr">回报时间</span></dt>
-            <dd class="order-dd">
-                <span class="fl mr10">众筹成功后</span>
-                <div class="z-ipt-s w78 fl">
-                    <input type="text" class="z-ipt fl w78" id="reward-rewardData">
-                    <span class="ipt-span">天</span>
-                </div>
-                <span class="fl ml50">，将会向支持者发送回报</span>
-            </dd>
-        </dl>
-        <!--回报时间 end-->
-        <!--是否支持开发票-->
-        <dl class="order-dl">
-            <dt class="order-dt"><span class="fr">是否支持发票</span></dt>
-            <dd class="order-dd">
-                <div class="z-radios JradioSetbuy">
-                    <div class="z-radio">
-                        <input type="radio" name="scrambleStatus" id="scramble1" value="1">
-                        <label class="radio-current" name="scrambleStatus">是</label>
-                    </div>
-                    <div class="z-radio">
-                        <input type="radio" name="scrambleStatus" id="scramble0" value="0">
-                        <label class="radio-normal" name="scrambleStatus">否</label>
-                    </div>
-                    <span class="z-notes">（该项目请仔细选择，bulabula........）</span>
-                </div>
-            </dd>
-        </dl>
-        <!--是否支持开发票 end-->
-        <!--取消、保存-->
-        <dl class="order-dl">
-            <dd class="tc">
-                <input type="button" class="common_btn_white mr10" value="取消" id="addRedoundCancelBtn">
-                <input type="button" class="common_button" id="addRedoundSaveBtn" value="保存">
-            </dd>
-
-        </dl>
-        <!--取消、保存 end-->
-    </div>
+<div id="reward-form-group">
 </div>
 <!--Reward information end-->
 <!--首次进入提示-->
@@ -1471,7 +1342,7 @@
         if ((!showBgLayer1) && (!showBgLayer2)) {
             bgLayer.style.display = 'none';
         }
-    }
+    };
     confirmTwo.onclick = function () {
         showBgLayer2 = false;
         stepTwo.style.display = 'none';
@@ -1577,7 +1448,91 @@
             addClass(var4, 'tabActive');
             addClass(var8, "order-list")
         }
+    };
+
+    /******************保存/提交信息**************************/
+    var drafts = document.getElementById('drafts');
+    var submitInfo = document.getElementById('submit-info');
+    drafts.onclick = function () {
+        if (hasClass(var1, 'tabActive')) {
+            //保存基本信息
+            var basicInfoDTO = new BasicInfoDTO();
+
+            var typeList = document.getElementById('');
+            var tagList = document.getElementById('');
+            var memberInfoDTOList = document.getElementById('');
+
+            basicInfoDTO.setUserToken($.sessionStorage.getItem('userToken'));
+            basicInfoDTO.setProjectTempToken($.sessionStorage.getItem('projectTempToken'));
+            basicInfoDTO.setType(document.getElementById('projectType').getAttribute('value'));
+            basicInfoDTO.setDay(document.getElementById('collectDays').value);
+            basicInfoDTO.setMoney(document.getElementById('projectAmount').value);
+            basicInfoDTO.setType(typeList);
+            basicInfoDTO.setTagList(tagList);
+            basicInfoDTO.setName(document.getElementById('projectName').value);
+            basicInfoDTO.setMainDescription(document.getElementById('projectAdWord').value);
+            basicInfoDTO.setHighlight(document.getElementById('projectSpot').value);
+            basicInfoDTO.setReturnPurchase(document.getElementById('returnPurchase').getAttribute('value'));
+            basicInfoDTO.setCrowdFundingStory(document.getElementsByClassName('editormd-markdown-textarea').item(0).value);
+            basicInfoDTO.setCompanyFile(document.getElementById('companyInfo').value);
+            basicInfoDTO.setTeamFile(document.getElementById('teamInfo').value);
+            basicInfoDTO.setMemberInfoDTOList(memberInfoDTOList);
+            console.log(basicInfoDTO);
+            $.ajax({
+                type: "POST",
+                url: "/save/project/basic/info",
+                contentType: "application/json",
+                data: {"basicInfoDTO": basicInfoDTO},
+                dataType: "json",
+                success: function (response) {
+                    var status = response.status;
+                    if (status === 'SUCCESS') {
+                        window.alert("项目基本信息保存成功。")
+                    } else {
+                        window.alert("项目基本信息保存失败，请重试！")
+                    }
+                }
+            });
+        }
+        if (hasClass(var2, 'tabActive')) {
+            //保存挡位信息
+            var rewardDTO = new RewardDTO();
+            rewardDTO.setUserToken($.sessionStorage.getItem('userToken'));
+            rewardDTO.setProjectTempToken($.sessionStorage.getItem('projectTempToken'));
+            rewardDTO.setRewardList(rewardList);
+            console.log(rewardDTO);
+            $.ajax({
+                type: "POST",
+                url: "/save/reward",
+                contentType: "application/json",
+                data: {"rewardDTO": rewardDTO},
+                dataType: "json",
+                success: function (response) {
+                    var status = response.status;
+                    if (status === 'SUCCESS') {
+                        window.alert("挡位信息保存成功。")
+                    } else {
+                        window.alert("挡位信息保存失败，请重试！")
+                    }
+                }
+            });
+        }
+        if (hasClass(var3, 'tabActive')) {
+            //保存推广资料
+
+
+        }
+        if (hasClass(var4, 'tabActive')) {
+            //保存资质信息
+
+        }
+
+    };
+    submitInfo.onclick = function () {
+
     }
+
+
 </script>
 <!--添加member-->
 <script>
@@ -1631,502 +1586,198 @@
     }
 
 </script>
-<!--添加，删除，修改挡位信息-->
-<script>
-    var addRewardBtn = document.getElementById('addStallNew');
-    var rewardFormShadow = document.getElementById('addStallPopupShadow');
-    var rewardForm = document.getElementById('addStallsPopupBody');
-    var bgLayer = document.getElementsByClassName('order-layer-tip').item(0);
-    var rewardInfoConfirmBtn = document.getElementById('addRedoundSaveBtn');
-    var rewardInfoCancelBtn = document.getElementById('addRedoundCancelBtn');
-    var x = document.getElementsByClassName('Jpopupclosed').item(0);   //关闭的小叉叉
-
-    var rewardDTOIndex = document.getElementById('rewardDTOIndex');   //该组件的value值表明此次操作是新增的还是修改的
-
-    //start--表单单选按钮逻辑处理
-    var actualItem = document.getElementById('rt1');
-    var actualItemLabel = actualItem.parentElement.children.item(1);
-    var visualItem = document.getElementById('rt0');
-    var visualItemLabel = visualItem.parentElement.children.item(1);
-    var receipt = document.getElementById('scramble1');
-    var receiptLabel = receipt.parentElement.children.item(1);
-    var noReceipt = document.getElementById('scramble0');
-    var noReceiptLabel = noReceipt.parentElement.children.item(1);
-    actualItemLabel.onclick = function () {
-        if (actualItemLabel.getAttribute('class') !== 'radio-current') {
-            actualItemLabel.setAttribute('class', 'radio-current');
-            visualItemLabel.setAttribute('class', 'radio-normal')
-        }
-    };
-    visualItemLabel.onclick = function () {
-        if (visualItemLabel.getAttribute('class') !== 'radio-current') {
-            visualItemLabel.setAttribute('class', 'radio-current');
-            actualItemLabel.setAttribute('class', 'radio-normal')
-        }
-    };
-    receiptLabel.onclick = function () {
-        if (receiptLabel.getAttribute('class') !== 'radio-current') {
-            receiptLabel.setAttribute('class', 'radio-current');
-            noReceiptLabel.setAttribute('class', 'radio-normal')
-        }
-    };
-    noReceiptLabel.onclick = function () {
-        if (noReceiptLabel.getAttribute('class') !== 'radio-current') {
-            noReceiptLabel.setAttribute('class', 'radio-current');
-            receiptLabel.setAttribute('class', 'radio-normal')
-        }
-    };
-
-    function getType() {
-        if (actualItemLabel.getAttribute('class') === 'radio-current') {
-            return parseInt(actualItem.getAttribute('value'));
-        } else {
-            return parseInt(visualItem.getAttribute('value'));
-        }
-    }
-
-    function getReceipt() {
-        if (receiptLabel.getAttribute('class') === 'radio-current') {
-            return parseInt(receipt.getAttribute('value'));
-        } else {
-            return parseInt(noReceipt.getAttribute('value'));
-        }
-    }
-
-    //表单单选按钮逻辑处理--end
-    //start 获取表单信息
-    var moneyUnit = document.getElementById('reward-money');
-    var descriptionUnit = document.getElementById('reward-description');
-    var pictureUnit = document.getElementById('reward-picture');
-    var remarksUnit = document.getElementById('reward-remarks');
-    var limitedAmountUnit = document.getElementById('reward-limitedAmount');
-    var limitedPurchaseUnit = document.getElementById('reward-limitedPurchase');
-    var freightUnit = document.getElementById('reward-freight');
-    var rewardDataUnit = document.getElementById('reward-rewardData');
-    //获取挡位简略展示表
-    var redoundTable = document.getElementById('redoundTable');
-
-    //清除表单数据的函数
-    function initFormData() {
-        //1. 重置按钮
-        if (actualItemLabel.getAttribute('class') !== 'radio-current') {
-            actualItemLabel.setAttribute('class', 'radio-current');
-            visualItemLabel.setAttribute('class', 'radio-normal')
-        }
-        if (receiptLabel.getAttribute('class') !== 'radio-current') {
-            receiptLabel.setAttribute('class', 'radio-current');
-            noReceiptLabel.setAttribute('class', 'radio-normal')
-        }
-        //2.清除数据,其中有三项为默认值的，最好需要值为零，不然用户采不修改该选项时会获取不到数据
-        moneyUnit.value = '';
-        descriptionUnit.value = '';
-        //*************************************pictureUnit.value = '';
-        remarksUnit.value = '';
-        limitedAmountUnit.value = '';
-        limitedAmountUnit.setAttribute('value', '0');
-        limitedPurchaseUnit.value = '';
-        limitedPurchaseUnit.setAttribute('value', '0');
-        freightUnit.value = '';
-        freightUnit.setAttribute('value', '0');
-        rewardDataUnit.value = '';
-        //2.1 清除标记
-        rewardDTOIndex.setAttribute('value', '');
-    }
-
-    //点击添加挡位信息
-    addRewardBtn.onclick = function () {
-        initFormData();
-        bgLayer.style.display = "block";
-        rewardFormShadow.style.display = 'block';
-        rewardForm.style.display = "block";
-    };
-
-    //关闭rewardForm的函数
-    function closeRewardForm() {
-        rewardForm.style.display = "none";
-        rewardFormShadow.style.display = 'none';
-        bgLayer.style.display = "none";
-        initFormData();
-    }
-
-    //点击"x"
-    x.onclick = function () {
-        closeRewardForm();
-    };
-    //取消添加挡位信息
-    rewardInfoCancelBtn.onclick = function () {
-        closeRewardForm();
-    };
-    //确认提交挡位信息
-    rewardInfoConfirmBtn.onclick = function () {
-        //1. 先将弹窗表单的信息保存起来，表单信息不完整弹出提示，返回
-        var type = getType();
-        var money = moneyUnit.value;
-        var description = descriptionUnit.value.replace(/\s+/g, "");//去除空格
-        var picture = '图片的路径';                     //pictureUnit.value;
-        var remarks = remarksUnit.value.replace(/\s+/g, "");
-        var limitedAmount = limitedAmountUnit.value;
-        var limitedPurchase = limitedPurchaseUnit.value;
-        var freight = freightUnit.value;
-        var rewardData = rewardDataUnit.value;
-        var receipt = getReceipt();
-        //2. *************这里需要进行表单信息格式的校验，以后再补充******************
-        if (money === null || money === '') {
-            window.alert('请输入支持金额！')
-            return;
-        }
-        //3. 校验成功，创建对象,给对象赋值
-        var rewardDTO = new RewardDTO();
-        rewardDTO.setUserToken('userToken');
-        rewardDTO.setProjectTempToken('projectTempToken');
-        rewardDTO.setType(type);
-        rewardDTO.setMoney(money);
-        rewardDTO.setDescription(description);
-        rewardDTO.setPicture(picture);
-        rewardDTO.setRemarks(remarks);
-        rewardDTO.setLimitedAmount(limitedAmount);
-        rewardDTO.setLimitedPurchase(limitedPurchase);
-        rewardDTO.setFreight(freight);
-        rewardDTO.setRewardData(rewardData);
-        rewardDTO.setReceipt(receipt);
-        //4. 根据标记位判断此次为修改操作还是添加操作
-        var index = rewardDTOIndex.getAttribute('value');
-        if (index === '' || index === null) {   //此次为新增操作
-            rewardDTOList.push(rewardDTO);
-        } else {                                  //此次为修改操作
-            rewardDTOList[parseInt(index)] = rewardDTO;
-        }
-        console.log(rewardDTOList);
-        //2. 表单信息保存完成，更新列表的序列
-        closeRewardForm();
-        updateRewardIntroList(rewardDTOList);
-    };
-
-    //删除某个挡位
-    function deleteRewardInfo(index) {
-        rewardDTOList.splice(index, 1);
-        updateRewardIntroList(rewardDTOList);
-    }
-
-    //修改某个挡位,即只需用修改rewardDTOList中的信息，再跟新
-    function modifyRewardInfo(index) {
-        //1. 取出挡位信息对象,复原到表
-        var rewardDTO = rewardDTOList[index];
-        moneyUnit.value = rewardDTO.getMoney();
-        descriptionUnit.value = rewardDTO.getDescription();
-        //pictureUnit.value = rewardDTO.getPicture();
-        remarksUnit.value = rewardDTO.getRemarks();
-        limitedAmountUnit.value = rewardDTO.getLimitedAmount();
-        limitedPurchaseUnit.value = rewardDTO.getLimitedPurchase();
-        freightUnit.value = rewardDTO.getFreight();
-        rewardDataUnit.value = rewardDTO.getRewardData();
-        if (rewardDTO.getType() === '0') {
-            actualItemLabel.setAttribute('class', 'radio-normal');
-            visualItemLabel.setAttribute('class', 'radio-current');
-        }
-        if (rewardDTO.getReceipt() === '0') {
-            receiptLabel.setAttribute('class', 'radio-normal');
-            noReceiptLabel.setAttribute('class', 'radio-current');
-        }
-        //2. 修改表的标记
-        rewardDTOIndex.setAttribute('value', index);
-        //3. 显示表
-        bgLayer.style.display = "block";
-        rewardFormShadow.style.display = 'block';
-        rewardForm.style.display = "block";
-    }
-
-    //更新挡位列表
-    function updateRewardIntroList(rewardDTOList) {
-        //1. 清除列表
-        var listLength = redoundTable.children.length;
-        if (listLength > 1) {
-            for (var i = 0; i < listLength - 1; i++) {
-                redoundTable.children[1].remove();
-            }
-        }
-        //2.重新按照rewardDTOList添加
-        for (var i = 0; i < rewardDTOList.length; i++) {
-            redoundTable.insertAdjacentHTML('beforeend', generateRewardIntro(rewardDTOList[i], i + 1, i));
-        }
-    }
-
-    function generateRewardIntro(rewardDTO, tag, index) {
-        var rewardIntro = "<tr>" +
-            "    <td >" + tag + "</td>" +
-            "    <td >￥" + rewardDTO.getMoney() + "</td>" +
-            "    <td >" + rewardDTO.getLimitedAmount() + "位</td>" +
-            "    <td>" +
-            "        <p class='tl'>" + rewardDTO.getDescription() + "</p>" +
-            "    </td>" +
-            "    <td >项目结束后" + rewardDTO.getRewardData() + "天</td>" +
-            "    <td >￥" + rewardDTO.getFreight() + "</td>" +
-            "    <td>" +
-            "        <span class='td-edit'>" +
-            "            <a class='td-edit' href='javascript:void(0);' onclick='modifyRewardInfo(" + index + ");');'>编辑</a>" +
-            "            <a class='td-edit' href='javascript:void(0);' onclick='deleteRewardInfo(" + index + ");');'>删除</a>" +
-            "        </span>" +
-            "    </td>" +
-            "</tr>";
-        return rewardIntro;
-    }
-
-</script>
+<!--文件传输-->
 <script>
     //资质信息
-    var brandPatent = new Map();
-    var managePermit = new Map();
-    var productionPermit = new Map();
-    var certification = new Map();
-    var qualityReport = new Map();
-    var businessLicenseReport = new Map();
-    var otherQualificationFile = new Map();
-    //推广资料
-    var importantBlockDisplay = new Map();
-    var pcHomeDisplay = new Map();
-    var pcProductDisplay = new Map();
-
     $("#brand-patent").fileinput({
         theme: 'fas',
         uploadUrl: '/file/upload',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        overwriteInitial: false,
-        maxFileCount: 6,  //允许每次上传的文件数为1
-        minFileSize: 200,
+        allowedFileTypes: ['image'],
+        maxFileCount: 6,
+        minFileSize: 300,
         maxFileSize: 1024 * 4,
         maxFilesNum: 6,
         showClose: false,
         uploadExtraData: {userToken: 'userToken'},
-        allowedFileTypes: ['image'],
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
+    }).on('fileuploaded', function (event, data, previewId) {
+        //文件上传成功，id-url的形式加入map中
+        brandPatent.set(previewId, data.response.data);
+    }).on('filesuccessremove', function (event, id) {
+        brandPatent.delete(id);
     });
     $("#manage-permit").fileinput({
         theme: 'fas',
         uploadUrl: '/file/upload',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        overwriteInitial: false,
-        maxFileCount: 6,  //允许每次上传的文件数为1
+        allowedFileTypes: ['image'],
+        maxFileCount: 6,
         minFileSize: 300,
-        maxFileSize: 1000,
+        maxFileSize: 1024 * 4,
         maxFilesNum: 6,
         showClose: false,
         uploadExtraData: {userToken: 'userToken'},
-        //allowedFileTypes: ['image', 'video', 'flash'],
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
+    }).on('fileuploaded', function (event, data, previewId) {
+        managePermit.set(previewId, data.response.data);
+    }).on('filesuccessremove', function (event, id) {
+        managePermit.delete(id);
     });
     $("#production-permit").fileinput({
         theme: 'fas',
         uploadUrl: '/file/upload',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        overwriteInitial: false,
-        maxFileCount: 6,  //允许每次上传的文件数为1
+        allowedFileTypes: ['image'],
+        maxFileCount: 6,
         minFileSize: 300,
-        maxFileSize: 1000,
+        maxFileSize: 1024 * 4,
         maxFilesNum: 6,
         showClose: false,
         uploadExtraData: {userToken: 'userToken'},
-        //allowedFileTypes: ['image', 'video', 'flash'],
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
+    }).on('fileuploaded', function (event, data, previewId) {
+        productionPermit.set(previewId, data.response.data);
+    }).on('filesuccessremove', function (event, id) {
+        productionPermit.delete(id);
     });
     $("#certification").fileinput({
         theme: 'fas',
         uploadUrl: '/file/upload',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        overwriteInitial: false,
-        maxFileCount: 6,  //允许每次上传的文件数为1
+        allowedFileTypes: ['image'],
+        maxFileCount: 6,
         minFileSize: 300,
-        maxFileSize: 1000,
+        maxFileSize: 1024 * 4,
         maxFilesNum: 6,
         showClose: false,
         uploadExtraData: {userToken: 'userToken'},
-        //allowedFileTypes: ['image', 'video', 'flash'],
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
+    }).on('fileuploaded', function (event, data, previewId) {
+        certification.set(previewId, data.response.data);
+    }).on('filesuccessremove', function (event, id) {
+        certification.delete(id);
     });
     $("#quality-report").fileinput({
         theme: 'fas',
         uploadUrl: '/file/upload',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        overwriteInitial: false,
-        maxFileCount: 6,  //允许每次上传的文件数为1
+        allowedFileTypes: ['image'],
+        maxFileCount: 6,
         minFileSize: 300,
-        maxFileSize: 1000,
+        maxFileSize: 1024 * 4,
         maxFilesNum: 6,
         showClose: false,
         uploadExtraData: {userToken: 'userToken'},
-        //allowedFileTypes: ['image', 'video', 'flash'],
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
+    }).on('fileuploaded', function (event, data, previewId) {
+        qualityReport.set(previewId, data.response.data);
+    }).on('filesuccessremove', function (event, id) {
+        qualityReport.delete(id);
     });
-    $("#business-license-report").fileinput({
+    $("#business-license").fileinput({
         theme: 'fas',
         uploadUrl: '/file/upload',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        overwriteInitial: false,
-        maxFileCount: 6,  //允许每次上传的文件数为1
+        allowedFileTypes: ['image'],
+        maxFileCount: 6,
         minFileSize: 300,
-        maxFileSize: 1000,
+        maxFileSize: 1024 * 4,
         maxFilesNum: 6,
         showClose: false,
         uploadExtraData: {userToken: 'userToken'},
-        //allowedFileTypes: ['image', 'video', 'flash'],
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
+    }).on('fileuploaded', function (event, data, previewId) {
+        businessLicenseReport.set(previewId, data.response.data);
+    }).on('filesuccessremove', function (event, id) {
+        businessLicenseReport.delete(id);
     });
     $("#other-qualification-file").fileinput({
         theme: 'fas',
         uploadUrl: '/file/upload',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        overwriteInitial: false,
-        maxFileCount: 6,  //允许每次上传的文件数为1
+        allowedFileTypes: ['image'],
+        maxFileCount: 6,
         minFileSize: 300,
-        maxFileSize: 1000,
+        maxFileSize: 1024 * 4,
         maxFilesNum: 6,
         showClose: false,
         uploadExtraData: {userToken: 'userToken'},
-        //allowedFileTypes: ['image', 'video', 'flash'],
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
-    });
-
-    /**
-     * 文件上传成功回调
-     * previewId:该略缩图组件的id
-     * index:这个可以不管，暂时用不上
-     */
-    $('#brand-patent').on('fileuploaded', function (event, data, previewId) {
-        //1. 文件上传成功，id-url的形式加入map中
-        brandPatent.set(previewId, data.response.data);
-    });
-    $('#brand-patent').on('filesuccessremove', function (event, id) {
-        brandPatent.delete(id);
-    });
-    $('#manage-permit').on('fileuploaded', function (event, data, previewId) {
-        managePermit.set(previewId, data.response.data);
-    });
-    $('#manage-permit').on('filesuccessremove', function (event, id) {
-        managePermit.delete(id);
-    });
-    $('#production-permit').on('fileuploaded', function (event, data, previewId) {
-        productionPermit.set(previewId, data.response.data);
-    });
-    $('#production-permit').on('filesuccessremove', function (event, id) {
-        productionPermit.delete(id);
-    });
-    $('#certification').on('fileuploaded', function (event, data, previewId) {
-        certification.set(previewId, data.response.data);
-    });
-    $('#certification').on('filesuccessremove', function (event, id) {
-        certification.delete(id);
-    });
-    $('#quality-report').on('fileuploaded', function (event, data, previewId) {
-        qualityReport.set(previewId, data.response.data);
-    });
-    $('#quality-report').on('filesuccessremove', function (event, id) {
-        qualityReport.delete(id);
-    });
-    $('#business-license-report').on('fileuploaded', function (event, data, previewId) {
-        businessLicenseReport.set(previewId, data.response.data);
-    });
-    $('#business-license-report').on('filesuccessremove', function (event, id) {
-        businessLicenseReport.delete(id);
-    });
-    $('#other-qualification-file').on('fileuploaded', function (event, data, previewId) {
+    }).on('fileuploaded', function (event, data, previewId) {
         otherQualificationFile.set(previewId, data.response.data);
-    });
-    $('#other-qualification-file').on('filesuccessremove', function (event, id) {
+    }).on('filesuccessremove', function (event, id) {
         otherQualificationFile.delete(id);
     });
 
+    //推广资料
     $("#important-block-display").fileinput({
         theme: 'fas',
         uploadUrl: '/file/upload',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        overwriteInitial: false,
-        showUpload: false,
-        maxFileCount: 1,  //允许每次上传的文件数为1
+        allowedFileTypes: ['image'],
+        overwriteInitial: true,
+        maxFileCount: 1,    //允许每次上传的文件数为1
         minFileSize: 200,
         maxFileSize: 1024 * 4,
         maxFilesNum: 1,
         showClose: false,
-        uploadExtraData: {userToken: 'userToken'},
-        allowedFileTypes: ['image'],
+        uploadExtraData: {userToken: 'fifteenthofjuly'},
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
+    }).on('fileuploaded', function (event, data, previewId) {
+        importantBlockDisplay.set(previewId, data.response.data);
+    }).on('filesuccessremove', function (event, id) {
+        importantBlockDisplay.delete(id);
     });
     $("#pc-home-display").fileinput({
         theme: 'fas',
         uploadUrl: '/file/upload',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        showUpload: false,
-        overwriteInitial: false,
+        allowedFileTypes: ['image'],
         maxFileCount: 1,  //允许每次上传的文件数为1
         minFileSize: 200,
         maxFileSize: 1024 * 4,
         maxFilesNum: 1,
         showClose: false,
         uploadExtraData: {userToken: 'userToken'},
-        allowedFileTypes: ['image'],
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
+    }).on('fileuploaded', function (event, data, previewId) {
+        pcHomeDisplay.set(previewId, data.response.data);
+    }).on('filesuccessremove', function (event, id) {
+        pcHomeDisplay.delete(id);
     });
     $("#pc-product-display").fileinput({
         theme: 'fas',
         uploadUrl: '/file/upload',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        showUpload: false,
-        overwriteInitial: false,
+        allowedFileTypes: ['image'],
         maxFileCount: 1,  //允许每次上传的文件数为1
         minFileSize: 200,
         maxFileSize: 1024 * 4,
         maxFilesNum: 1,
         showClose: false,
         uploadExtraData: {userToken: 'userToken'},
-        allowedFileTypes: ['image'],
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
-    });
-
-    $('#important-block-display').on('fileuploaded', function (event, data, previewId) {
-        //1. 文件上传成功，id-url的形式加入map中
-        importantBlockDisplay.set(previewId, data.response.data);
-    });
-    $('#important-block-display').on('filesuccessremove', function (event, id) {
-        importantBlockDisplay.delete(id);
-    });
-    $('#pc-home-display').on('fileuploaded', function (event, data, previewId) {
-        pcHomeDisplay.set(previewId, data.response.data);
-    });
-    $('#pc-home-display').on('filesuccessremove', function (event, id) {
-        pcHomeDisplay.delete(id);
-    });
-    $('#pc-product-display').on('fileuploaded', function (event, data, previewId) {
-        //1. 文件上传成功，id-url的形式加入map中
+    }).on('fileuploaded', function (event, data, previewId) {
         pcProductDisplay.set(previewId, data.response.data);
-    });
-    $('#pc-product-display').on('filesuccessremove', function (event, id) {
+    }).on('filesuccessremove', function (event, id) {
         pcProductDisplay.delete(id);
     });
-
-    // Resumable Uploads
     $("#upload-video").fileinput({
         theme: 'fas',
         uploadUrl: '/resumable/file/upload',
         enableResumableUpload: true,            //支持断点续传
-        allowedFileTypes: ['video'],  //设置其一就够了
+        allowedFileTypes: ['video'],            //设置其一就够了
         //overwriteInitial: false,
         resumableUploadOptions: {
             //testUrl: "/site/test-file-chunks",续传功能的开发
@@ -2145,16 +1796,17 @@
             dataType: "json",
             success: function (response) {
                 if (response.status === 'FAILED') {
-                    console.log("文件上传失败")
+                    window.alert("视频上传失败，请删除再重传")
                 } else {
-                    var url = response.data;
-                    console.log("文件上传成功，文件的地址为" + url)
+                    video.set(fileId, response.data);
                 }
             }
         })
     }).on('filesuccessremove', function (event, id) {
-        //productVideo.delete(id);
+        video.delete(id);
     });
+
+    //挡位
 </script>
 </body>
 </html>
