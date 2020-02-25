@@ -1,0 +1,195 @@
+﻿@charset "utf-8";
+.tag-customize * {
+    margin: 0;
+    padding: 0;
+    list-style-type: none
+}
+
+.tag-customize a, img {
+    border: 0
+}
+
+.tag-customize em {
+    font-style: normal
+}
+
+.tag-customize a, a:visited {
+    color: #5e5e5e;
+    text-decoration: none
+}
+
+.tag-customize a:hover {
+    color: #36c !important;
+    text-decoration: none
+}
+
+.tag-customize .clear {
+    display: block;
+    overflow: hidden;
+    clear: both;
+    height: 0;
+    line-height: 0;
+    font-size: 0
+}
+
+.tag-customize .clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden
+}
+
+.tag-customize .clearfix {
+    display: inline-table
+}
+
+.tag-customize * html .clearfix {
+    height: 1%
+}
+
+.tag-customize .clearfix {
+    display: block
+}
+
+.tag-customize * + html .clearfix {
+    min-height: 1%
+}
+
+.tag-customize .demo {
+    width: 450px;
+    margin: 40px auto;
+    position: relative
+}
+
+.tag-customize .login .stext {
+    padding: 6px 12px;
+    width: 380px;
+    border: 1px solid #a4a2a2
+}
+
+.tag-customize .default-tag a {
+    background: url(https://capharnaum.oss-us-west-1.aliyuncs.com/goCreate/images/tagbg.png) no-repeat
+}
+
+.tag-customize .default-tag a span {
+    background: url(https://capharnaum.oss-us-west-1.aliyuncs.com/goCreate/images/tagbg.png) no-repeat
+}
+
+.tag-customize .plus-tag a {
+    background: url(https://capharnaum.oss-us-west-1.aliyuncs.com/goCreate/images/tagbg.png) no-repeat
+}
+
+.tag-customize .plus-tag a em {
+    background: url(https://capharnaum.oss-us-west-1.aliyuncs.com/goCreate/images/tagbg.png) no-repeat
+}
+
+.tag-customize .plus-tag-add a {
+    background: url(https://capharnaum.oss-us-west-1.aliyuncs.com/goCreate/images/tagbg.png) no-repeat
+}
+
+
+.tag-customize .tagbtn a {
+    color: #333;
+    display: block;
+    float: left;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    margin: 0 10px 10px 0;
+    padding: 0 10px 0 5px;
+    white-space: nowrap
+}
+
+.tag-customize .default-tag {
+    padding: 0 0 0;
+    margin-right: 300px;
+}
+
+.tag-customize .default-tag a {
+    background-position: 100% 0;
+    font-size: 12px
+}
+
+.tag-customize .default-tag a:hover {
+    background-position: 100% -22px
+}
+
+.tag-customize .default-tag a span {
+    padding: 0 0 0 11px;
+    background-position: 0 -60px
+}
+
+.tag-customize .default-tag a:hover span {
+    background-position: 0 -98px
+}
+
+.tag-customize .default-tag a.selected {
+    opacity: .6;
+    filter: alpha(opacity=60)
+}
+
+.tag-customize .default-tag a.selected:hover {
+    background-position: 100% 0;
+    cursor: default
+}
+
+.tag-customize .default-tag a.selected:hover span {
+    background-position: 0 -60px
+}
+
+.tag-customize .plus-tag {
+    padding: 10px 180px 0 0;
+}
+
+.tag-customize .plus-tag a {
+    background-position: 100% -22px
+}
+
+.tag-customize .plus-tag a span {
+    float: left
+}
+
+.tag-customize .plus-tag a em {
+    display: block;
+    float: left;
+    margin: 5px 0 0 8px;
+    width: 13px;
+    height: 13px;
+    overflow: hidden;
+    background-position: -165px -100px;
+    cursor: pointer
+}
+
+.tag-customize .plus-tag a:hover em {
+    background-position: -168px -64px
+}
+
+.tag-customize .plus-tag-add li {
+    height: 40px;
+    position: relative
+}
+
+.tag-customize .plus-tag-add li .label {
+    position: absolute;
+    left: -110px;
+    top: 7px;
+    display: block
+}
+
+.tag-customize .plus-tag-add button {
+    float: left
+}
+
+.tag-customize .plus-tag-add a {
+    float: left;
+    margin: 0 0 0 0;
+    display: inline;
+    font-size: 18px;
+    background-position: -287px -53px;
+    padding: 0 0 0 16px
+}
+
+.tag-customize .plus-tag-add a.plus {
+    background-position: -285px -90px
+}

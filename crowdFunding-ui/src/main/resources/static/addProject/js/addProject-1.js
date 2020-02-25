@@ -14,7 +14,7 @@ function BasicInfoDTO() {
     var crowdFundingStory;
     var companyFile;
     var teamFile;
-    var memberInfoDTOList;
+    var memberList;
 }
 
 BasicInfoDTO.prototype.getUserToken = function () {
@@ -59,8 +59,8 @@ BasicInfoDTO.prototype.getCompanyFile = function () {
 BasicInfoDTO.prototype.getTeamFile = function () {
     return this.teamFile;
 };
-BasicInfoDTO.prototype.getMemberInfoDTOList = function () {
-    return this.memberInfoDTOList;
+BasicInfoDTO.prototype.getMemberList = function () {
+    return this.memberList;
 };
 BasicInfoDTO.prototype.setUserToken = function (userToken) {
     this.userToken = userToken;
@@ -104,12 +104,41 @@ BasicInfoDTO.prototype.setCompanyFile = function (companyFile) {
 BasicInfoDTO.prototype.setTeamFile = function (teamFile) {
     this.teamFile = teamFile;
 };
-BasicInfoDTO.prototype.setMemberInfoDTOList = function (memberInfoDTOList) {
-    this.memberInfoDTOList = memberInfoDTOList;
+BasicInfoDTO.prototype.setMemberList = function (memberList) {
+    this.memberList = memberList;
 };
-//1.1 type
-//1.2 tag
-//1.3 member
+
+function Member() {
+    var name;
+    var position;
+    var introduction;
+    var avatar;
+}
+
+Member.prototype.setName = function (name) {
+    this.name = name;
+};
+Member.prototype.setPosition = function (position) {
+    this.position = position;
+};
+Member.prototype.setIntroduction = function (introduction) {
+    this.introduction = introduction;
+};
+Member.prototype.setAvatar = function (avatar) {
+    this.avatar = avatar;
+};
+Member.prototype.getName = function () {
+    return this.name;
+};
+Member.prototype.getPosition = function () {
+    return this.position;
+};
+Member.prototype.getIntroduction = function () {
+    return this.introduction;
+};
+Member.prototype.getAvatar = function () {
+    return this.avatar;
+};
 
 //2.回报挡位
 function RewardDTO() {
@@ -209,20 +238,6 @@ Reward.prototype.getRewardDate = function () {
 };
 Reward.prototype.getReceipt = function () {
     return this.receipt;
-};
-
-var rewardList = [];    //回报挡位信息数组
-
-//媒体类
-function Media() {
-    var url;
-}
-
-Media.prototype.getUrl = function () {
-    return this.url;
-};
-Media.prototype.setUrl = function (url) {
-    this.url = url;
 };
 
 //3.推广资料
@@ -340,23 +355,43 @@ QualificationInfoDTO.prototype.setOtherQualificationFile = function (otherQualif
     this.otherQualificationFile = otherQualificationFile;
 };
 
+//将map转化为list
+function mapToList(map) {
+    var list = [];
+    map.forEach(function (value, key) {
+        list.push(value);
+    });
+    return list;
+}
 
-//资质信息
-var brandPatent = new Map();
-var managePermit = new Map();
-var productionPermit = new Map();
-var certification = new Map();
-var qualityReport = new Map();
-var businessLicenseReport = new Map();
-var otherQualificationFile = new Map();
-//推广资料
-var importantBlockDisplay = new Map();
-var pcHomeDisplay = new Map();
-var pcProductDisplay = new Map();
-var video = new Map();
+//判断该标签elements是否有为cName的样式
+function hasClass(elements, cName) {
+    return !!elements.className.match(new RegExp("(\\s|^)" + cName + "(\\s|$)"));
+}
 
+//为标签elements添加为名为cName样式
+function addClass(elements, cName) {
+    if (!hasClass(elements, cName)) {
+        elements.className += " " + cName;
+    }
+}
+
+//删除样式
+function removeClass(elements, cName) {
+    if (hasClass(elements, cName)) {
+        elements.className = elements.className.replace(new RegExp("(\\s|^)" + cName + "(\\s|$)"), " ");
+    }
+}
+
+/***********************************************基本信息****************************************************/
+var basicInfoDTO = new BasicInfoDTO();
+/**基本信息 end*/
 
 /***********************************************挡位信息****************************************************/
+var rewardDTO = new RewardDTO();
+var formIndex = 0;       //表的索引
+var rewardMap = new Map();
+
 function showBGLayer() {
     document.getElementsByClassName('order-layer-tip').item(0).style.display = "block";
     document.getElementById('addStallPopupShadow').style.display = 'block';
@@ -366,9 +401,6 @@ function hideBGLayer() {
     document.getElementsByClassName('order-layer-tip').item(0).style.display = "none";
     document.getElementById('addStallPopupShadow').style.display = 'none';
 }
-
-var formIndex = 0;       //表的索引
-var rewardMap = new Map();
 
 //添加挡位
 function addRewardInfo() {
@@ -429,7 +461,7 @@ function generateRewardForm(index) {
         "                    <dt class='order-dt'><span class='fr'>支持金额</span></dt>" +
         "                    <dd class='order-dd clearfix w200'>" +
         "                        <div class='z-ipt-s w78 fl'>" +
-        "                            <input type='text' class='z-ipt fl w78' placeholder='不少于0' id='reward-money-" + index + "' maxlength='8'>" +
+        "                            <input type='text' class='z-ipt fl w78' placeholder='不少于1000' id='reward-money-" + index + "' maxlength='8'>" +
         "                            <span class='ipt-span'>元</span>" +
         "                        </div>" +
         "                    </dd>" +
@@ -441,7 +473,7 @@ function generateRewardForm(index) {
         "                <dt class='order-dt'><span class='fr'>回报内容</span></dt>" +
         "                <dd class='order-dd lt0 mt5 mb5'>" +
         "                <textarea class='z-textarea h80' placeholder='请简要概述该档位的回报内容，最多120字' id='reward-description-" + index + "'" +
-        "                          style='width: 566px'></textarea>" +
+        "                          style='width: 566px' maxlength='120'></textarea>" +
         "                </dd>" +
         "            </dl>" +
         "            <!--回报说明 end-->" +
@@ -477,29 +509,29 @@ function generateRewardForm(index) {
         "                <dt class='order-dt'><span class='fr'>限定数量</span></dt>" +
         "                <dd class='order-dd mb5'>" +
         "                    <div class='z-ipt-s fl w78'>" +
-        "                        <input type='text' class='z-ipt fl w78' placeholder='0' id='reward-limitedAmount-" + index + "' value='0'>" +
+        "                        <input type='text' class='z-ipt fl w78' placeholder='0' id='reward-limitedAmount-" + index + "' maxlength='6'>" +
         "                        <span class='ipt-span'>份</span>" +
         "                    </div>" +
         "                    <span id='count_tip' class='z-notes'>（0人为不限发售量，提示：该档位支持者每单可支持份）</span></dd>" +
         "            </dl>" +
         "            <!--限定发售量 end-->" +
-        "            <!--单人限购数量-->" +
+        "            <!--单笔订单限购数量-->" +
         "            <dl class='order-dl'>" +
-        "                <dt class='order-dt'><span class='fr'>单人限购数量</span></dt>" +
+        "                <dt class='order-dt'><span class='fr'>单笔订单限购数量</span></dt>" +
         "                <dd class='order-dd mb5'>" +
         "                    <div class='z-ipt-s fl w78'>" +
-        "                        <input type='text' class='z-ipt fl w78' placeholder='0' id='reward-limitedPurchase-" + index + "' value='0'>" +
+        "                        <input type='text' class='z-ipt fl w78' placeholder='0' id='reward-limitedPurchase-" + index + "' maxlength='4'>" +
         "                        <span class='ipt-span'>份</span>" +
         "                    </div>" +
         "                    <span id='singlg_count_tip' class='z-notes'>（0人为不限购）</span></dd>" +
         "            </dl>" +
-        "            <!--单人限购数量 end-->" +
+        "            <!--单笔订单限购数量 end-->" +
         "            <!--运费-->" +
         "            <dl class='order-dl'>" +
         "                <dt class='order-dt'><span class='fr'>运费单价</span></dt>" +
         "                <dd class='order-dd'>" +
         "                    <div class='z-ipt-s fl w78'>" +
-        "                        <input type='text' class='z-ipt fl w78 fl' placeholder='0' id='reward-freight-" + index + "' value='0'>" +
+        "                        <input type='text' class='z-ipt fl w78 fl' placeholder='0' id='reward-freight-" + index + "' maxlength='5'>" +
         "                        <span class='ipt-span'>元</span>" +
         "                    </div>" +
         "                    <span class='z-notes'>（0元为包邮）</span></dd>" +
@@ -511,10 +543,10 @@ function generateRewardForm(index) {
         "                <dd class='order-dd'>" +
         "                    <span class='fl mr10'>众筹成功后</span>" +
         "                    <div class='z-ipt-s w78 fl'>" +
-        "                        <input type='text' class='z-ipt fl w78' id='reward-rewardDate-" + index + "'>" +
+        "                        <input type='text' class='z-ipt fl w78' placeholder='0' id='reward-rewardDate-" + index + "' maxlength='3'>" +
         "                        <span class='ipt-span'>天</span>" +
         "                    </div>" +
-        "                    <span class='fl ml50'>，将会向支持者发送回报</span>" +
+        "                    <span class='fl ml50'>，将会向支持者发送回报（0天表示成功当天发货）</span>" +
         "                </dd>" +
         "            </dl>" +
         "            <!--回报时间 end-->" +
@@ -548,14 +580,13 @@ function generateRewardForm(index) {
         "    </div>";
 }
 
-
 function generateRewardFormControllerCode(index) {
     return "$('#reward-picture-input-" + index + "').fileinput({\n" +
         "    theme: 'fas',\n" +
         "    uploadUrl: '/file/upload',\n" +
         "    allowedFileTypes: ['image'],\n" +
         "    maxFileCount: 1,\n" +
-        "    minFileSize: 200,\n" +
+        "    minFileSize: 50,\n" +
         "    maxFileSize: 1024 * 4,\n" +
         "    maxFilesNum: 1,\n" +
         "    showClose: false,\n" +
@@ -629,8 +660,12 @@ function generateRewardFormControllerCode(index) {
         "    var freight = document.getElementById('reward-freight-" + index + "').value;\n" +
         "    var rewardDate = document.getElementById('reward-rewardDate-" + index + "').value;\n" +
         "    var receipt = getReceipt_" + index + "();\n" +
+        "    if (limitedAmount === '') { limitedAmount = '0'}\n" +
+        "    if (limitedPurchase === '') { limitedPurchase = '0'}\n" +
+        "    if (freight === '') { freight = '0'}\n" +
+        "    if (rewardDate === '') { rewardDate = '0'}\n" +
         "    var reward = new Reward();\n" +
-        "    reward.setType(type);\n" +
+        "    reward.setType(type+'');\n" +
         "    reward.setMoney(money);\n" +
         "    reward.setDescription(description);\n" +
         "    reward.setPicture(picture);\n" +
@@ -639,7 +674,7 @@ function generateRewardFormControllerCode(index) {
         "    reward.setLimitedPurchase(limitedPurchase);\n" +
         "    reward.setFreight(freight);\n" +
         "    reward.setRewardDate(rewardDate);\n" +
-        "    reward.setReceipt(receipt);\n" +
+        "    reward.setReceipt(receipt+'');\n" +
         "    rewardMap.set('" + index + "', reward);\n" +
         "    document.getElementById('addStallsPopupBody-" + index + "').remove();\n" +
         "    hideBGLayer();\n" +
@@ -663,7 +698,7 @@ function generateRewardFormControllerCodeI(reward, index) {
         "    overwriteInitial: true,\n" +
         "    initialPreviewAsData: true,\n" +
         "    maxFileCount: 1,\n" +
-        "    minFileSize: 200,\n" +
+        "    minFileSize: 50,\n" +
         "    maxFileSize: 1024 * 4,\n" +
         "    maxFilesNum: 1,\n" +
         "    showClose: false,\n" +
@@ -738,8 +773,12 @@ function generateRewardFormControllerCodeI(reward, index) {
         "    var freight = document.getElementById('reward-freight-" + index + "').value;\n" +
         "    var rewardDate = document.getElementById('reward-rewardDate-" + index + "').value;\n" +
         "    var receipt = getReceipt_" + index + "();\n" +
+        "    if (limitedAmount === '') { limitedAmount = '0'}\n" +
+        "    if (limitedPurchase === '') { limitedPurchase = '0'}\n" +
+        "    if (freight === '') { freight = '0'}\n" +
+        "    if (rewardDate === '') { rewardDate = '0'}\n" +
         "    var reward = new Reward();\n" +
-        "    reward.setType(type);\n" +
+        "    reward.setType(type+'');\n" +
         "    reward.setMoney(money);\n" +
         "    reward.setDescription(description);\n" +
         "    reward.setPicture(picture);\n" +
@@ -748,7 +787,7 @@ function generateRewardFormControllerCodeI(reward, index) {
         "    reward.setLimitedPurchase(limitedPurchase);\n" +
         "    reward.setFreight(freight);\n" +
         "    reward.setRewardDate(rewardDate);\n" +
-        "    reward.setReceipt(receipt);\n" +
+        "    reward.setReceipt(receipt+'');\n" +
         "    rewardMap.set('" + index + "', reward);\n" +
         "    document.getElementById('addStallsPopupBody-" + index + "').remove();\n" +
         "    hideBGLayer();\n" +
@@ -852,7 +891,25 @@ function updateRewardIntroList(rewardMap) {
     });
 }
 
-/***********************************************挡位信息 end************************************************/
+/**挡位信息 end*/
+
+/*************************************************推广资料**************************************************/
+var promotionalMaterialDTO = new PromotionalMaterialDTO();
+
+/**推广资料 end*/
+
+/*************************************************资质信息**************************************************/
+var brandPatent = new Map();
+var managePermit = new Map();
+var productionPermit = new Map();
+var certification = new Map();
+var qualityReport = new Map();
+var businessLicense = new Map();
+var otherQualificationFile = new Map();
+
+var qualificationInfoDTO = new QualificationInfoDTO();
+
+/**资质信息 end*/
 
 
 

@@ -42,7 +42,7 @@
         <profile>
             <id>development</id>
             <properties>
-                <db.url>jdbc:mysql://45.76.75.121:3306/crowd_funding?useSSL=false</db.url>
+                <db.url>jdbc:mysql://149.248.18.111:3306/crowd_funding?useSSL=false</db.url>
                 <db.user>root</db.user>
                 <db.password>Justin.171464928</db.password>
                 <db.driver>com.mysql.jdbc.Driver</db.driver>

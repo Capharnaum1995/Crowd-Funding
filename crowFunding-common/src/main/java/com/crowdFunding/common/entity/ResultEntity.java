@@ -33,4 +33,9 @@ public class ResultEntity<T> {
         return new ResultEntity<>(FAILED, null, null);
     }
 
+    //从Redis中是否获取到了数据
+    public static boolean getDataFromRedisSucceed(ResultEntity<String> resultEntity) {
+        return !ResultEntity.FAILED.equals(resultEntity.getStatus()) && !ResultEntity.NO_DATA.equals(resultEntity.getData());
+    }
+
 }

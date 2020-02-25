@@ -10,7 +10,7 @@
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <!--不多讲，连接数据库必须的-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://45.76.75.121:3306/crowd_funding?useSSL=false"
+                        connectionURL="jdbc:mysql://149.248.18.111:3306/crowd_funding?useSSL=false"
                         userId="root"
                         password="Justin.171464928">
             <property name="nullCatalogMeansCurrent" value="true"/>

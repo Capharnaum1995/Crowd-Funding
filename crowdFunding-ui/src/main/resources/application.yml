@@ -3,7 +3,7 @@ server:
 spring:
   redis:
     cluster:
-      nodes: 45.76.75.121:9920,45.76.75.121:9921,45.76.75.121:9922,45.76.75.121:9923,45.76.75.121:9924,45.76.75.121:9925
+      nodes: 149.248.18.111:9920,149.248.18.111:9921,149.248.18.111:9922,149.248.18.111:9923,149.248.18.111:9924,149.248.18.111:9925
       max-redirects: 3
     password: justin.171464928
     jedis:
@@ -32,7 +32,7 @@ eureka:
   client:
     register-with-eureka: false
     service-url:
-      defaultZone: http://144.202.121.88:8761/eureka/
+      defaultZone: http://45.32.64.240:8761/eureka/
   instance:
     prefer-ip-address: true
 

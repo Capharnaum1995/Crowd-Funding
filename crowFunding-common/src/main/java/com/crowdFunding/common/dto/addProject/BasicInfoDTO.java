@@ -46,6 +46,6 @@ public class BasicInfoDTO implements Serializable {
 
     private String teamFile;
 
-    private List<MemberInfoDTO> memberInfoDTOList;
+    private List<Member> memberList;
 
 }

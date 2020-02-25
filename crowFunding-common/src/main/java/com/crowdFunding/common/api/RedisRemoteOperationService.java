@@ -15,7 +15,7 @@ public interface RedisRemoteOperationService {
      *
      * @param key
      * @param value
-     * @param validTime 缓存数据的有效时间，以分钟为单位
+     * @param validTime 正数表示过期时间，0或者null是不合法的，负数（-1）表示永久不过期
      * @return
      */
     @RequestMapping("/save/key/value")
@@ -53,6 +53,21 @@ public interface RedisRemoteOperationService {
     ResultEntity<String> setIfNotExist(@RequestParam("lock") String lock,
                                        @RequestParam("key") String key,
                                        @RequestParam("value") String value);
+
+    /**
+     * 如果不存在则添加一条记录(有过期时间的)
+     *
+     * @param lock
+     * @param key
+     * @param value
+     * @param validTime
+     * @return
+     */
+    @RequestMapping("/set/if/not/exist/with/valid/time")
+    ResultEntity<String> setIfNotExistWithValidTime(@RequestParam("lock") String lock,
+                                                    @RequestParam("key") String key,
+                                                    @RequestParam("value") String value,
+                                                    @RequestParam("validTime") Long validTime);
 
     /**
      * 返回Set

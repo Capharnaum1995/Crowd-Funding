@@ -3,9 +3,11 @@ package com.crowdFunding.redisProvider.Controller;
 import com.crowdFunding.common.constant.Constant;
 import com.crowdFunding.common.entity.ResultEntity;
 import com.crowdFunding.common.utils.CommonUtils;
+import com.crowdFunding.redisProvider.provider.RedisProvider;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +23,11 @@ public class RedisOperationController {
     private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
-    private RedissonClient redissonClient;
+    private RedisProvider redisProvider;
 
     /**
+     * 保存
+     *
      * @param key
      * @param value
      * @param validTime 正数表示过期时间，0或者null是不合法的，负数（-1）表示永久不过期
@@ -86,6 +90,12 @@ public class RedisOperationController {
         }
     }
 
+    /**
+     * 删除
+     *
+     * @param key
+     * @return
+     */
     @RequestMapping("/remove/by/key")
     //@HystrixCommand(fallbackMethod = "removeByKeyHystrix")
     public ResultEntity<String> removeByKey(@RequestParam("key") String key) {
@@ -117,44 +127,24 @@ public class RedisOperationController {
     ResultEntity<String> setIfNotExist(@RequestParam("lock") String lock,
                                        @RequestParam("key") String key,
                                        @RequestParam("value") String value) {
+        return redisProvider.setIfNotExistWithValidTime(lock, key, value, (long) -1);
+    }
 
-        //1. 获取锁对象
-        RLock fairLock = redissonClient.getFairLock(lock);
-        //2. 尝试加锁，最多等待60秒，上锁以后10秒自动解锁
-        boolean res;
-        try {
-            res = fairLock.tryLock(60, 10, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return ResultEntity.failed(Constant.REDISSION_LOCK_INTERRUPTED_EXCEPTION);
-        }
-        if (!res) {
-            return ResultEntity.failed(Constant.REDISSION_LOCK_FAILED);
-        }
-        //3. 上锁成功，先查询
-        String result;
-        try {
-            result = stringRedisTemplate.opsForValue().get(key);
-        } catch (Exception e) {
-            fairLock.unlock();
-            e.printStackTrace();
-            return ResultEntity.failed(Constant.REDIS_CALL_FAILED + " " + e.getMessage());
-        }
-        //4.1 存在记录，释放锁，返回
-        if (result != null) {
-            fairLock.unlock();
-            return ResultEntity.successWithoutData();
-        }
-        //4.2 不存在记录，添加记录，释放锁，返回
-        try {
-            stringRedisTemplate.opsForValue().set(key, value);
-        } catch (Exception e) {
-            fairLock.unlock();
-            e.printStackTrace();
-            return ResultEntity.failed(Constant.REDIS_CALL_FAILED + " " + e.getMessage());
-        }
-        fairLock.unlock();
-        return ResultEntity.successWithoutData();
+    /**
+     * 如果不存在则添加一条记录(有过期时间的)
+     *
+     * @param lock
+     * @param key
+     * @param value
+     * @param validTime
+     * @return
+     */
+    @RequestMapping("/set/if/not/exist/with/valid/time")
+    ResultEntity<String> setIfNotExistWithValidTime(@RequestParam("lock") String lock,
+                                                    @RequestParam("key") String key,
+                                                    @RequestParam("value") String value,
+                                                    @RequestParam("validTime") Long validTime) {
+        return redisProvider.setIfNotExistWithValidTime(lock, key, value, validTime);
     }
 
     /**

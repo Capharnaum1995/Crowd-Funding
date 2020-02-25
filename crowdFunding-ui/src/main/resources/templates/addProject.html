@@ -1,0 +1,1304 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <title>众筹商家后台管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link href="/fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+    <link href="/fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/addProject/css/index1.css"/>
+    <link rel="stylesheet" href="/addProject/css/index2.css"/>
+    <link rel="stylesheet" href="/addProject/css/base.css"/>
+    <link rel="stylesheet" href="/addProject/css/my-z.css"/>
+    <link rel="stylesheet" href="/addProject/css/customize-tag.css"/>
+    <link rel="stylesheet" href="/editor/css/editormd.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"></script>
+    <script src="/fileinput/js/plugins/piexif.js" type="text/javascript"></script>
+    <script src="/fileinput/js/plugins/sortable.js" type="text/javascript"></script>
+    <script src="/fileinput/js/fileinput.js" type="text/javascript"></script>
+    <script src="/fileinput/js/locales/fr.js" type="text/javascript"></script>
+    <script src="/fileinput/js/locales/es.js" type="text/javascript"></script>
+    <script src="/fileinput/themes/fas/theme.js" type="text/javascript"></script>
+    <script src="/fileinput/themes/explorer-fas/theme.js" type="text/javascript"></script>
+    <script src="/editor/js/editormd.min.js"></script>
+    <script src="/addProject/js/addProject-1.js" type="application/javascript"></script>
+    <style>
+        .zpopup {
+            z-index: 1001;
+        }
+
+        .pop-search {
+            padding-left: 20px;
+            width: 460px;
+            height: 40px;
+            position: relative;
+        }
+
+        .pop-search .button {
+            display: block;
+            z-index: 2;
+            top: 0;
+            right: 0;
+            background-color: #009aff;
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            width: 100px;
+            height: 40px;
+            position: absolute;
+        }
+
+        .pop-search .input {
+            line-height: 40px;
+            font-size: 16px;
+            width: 100%;
+            height: 100%;
+
+            border: none !important;
+            color: #444;
+        }
+
+        .pop-search-resault {
+            position: absolute;
+            z-index: 2;
+            left: 0;
+            top: 40px;
+            background-color: #fff;
+            width: 500px;
+            height: auto;
+            min-height: 40px;
+            max-height: 500px;
+            overflow-y: scroll;
+        }
+
+        .pop-search-resault.hide {
+            display: none;
+        }
+
+        .pop-search-resault ul li {
+            padding-left: 20px;
+            line-height: 40px;
+            font-size: 12px;
+            color: #444;
+            cursor: pointer;
+        }
+
+        .pop-search-resault ul li img {
+            width: 30px;
+        }
+
+        .pop-search-resault ul li:hover {
+            background-color: #666;
+        }
+
+        .popSearchBg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .popSearchBg.hide {
+            display: none;
+        }
+
+        .popSearch {
+            position: absolute;
+            left: 225px;
+            top: 300px;
+            z-index: 3;
+            width: 500px;
+            height: 40px;
+            border: 10px solid #fff;
+            background-color: #fff;
+        }
+
+        .popSearch.hide {
+            display: none;
+        }
+
+        .app-story-con {
+            position: relative;
+            /*background: #F1F9FC;*/
+            margin-bottom: 5px;
+        }
+
+        .app-reason-con {
+            position: relative;
+            margin-bottom: 5px;
+            /*background: #F1F9FC;*/
+        }
+
+        .app-story-title {
+            font-size: 12px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .app-reason-title {
+            font-size: 12px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .upfile_root_ueditor input.ui_file {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            width: auto;
+            height: 40px;
+            cursor: pointer;
+            font-size: 40px;
+            opacity: 0;
+        }
+
+        .edui-default .edui-toolbar .edui-button .edui-icon, .edui-default .edui-toolbar .edui-menubutton .edui-icon, .edui-default .edui-toolbar .edui-splitbutton .edui-icon {
+            transform: translateY(5px);
+        }
+
+        #edui20 .edui-label {
+            transform: translateY(5px);
+        }
+
+        #edui41 .edui-label {
+            transform: translateY(5px);
+        }
+
+        .order-dl .additional {
+            margin-top: 10px;
+            color: #a5a5a5;
+            line-height: 1.25;
+            padding-right: 80px;
+        }
+
+        .project-photos .upload-number-tips-detail {
+            line-height: 1.2;
+            padding-top: 50px;
+        }
+
+        .project-photos .upload-number-tips .para {
+            line-height: 1.2;
+            color: black;
+            margin-top: 0;
+
+        }
+
+        #z-has-photo-m-detail .z-img {
+            position: absolute;
+            width: 200px;
+            height: 355px;
+        }
+
+        #z-has-photo-m-detail .z-shade {
+            width: 200px;
+            height: 355px;
+        }
+
+        #z-has-photo-m-detail .z-hover {
+            width: 200px;
+            height: 355px;
+            background-image: url(//static.360buyimg.com/zhongchou/zc_fe_cms/v1/build/css/i/bg-edit.png);
+            background-position: 0 0;
+        }
+
+        #z-has-photo-m-detail .z-hover .z-file {
+            width: 200px;
+            height: 355px;
+        }
+
+        .z-wrap {
+            position: relative;
+        }
+
+        .navTabbarFixd {
+            position: fixed;
+            top: 0;
+            z-index: 1001;
+        }
+
+        .edit-button {
+            position: absolute;
+            top: 126px;
+            right: 48px;
+            padding: 7px 9px;
+            border-radius: 4px;
+            border: 1px solid #666;
+        }
+
+        .edit-button a {
+            color: #666;
+        }
+
+        .project-photos .z-has-photo-x {
+            width: 200px;
+            height: 180px;
+            left: -212px;
+            top: 175px;
+        }
+
+        .project-photos .z-photo-x .phone-posi2 {
+            border: none;
+        }
+
+        .project-photos .z-photo-x .z-img {
+            width: 202px;
+            height: 182px;
+            border: none;
+            margin-left: -1px;
+            margin-top: -1px;
+        }
+
+        .project-photos-pp {
+            position: relative;
+            height: 220px
+        }
+
+        .err_ProjectListImg {
+            position: absolute;
+            top: 200px;
+            left: 0px;
+        }
+
+        .err_projectImage {
+            position: absolute;
+            top: 200px;
+            left: 273px;
+        }
+
+        .project-photos-pps {
+            position: relative;
+            height: 360px;
+        }
+
+        .err_appShow {
+            position: absolute;
+            top: 365px;
+            left: 0px;
+        }
+
+        .z-has-photo-xxl {
+            position: relative;
+        }
+
+        .err_floor {
+            position: absolute;
+            top: 145px;
+            left: 545px;
+        }
+
+        .err_floor_110 {
+            position: absolute;
+            top: 34px;
+            left: 240px;
+        }
+
+        .phone-posi2 {
+            position: relative;
+        }
+
+        .upload-notice-text {
+            margin-top: 10px;
+        }
+
+        .upload-notice-text2 {
+            position: absolute;
+            top: 356px;
+            right: 170px;
+        }
+
+        .prove-imgs .z-photo .z-img {
+            height: 0;
+        }
+
+        .prove-imgs .z-photo {
+            background-image: none;
+        }
+
+        .prove-imgs .z-photo:before {
+            display: flex;
+            justify-content: center;
+            line-height: 98px;
+            font-size: 18px;
+            content: "+";
+            color: #ccc;
+        }
+
+        .up-nt {
+            margin-top: 10px;
+        }
+
+        #z-has-photo-m-detail .z-p {
+            top: 295px;
+        }
+
+        .project-photos .z-has-photo-x .z-img {
+            width: 199px;
+        }
+
+        .project-photos .z-has-photo-x .small-mask {
+            width: 199px;
+            height: 180px;
+        }
+
+        .delete-icon2 {
+            margin-left: 20px;
+        }
+
+        .project-photos .z-has-photo-x {
+            width: 199px;
+        }
+
+        #z-has-photo-m-detail {
+            margin-top: 0px;
+        }
+
+        .z-has-photo-change {
+            top: 263px;
+        }
+
+        .z-has-photo-lang {
+            top: 606px;
+        }
+
+        #phone-posi {
+            position: absolute;
+            width: 308px;
+            top: 196px;
+            left: 215px;
+        }
+
+        .project-photos .z-photo-x .z-img {
+            width: 310px;
+        }
+
+        .project-photos .z-photo-x .z-file {
+            width: 310px;
+        }
+
+        .project-photos .z-photo-x {
+            background-position: 0px -1692px;
+        }
+
+        .upload-notice-text2 {
+            right: 233px;
+        }
+
+        /*修改公共样式*/
+
+        .header, .footer {
+            position: relative;
+            z-index: 1001;
+        }
+
+        .z-editor {
+            width: inherit;
+        }
+
+        #app-story, #app-reason {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        #edui22_iframeholder, #edui1_iframeholder {
+            overflow: auto !important;
+        }
+
+        #edui22, #edui1 {
+            width: 778px !important;
+        }
+
+        .form-title {
+            border: none;
+        }
+
+        .z-wrap .z-r {
+            padding-bottom: 10px;
+            width: inherit;
+        }
+
+        .z-table, .z-table-wrap {
+            width: inherit;
+        }
+
+        .order-dd {
+            overflow: visible !important;
+            position: relative;
+            width: 816px
+        }
+
+        .slideInDown .order-dd {
+            overflow: visible !important;
+            position: relative;
+            width: 566px
+        }
+
+        .clearfix:after {
+            display: block;
+            content: "";
+            height: 0;
+            line-height: 0;
+            visibility: hidden;
+            clear: both;
+        }
+
+        /*tab css*/
+        .order-tabBar, .order-item {
+            font-size: 14px;
+        }
+
+        .tabBar-wrapper {
+            float: left;
+        }
+
+        .tabBar-title > div, .tabBar-button > div {
+            display: inline-block;
+            margin-right: -4px;
+        }
+
+        /*翻页隐藏*/
+        .tabBar-button div.tabBar-button-hide {
+            display: none;
+        }
+
+        .tabBar-title, .tabBar-button {
+            position: relative;
+            z-index: 10;
+            background: #fff;
+        }
+
+        .tabBar-title, .tabBar-button {
+            padding: 10px;
+        }
+
+        .tabBar-title > div {
+            margin-right: 0;
+            padding-left: 15px;
+            width: 200px;
+            height: 34px;
+            line-height: 34px;
+            border-bottom: 2px solid #666;
+            font-weight: 500;
+        }
+
+        .tabBar-button > div {
+            width: 80px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            background: #d7d7d7;
+            color: #171717;
+        }
+
+        .tabBar-button-save {
+            background: #aaa !important;
+        }
+
+        .tabActive {
+            position: relative;
+            top: 1px;
+            background: #f2f2f2;
+            box-shadow: 2px 3px 3px 0 #999;
+        }
+
+        .tabBar-title > div:hover, .tabBar-button > div:hover {
+            cursor: pointer;
+        }
+
+        .tabBar-button div:hover {
+            position: relative;
+            top: -1px;
+            box-shadow: 0 2px 2px 0 #ccc;
+        }
+
+        .order-item > div {
+            display: none;
+        }
+
+        .order-item > div.order-list {
+            display: block !important;
+        }
+
+        /*-------layer-bg---------*/
+        /*暂时隐藏弹层信息*/
+        .order-layer-tip, .tabBar-step-one, .tabBar-step-two {
+            display: none;
+        }
+
+        .order-layer-tip {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .tabBar-step {
+            position: relative;
+            top: 40px;
+        }
+
+        .tabBar-step::before {
+            position: absolute;
+            bottom: -1px;
+            left: 100px;
+            display: block;
+            content: "";
+            height: 0;
+            z-index: 1002;
+            border-top: 16px solid transparent;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-bottom: 16px solid #fff;
+        }
+
+        .step-wrapper {
+            position: absolute;
+            z-index: 1001;
+            width: 300px;
+            padding: 20px 40px;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #999;
+        }
+
+        .step-wrapper p {
+            margin-bottom: 10px;
+            line-height: 20px;
+            color: #333;
+        }
+
+        .step-wrapper button {
+            border: none;
+            float: left;
+            color: #1d8bbc;
+            font-weight: 600;
+            background: none;
+        }
+
+        .step-one-img {
+            z-index: 1001;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 935px;
+            height: 50px;
+        }
+
+        .step-two-img {
+            z-index: 1001;
+            position: absolute;
+            top: 0;
+            left: 945px;
+            width: 190px;
+            height: 50px;
+        }
+
+        .step-one-img img, .step-two-img img {
+            width: 100%;
+            height: 100%;
+        }
+
+        /*form 表单样式*/
+        .z-h5 {
+            height: 40px;
+            line-height: 40px;
+            border-bottom: 1px solid #666;
+            color: #fff;
+        }
+
+        .z-h5 > h4 {
+            padding-left: 20px;
+            width: 200px;
+            background: #7f7f7f;
+            line-height: 2.2;
+        }
+
+        .upload-img-button {
+            display: inline-block;
+            vertical-align: middle;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border: 1px solid #ccc;
+            color: #5e5e5e;
+        }
+
+        .item-block-err .order-dl {
+            display: flex;
+            align-items: center;
+        }
+
+        .item-block-err order-dt {
+            line-height: 20px;
+        }
+
+        .z-br-error .z-limit {
+            background-position-y: 1px;
+        }
+    </style>
+</head>
+<body>
+<!--header-->
+<div class="header">
+    <div class="header-inner pr">
+        <div class="header-logo">
+            <a href="//z-dm.jd.com/" style="color: #FFF;">
+                <h1>京东众筹商家后台管理系统</h1>
+            </a>
+        </div>
+        <div class="sign-out">
+            <div id="newLoginbar" class="user-title fl"></div>
+        </div>
+        <div class="header-nav">
+            <ul>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|2" target="_blank"
+                       href="//z.jd.com/new.html">众筹首页</a></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|1" target="_blank"
+                       href="//z-dm.jd.com/funding/goCreate.html">发起众筹</a></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|4" target="_blank"
+                       href="//ur.jr.jd.com/survey/show?id=137&amp;u=http%3A%2F%2Ftrade.z.jd.com%2Ffunding%2FmyCrowdfunding.action">问题反馈</a>
+                </li>
+            </ul>
+        </div>
+        <div class="cb"></div>
+    </div>
+</div>
+<!--wrap-->
+<div class="wrap wrap-m-editor" style="background-color: rgb(255, 255, 255);">
+    <div class="z-main" style="">
+        <div class="z-form" style="">
+            <!--title-->
+            <div class="form-title">
+                <span class="red-block"></span>
+                <p><span class="font-big">发起众筹</span></p>
+            </div>
+            <!--title end-->
+            <div class="z-wrap" style="">
+                <!--  formHeader -->
+                <div class="z-r navTabbar">
+                    <div class="order-tabBar">
+                        <!--提示层背景-->
+                        <div class="order-layer-tip"></div>
+                        <!--tabBar-->
+                        <div class="tabBar-wrapper">
+                            <div class="tabBar-title">
+                                <!--####“基本信息” “挡位信息” “推广资料” “资质信息”的导航条，tabActive的为高亮#####-->
+                                <div id="tabBar-title-one" class="tabBar-title-one tabActive">基本信息</div>
+                                <div id="tabBar-title-two" class="tabBar-title-two">档位信息</div>
+                                <div id="tabBar-title-three" class="tabBar-title-three">推广资料</div>
+                                <div id="tabBar-title-four" class="tabBar-title-four">资质信息</div>
+                            </div>
+
+                            <!--第一步提示-->
+                            <div class="tabBar-step-one">
+                                <div class="step-one-img">
+                                    <img src="https://capharnaum.oss-us-west-1.aliyuncs.com/goCreate/images/step1.png"
+                                         alt="">
+                                </div>
+                                <div class="tabBar-step">
+                                    <div class="step-wrapper step-one-wrapper">
+                                        <p>展示您当前填写资料的进度。</p>
+                                        <p>创建或修改项目的过程中，您可以随时掌握自己填写进度。</p>
+                                        <button class="step-one-know">我知道了</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--tabButton-->
+                        <div class="tabBar-wrapper">
+                            <div class="tabBar-button">
+                                <div id="drafts" class="tabBar-button-save">保存</div>
+                                <div id="submit-info" class="tabBar-button-submit">提交</div>
+                            </div>
+                            <!--第二步提示-->
+                            <div class="tabBar-step-two">
+                                <div class="step-two-img">
+                                    <img src="https://capharnaum.oss-us-west-1.aliyuncs.com/goCreate/images/step2.png">
+                                </div>
+                                <div class=" tabBar-step">
+                                    <div class="step-wrapper step-two-wrapper">
+                                        <p>填写信息的过程中，可以随时保存，可以在下次访问时，继续填写。</p>
+                                        <p>所有表单都填写完成后，可以点击提交，项目就会交由运营人员进行审核。</p>
+                                        <button class="step-two-know">我知道了</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--tabButton end-->
+                    </div>
+                </div>
+                <!--  formHeader end  -->
+                <!-- form -->
+                <div class="z-r" style="">
+                    <div class="order-item" style="padding-top: 0px;">
+                        <!--基本信息-->
+                        <div id="basicInfo" class="order-list" style="">
+                            <!--众筹类型-->
+                            <dl class="order-dl">
+                                <dt class="order-dt"><span class="fr">众筹类型</span><span
+                                        class="order-point fr">*</span></dt>
+                                <dd class="order-dd">
+                                    <div class="z-radios JradioType">
+                                        <input type="hidden" id="projectType" value="0">
+                                        <div class="z-radio">
+                                            <label id="projectTypeLabel1" class="radio-current">回报众筹</label>
+                                        </div>
+                                        <span class="z-notes">（一般的有产品回报的众筹项目）</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span id="err_projectType" class="z-limit" style="display: none;"> </span>
+                                        <br>
+                                        <div class="z-radio">
+                                            <label id="projectTypeLabel2" class="radio-normal">公益众筹</label>
+                                        </div>
+                                        <span class="z-notes">（公益捐助类项目）</span>
+                                    </div>
+                                </dd>
+                                <script>
+                                    var projectTypeLabel1 = document.getElementById('projectTypeLabel1');
+                                    var projectTypeLabel2 = document.getElementById('projectTypeLabel2');
+                                    var projectType = document.getElementById('projectType');
+                                    projectTypeLabel1.onclick = function () {
+                                        if (projectTypeLabel1.getAttribute('class') !== 'radio-current') {
+                                            projectTypeLabel2.setAttribute('class', 'radio-normal');
+                                            projectTypeLabel1.setAttribute('class', 'radio-current');
+                                            projectType.setAttribute('value', '0')
+                                        }
+                                    };
+                                    projectTypeLabel2.onclick = function () {
+                                        if (projectTypeLabel2.getAttribute('class') !== 'radio-current') {
+                                            projectTypeLabel1.setAttribute('class', 'radio-normal');
+                                            projectTypeLabel2.setAttribute('class', 'radio-current');
+                                            projectType.setAttribute('value', '1')
+                                        }
+                                    }
+                                </script>
+                            </dl>
+                            <!--众筹类型 end-->
+                            <!--筹资天数-->
+                            <dl class="order-dl">
+                                <dt class="order-dt"><span class="fr">筹资天数</span><span
+                                        class="order-point fr">*</span></dt>
+                                <dd class="order-dd">
+                                    <div class="z-radios JradioDay">
+                                        <div id="collectDaysDiv" class="z-ipt-s fl w48 mr55">
+                                            <label for="collectDays"></label>
+                                            <input id="collectDays" maxlength="3" type="text" value=""
+                                                   class="z-ipt fl w48"
+                                                   placeholder="10~60">
+                                            <span class="ipt-span">天</span>
+                                        </div>
+                                        <span class="z-notes" id="collectDaysSpan">（一般建议众筹时间为10-60天）</span>
+                                        <span id="err_collectDays" class="z-limit" style="display: none;"></span>
+                                        <br>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!--筹资天数 end-->
+                            <!--筹资金额-->
+                            <dl class="order-dl">
+                                <dt class="order-dt"><span class="fr">筹资金额</span><span
+                                        class="order-point fr">*</span></dt>
+                                <dd class="order-dd">
+                                    <div class="z-ipt-s w78">
+                                        <label for="projectAmount"></label>
+                                        <input id="projectAmount" name="projectAmount" value="" type="text"
+                                               class="z-ipt fl w78" placeholder="不少于1k元">
+                                        <span class="ipt-span">元</span>
+                                    </div>
+                                    <div class="additional">本次项目需要筹集的目标金额</div>
+                                    <span id="err_amount" class="z-limit" style="display: none;"></span>
+
+                                </dd>
+                            </dl>
+                            <!--筹资金额 end-->
+                            <div class="z-h5">
+                                <h4>1、项目信息</h4>
+                            </div>
+                            <!--项目品类-->
+                            <dl class="order-dl">
+                                <dt class="order-dt">
+                                    <span class="fr">项目品类</span>
+                                    <span class="order-point fr">*</span>
+                                </dt>
+                                <dd class="order-dd tag-customize">
+                                    <div id="type-tag-selected" class="plus-tag tagbtn clearfix">
+                                    </div>
+                                    <div class="plus-tag-add">
+                                        <li>
+                                            <a href="javascript:void(0);" id="collapse-type-tag" class="">展开标签</a>
+                                        </li>
+                                    </div>
+                                    <div id="type-tag" style="display:none">
+                                        <div class="default-tag tagbtn">
+                                            <div class="clearfix nowtips-type">
+                                                <li th:each="type:${typeDTO.typeList}">
+                                                    <a href="javascript:void(0);" th:tag-id="${type.id}" class="">
+                                                        <span th:text="${type.name}"></span>
+                                                        <em></em>
+                                                    </a>
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!--项目品类 end-->
+                            <!--标签-->
+                            <dl class="order-dl">
+                                <dt class="order-dt">
+                                    <span class="fr">项目标签</span>
+                                    <span class="order-point fr">*</span>
+                                </dt>
+                                <dd class="order-dd">
+                                <dd class="order-dd tag-customize">
+                                    <div id="tag-tag-selected" class="plus-tag tagbtn clearfix">
+                                    </div>
+                                    <div class="plus-tag-add">
+                                        <li>
+                                            <a href="javascript:void(0);" id="collapse-tag-tag" class="">展开标签</a>
+                                        </li>
+                                    </div>
+                                    <div id="tag-tag" style="display:none">
+                                        <div class="default-tag tagbtn">
+                                            <div class="clearfix nowtips-tag">
+                                                <li th:each="tag:${tagDTO.tagList}">
+                                                    <a href="javascript:void(0);" th:tag-id="${tag.id}" class="">
+                                                        <span th:text="${tag.name}"></span>
+                                                        <em></em>
+                                                    </a>
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </dd>
+                                </dd>
+                            </dl>
+                            <!--标签 end-->
+                            <!--项目名称-->
+                            <dl class="order-dl">
+                                <dt class="order-dt"><span class="fr">项目名称</span><span
+                                        class="order-point fr">*</span></dt>
+                                <dd class="order-dd">
+                                    <label for="projectName"></label>
+                                    <input id="projectName" maxlength="14" name="projectName" value="" type="text"
+                                           class="z-ipt w328" placeholder="不多于14个字">
+                                    <span id="err_projectName" class="z-limit" style="display: none;"></span>
+                                    <div class="additional">示例：咕咚智能健步鞋 1万个透气孔</div>
+                                </dd>
+                            </dl>
+                            <!--项目名称 end-->
+                            <!--关键描述-->
+                            <dl class="order-dl">
+                                <dt class="order-dt"><span class="fr">关键描述</span><span
+                                        class="order-point fr">*</span></dt>
+                                <dd class="order-dd">
+                                    <label for="projectAdWord"></label>
+                                    <input placeholder="请提炼产品卖点成关键词描述，不多于35个字" id="projectAdWord" maxlength="35"
+                                           name="projectAdWord" value="" type="text" class="z-ipt w328">
+                                    <span id="err_projectAdWord" class="z-limit" style="display: none;"></span>
+                                    <div class="additional"> 该描述用于首页推荐项目展示；示例：机洗无忧加倍减脂</div>
+                                </dd>
+                            </dl>
+                            <!--关键描述 end-->
+                            <!--项目亮点-->
+                            <dl class="order-dl">
+                                <dt class="order-dt"><span class="fr">项目亮点</span><span
+                                        class="order-point fr">*</span></dt>
+                                <dd class="order-dd">
+                                    <label for="projectSpot"></label>
+                                    <input id="projectSpot" maxlength="5" value="" type="text"
+                                           class="z-ipt w328" placeholder="不多于5个字">
+                                    <input id="spotId0" name="spotId0" value="" type="hidden">
+                                    <span id="err_projectSpot" class="z-limit" style="display: inline;"></span>
+                                </dd>
+                            </dl>
+                            <!--项目亮点 end-->
+                            <!--退换货说明-->
+                            <dl class="order-dl">
+                                <dt class="order-dt"><span class="fr">退换货说明</span><span
+                                        class="order-point fr">*</span></dt>
+                                <dd class="order-dd">
+                                    <div class="z-radios JradioType">
+                                        <input type="hidden" id="returnPurchase" value="0">
+                                        <div class="z-radio">
+                                            <label id="returnPurchase0" class="radio-current">该项目支持15天无理由退换货</label>
+                                        </div>
+                                        <br>
+                                        <div class="z-radio">
+                                            <label id="returnPurchase1" class="radio-normal">该项目不支持15天无理由退换货</label>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <script>
+                                    var returnPurchase0 = document.getElementById('returnPurchase0');
+                                    var returnPurchase1 = document.getElementById('returnPurchase1');
+                                    var returnPurchase = document.getElementById('returnPurchase');
+                                    returnPurchase0.onclick = function () {
+                                        if (returnPurchase0.getAttribute('class') !== 'radio-current') {
+                                            returnPurchase1.setAttribute('class', 'radio-normal');
+                                            returnPurchase0.setAttribute('class', 'radio-current');
+                                            returnPurchase.setAttribute('value', '0')
+                                        }
+                                    };
+                                    returnPurchase1.onclick = function () {
+                                        if (returnPurchase1.getAttribute('class') !== 'radio-current') {
+                                            returnPurchase0.setAttribute('class', 'radio-normal');
+                                            returnPurchase1.setAttribute('class', 'radio-current');
+                                            returnPurchase.setAttribute('value', '1')
+                                        }
+                                    }
+                                </script>
+                            </dl>
+                            <!--退换货说明 end-->
+                            <div class="z-h5">
+                                <h4>2 众筹故事</h4>
+                            </div>
+                            <!-- 众筹故事 -->
+                            <dl class="order-dl" style="">
+                                <dt class="order-dt"><span class="fr">众筹故事</span><span
+                                        class="order-point fr">*</span></dt>
+                                <dd class="order-dd" style="">
+                                    <span id="err_app-story" class="z-limit" style="display: none;"></span>
+                                    <div class="additional">（请上传宽度790px，高度建议506px场景图，格式为 jpg jpeg gif png bmp webp）
+                                    </div>
+                                    <div id="app-story" class="edui-default" style="z-index: 999;">
+                                        <!--###########这里添加md编辑器###########-->
+                                        <div id="editor" style="z-index: 999;">
+                                            <div th:insert="~{editor :: editor}"></div>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!-- 众筹故事 end -->
+                            <!-- 基本信息 -->
+                            <dl class="order-dl">
+                                <dt class="order-dt"><span class="fr">基本信息</span><span
+                                        class="order-point fr">*</span></dt>
+                                <dd class="order-dd">
+                                    <div class="mb10">公司简介</div>
+                                    <span id="err_companyInfo" class="z-limit" style="display: none;"></span>
+                                    <div class="z-editor z-editor-auto mb10">
+                                            <textarea class="z-editor-textarea" name="companyInfo" id="companyInfo"
+                                                      cols="30" rows="10" placeholder="请输入公司简介50个字以内"></textarea>
+                                    </div>
+                                    <div class="mb10">团队信息</div>
+                                    <span id="err_teamInfo" class="z-limit" style="display: none;"></span>
+                                    <div class="z-editor z-editor-auto mb10">
+                                            <textarea class="z-editor-textarea" name="teamInfo" id="teamInfo" cols="30"
+                                                      rows="10" placeholder="请输入团队介绍，限制100~500字。"></textarea>
+                                    </div>
+                                    <!--添加成员-->
+                                    <div class="photos-wrapper" id="memberList">
+                                        <!--添加-->
+                                    </div>
+                                    <!--添加成员的按钮-->
+                                    <div class="tc">
+                                        <input type="button" id="addMember" class="common_button mr20"
+                                               value="添加成员（还能添加 9 人）">
+                                    </div>
+                                    <!--添加成员 end-->
+                                </dd>
+                            </dl>
+                            <!-- 基本信息 end-->
+                        </div>
+
+                        <!--挡位信息-->
+                        <div id="rewardInfo" class="" style="width: 940px;">
+                            <!--table-->
+                            <dl class="order-dl">
+                                <dt class="order-dt"><span class="fr">基本信息</span><span
+                                        class="order-point fr">*</span></dt>
+                                <dd class="order-dd" style="width: 778px;">
+                                    <span id="err_stall" class="z-limit" style="display: none;"></span>
+                                    <div class="z-table-wrap">
+                                        <div class="z-thead-bg"></div>
+                                        <table class="z-table">
+                                            <tbody id="redoundTable">
+                                            <tr>
+                                                <th class="w40">序号</th>
+                                                <th class="w80">支持金额</th>
+                                                <th class="w90">名额</th>
+                                                <th class="w200">回报内容</th>
+                                                <th class="w120">回报时间</th>
+                                                <th class="w100">运费</th>
+                                                <th class="w100">操作</th>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="add-stall" id="addStallNew" onclick="addRewardInfo()"
+                                             style="background: none;width: 100px;">+ 添加档位
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!--table end-->
+                        </div>
+
+                        <!--推广资料-->
+                        <div id="promoteMaterial" class="">
+                            <!--APP图片上传-->
+                            <dl class="order-dl">
+                                <dt class="order-dt">
+                                    <span class="fr">单品页图</span>
+                                    <span class="order-point fr">*</span>
+                                </dt>
+                                <dd class="order-dd" id="appImageDev" style="line-height: 12px;width: 705px;">
+                                    <div class="container my-4">
+                                        <form enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <div class="file-loading">
+                                                    <input id="important-block-display" type="file" multiple>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <form enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <div class="file-loading">
+                                                    <input id="pc-home-display" type="file" multiple>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <form enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <div class="file-loading">
+                                                    <input id="pc-product-display" type="file" multiple>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!--APP图片上传 end-->
+                            <!--上传视频-->
+                            <dl class="order-dl">
+                                <dt class="order-dt">
+                                    <span class="fr">视频介绍</span>
+                                </dt>
+                                <dd class="order-dd"
+                                    style="line-height: 12px;width: 705px;padding-left: 13px;padding-right: 13px">
+                                    <div class="file-loading">
+                                        <input id="upload-video" name="upload-video[]" type="file" multiple>
+                                    </div>
+                                    <div class="upload-notice-text">
+                                        视频小于200M，建议视频时间3分钟以内，尺寸比例4:3，格式为wmv、avi、rmvb、mp4、flv等。
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!--上传视频  end-->
+                        </div>
+
+                        <!--资质信息-->
+                        <div id="qualificationInfo" class="">
+                            <!--品牌专利委托-->
+                            <dl class="order-dl">
+                                <dt class="order-dt">
+                                    <span class="fr">品牌、专利、委托</span>
+                                    <span class="fr">或销售协议</span>
+                                </dt>
+                                <dd class="order-dd">
+                                    <div class="prove-imgs">
+                                        <div class="container">
+                                            <form enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <div class="file-loading">
+                                                        <input id="brand-patent" type="file" multiple class="file"
+                                                               data-overwrite-initial="false"
+                                                               data-min-file-count="2" data-theme="fas">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!--品牌专利委托  end-->
+                            <!--经营许可证-->
+                            <dl class="order-dl">
+                                <dt class="order-dt">
+                                    <span class="fr">经营许可证</span>
+                                </dt>
+                                <dd class="order-dd">
+                                    <div class="prove-imgs">
+                                        <div class="container">
+                                            <form enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <div class="file-loading">
+                                                        <input id="manage-permit" type="file" multiple class="file"
+                                                               data-overwrite-initial="false"
+                                                               data-min-file-count="2" data-theme="fas">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!--经营许可证  end-->
+                            <!--生产许可-->
+                            <dl class="order-dl">
+                                <dt class="order-dt">
+                                    <span class="fr">生产许可</span>
+                                </dt>
+                                <dd class="order-dd">
+                                    <div class="prove-imgs">
+                                        <div class="container">
+                                            <form enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <div class="file-loading">
+                                                        <input id="production-permit" type="file" multiple
+                                                               class="file"
+                                                               data-overwrite-initial="false"
+                                                               data-min-file-count="2" data-theme="fas">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!--生产许可  end-->
+                            <!--3C 认证-->
+                            <dl class="order-dl">
+                                <dt class="order-dt">
+                                    <span class="fr">3C 认证、产品备案注册凭证等</span>
+                                </dt>
+                                <dd class="order-dd">
+                                    <div class="prove-imgs">
+                                        <div class="container">
+                                            <form enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <div class="file-loading">
+                                                        <input id="certification" type="file" multiple class="file"
+                                                               data-overwrite-initial="false"
+                                                               data-min-file-count="2" data-theme="fas">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!--3C 认证  end-->
+                            <!--质检报告-->
+                            <dl class="order-dl">
+                                <dt class="order-dt">
+                                    <span class="fr">质检报告</span>
+                                </dt>
+                                <dd class="order-dd">
+                                    <div class="prove-imgs">
+                                        <div class="container">
+                                            <form enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <div class="file-loading">
+                                                        <input id="quality-report" type="file" multiple class="file"
+                                                               data-overwrite-initial="false"
+                                                               data-min-file-count="2" data-theme="fas">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <a href="https://zbbs.jd.com/thread-27129-1-1.html" target="_blank"
+                                       class="font-blue">
+                                        请仔细阅读《京东众筹行业分类及其行业资质》，并上传正确的行业资质。
+                                    </a>
+                                </dd>
+                            </dl>
+                            <!--质检报告  end-->
+                            <!--营业执照-->
+                            <dl class="order-dl">
+                                <dt class="order-dt">
+                                    <span class="fr">营业执照</span>
+                                </dt>
+                                <dd class="order-dd">
+                                    <div class="prove-imgs">
+                                        <div class="container">
+                                            <form enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <div class="file-loading">
+                                                        <input id="business-license" type="file" multiple
+                                                               class="file"
+                                                               data-overwrite-initial="false"
+                                                               data-min-file-count="2" data-theme="fas">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!--营业执照  end-->
+                            <!--其他-->
+                            <dl class="order-dl">
+                                <dt class="order-dt"><span class="fr">其他证明</span></dt>
+                                <dd class="order-dd">
+                                    <div class="prove-imgs">
+                                        <div class="container">
+                                            <form enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <div class="file-loading">
+                                                        <input id="other-qualification-file" type="file" multiple
+                                                               class="file"
+                                                               data-overwrite-initial="false"
+                                                               data-min-file-count="2" data-theme="fas">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!--其他  end-->
+                        </div>
+                    </div>
+                </div>
+                <!-- form end-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--footer-->
+<div class="footer">
+    <div class="footer-inner">
+        <div class="footer-container fl">
+            <ul>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|49" target="_blank"
+                       href="//help.jr.jd.com/show/helpcenter/110.html">关于京东金融</a><span class="v-line">|</span></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|50" target="_blank"
+                       href="//help.jr.jd.com/show/helpcenter/139.html">联系我们</a><span class="v-line">|</span></li>
+                <li><a clstag="pageclick|keycount|zcprojectsystem_201509071|51" target="_blank"
+                       href="//help.jr.jd.com/show/helpcenter/145.html">服务协议</a></li>
+            </ul>
+            <p>Copyright © 2004-2015 京东JD.com 版权所有</p>
+        </div>
+        <div class="footer-contact fr">
+            <div class="mt50 mr50"><span class="tel"></span><a clstag="pageclick|keycount|zcprojectsystem_201509071|52"
+                                                               target="_blank"
+                                                               href="//sale.jd.com/act/Sx4iqnbrpmWDtAOR.html"
+                                                               class="contact-us">咨询我们</a></div>
+        </div>
+    </div>
+</div>
+<!--Reward information-->
+<div class="zpopup" id="addStallPopupShadow" style="height: 1263px; display: none;"></div>
+<div id="reward-form-group">
+</div>
+<!--Reward information end-->
+<script src="/addProject/js/addProject-2.js" type="application/javascript"></script>
+</body>
+</html>
