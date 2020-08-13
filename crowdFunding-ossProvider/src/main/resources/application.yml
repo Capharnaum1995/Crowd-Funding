@@ -22,7 +22,7 @@ rocketmq:
   consumer:
     group: ChunkFileUploadGroup
 oss:
-  endpoint: oss-us-west-1.aliyuncs.com
-  accessKeyId: LTAI4FcBhdDymSvgNUX3AnmD
-  accessKeySecret: yi2PLWM5fia6uzWO5To3xZpTkoDuSv
-  bucketName: capharnaum
+  endpoint: oss-us-west-1.gfdhngfdn.com
+  accessKeyId: hgnfnhgfnh
+  accessKeySecret: yi2PLWM5fia6unhgfdnhgzWO5To3xZpTkoDuSv
+  bucketName: nghdfnhgfd
